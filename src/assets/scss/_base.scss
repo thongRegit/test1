@@ -1,0 +1,192 @@
+.table {
+    width: 100%;
+    border-spacing: 0;
+    thead {
+        color: var(--color-bg-main);
+        tr {
+            th {
+                text-align: left;
+                font-weight: 300;
+                font-size: 17px;
+                padding: 0 8px;
+                height: 48px;
+                &:last-child {
+                    text-align: right;
+                }
+            }
+            &:last-child {
+                th {
+                    border-bottom: thin solid rgba(0,0,0,.12);
+                }
+            }
+        }
+    }
+    tbody {
+        color: rgba(0,0,0,.87);
+        tr {
+            td {
+                text-align: left;
+                font-weight: 300;
+                padding: 0 16px;
+                height: 48px;
+                &:last-child {
+                    text-align: right;
+                }
+            }
+            &:not(:last-child) {
+                td {
+                    border-bottom: thin solid rgba(0,0,0,.12);
+                }
+            }
+        }
+    }
+}
+
+.el-form-item {
+    .el-form-item__content {
+        .label {
+            display: block;
+            width: 100%;
+        }
+        .el-button {
+            width: var(--vt-w-button);
+        }
+        .el-checkbox__label {
+            font-size: 12px;
+        }
+    }
+}
+
+.el-group-title-child {
+    h4 {
+        font-size: 20px;
+    }
+}
+
+.table-pagination {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 0 16px;
+    .el-pagination {
+        padding: 0;
+        &.is-background {
+            .btn-prev {
+                background-color: unset;
+                &:disabled {
+                    background-color: unset;
+                }
+            }
+            .btn-next {
+                background-color: unset;
+                &:disabled {
+                    background-color: unset;
+                }
+            }
+            .el-pager {
+                li {
+                    border-radius: 50%;
+                    background-color: unset;
+                    &:not(.is-disabled).is-active {
+                        background-color: var(--color-bg-main);
+                        box-shadow: 0 4px 5px 0 rgb(76 175 80 / 14%), 0 1px 10px 0 rgb(76 175 80 / 12%), 0 2px 4px -1px rgb(76 175 80 / 20%);
+                    }
+                    &:not(.is-disabled):not(.is-active):hover {
+                        color: var(--color-bg-main);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.el-table {
+    th {
+        &.el-table__cell {
+            border-top: var(--el-table-border);
+        }
+    }
+    .el-table__row {
+        &:hover {
+            .btn-action {
+                background-color: unset;
+            }
+        }
+    }
+    .el-table__cell {
+        &:hover {
+            .btn-action {
+                background-color: unset;
+            }
+        }
+    }
+    .cell {
+        &:hover {
+            .btn-action {
+                background-color: unset;
+            }
+        }
+    }
+    .el-button {
+        &.btn-action {
+            border: none;
+            margin: 0;
+            padding: 8px 12px;
+            &:hover {
+                background-color: unset;
+                border-color: unset;
+            }
+            &:active {
+                background-color: unset;
+                border-color: unset;
+            }
+            &:focus {
+                background-color: unset;
+                border-color: unset;
+            }
+            i {
+                font-size: 18px;
+            }
+        }
+        &.btn-update {
+            color: orange;
+        }
+        &.btn-delete {
+            color: var(--vt-c-red);
+        }
+    }
+}
+
+.el-dialog {
+    .el-dialog__body {
+        padding-bottom: 0;
+    }
+    .el-form {
+        .el-form-item {
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+    }
+}
+
+.text-note {
+    color: var(--vt-c-red);
+    font-size: 12px;
+}
+
+.table-scheduler {
+    thead {
+        th:not(:first-child) {
+            .cell {
+                background-color: black;
+                border-radius: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                width: 120px;
+                height: 40px;
+            }
+        }
+    }
+}

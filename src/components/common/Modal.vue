@@ -1,0 +1,47 @@
+<template>
+    <el-dialog v-model="dialogFormVisible" :title="title" :width="width">
+        <slot></slot>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="close">Cancel</el-button>
+                <el-button type="primary" @click="onSubmit">
+                    Confirm
+                </el-button>
+            </span>
+        </template>
+    </el-dialog>
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue'
+
+const { title, open, width } = defineProps(['title', 'open', 'width'])
+const emit = defineEmits(['cancel', 'submit', 'close'])
+
+const dialogFormVisible = ref(open)
+
+const close = () => {
+    emit('close')
+}
+
+const onSubmit = () => {
+    emit('submit')
+}
+</script>
+<style scoped lang="scss">
+.el-button--text {
+    margin-right: 15px;
+}
+
+.el-select {
+    width: 300px;
+}
+
+.el-input {
+    width: 300px;
+}
+
+.el-button {
+    width: 92px;
+}
+</style>
