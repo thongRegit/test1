@@ -6,32 +6,53 @@
         @onCreate="onCreatePattern"
     >
         <template v-slot:body>
-            <span>asdad</span>
+            <el-row style="width: 100%">
+                <el-col :span="12">
+                    <el-select
+                        v-model="value1"
+                        placeholder="Activity zone"
+                        class="base-input"
+                    >
+                        <el-option
+                            v-for="(item, index) in timeArr"
+                            :key="index"
+                            :label="item"
+                            :value="item"
+                        />
+                    </el-select>
+                </el-col>
+                <el-col :span="12">
+                    <el-select
+                        v-model="value2"
+                        placeholder="Activity zone"
+                        class="base-input"
+                    >
+                        <el-option
+                            v-for="(item, index) in timeArr"
+                            :key="`select_2_${index}`"
+                            :label="item"
+                            :value="item"
+                        />
+                    </el-select>
+                </el-col>
+            </el-row>
         </template>
     </BoxVue>
-    {{ `${isShowModal}` }}_1
-    <modal
-        title="パターン登録"
-        width="1193"
-        :open="isShowModal"
-        @close="oncloseModal"
-    >
-        <span>asdad</span>
-    </modal>
+    <create-pattern ref="createModalRef" />
 </template>
 
 <script setup lang="ts">
-import BoxVue from '@/components/common/Box.vue'
+import BoxVue from '@/components/common/BoxVue.vue'
+import { generateTimeArr } from '@/utilities/constant'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { fa } from 'element-plus/es/locale'
-
-const isShowModal = ref(false)
+import { ref, reactive } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+import CreatePattern from './CreateVue.vue'
+const timeArr = generateTimeArr()
+const value1 = ref('')
+const value2 = ref('')
+const createModalRef = ref()
 const onCreatePattern = () => {
-    isShowModal.value = !isShowModal.value
-}
-
-const oncloseModal = () => {
-    isShowModal.value = false
+    createModalRef.value?.showCreateModal()
 }
 </script>
