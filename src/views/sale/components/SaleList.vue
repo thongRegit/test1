@@ -54,18 +54,6 @@ const buttons = ref([
     { id: '2', label: '', icon: 'CloseBold', class: 'btn-action btn-delete' },
 ])
 const sortProp = reactive({ key: 'created_at', dir: 'desc' })
-const dataSearch = reactive({
-    page: 1,
-    text: '',
-    filters: [
-        { key: 'id', data: '' },
-        { key: 'name', data: '' },
-    ],
-} as {
-    page: Number
-    text: String
-    filters: Array<any> | String
-})
 
 const handleClickButtonTable = (type: any, row: any) => {
     const planStore = usePlanStore()
@@ -99,7 +87,7 @@ const handleClickButtonTable = (type: any, row: any) => {
     }
 }
 
-const handleCheckbox = (val: any) => {}
+const handleCheckbox = () => {}
 
 const getListData = async () => {
     let query = {
@@ -135,7 +123,7 @@ const handleChangePage = (page: any) => {
     getListData()
 }
 
-const cellClick = (row: any, column: any, cell: any) => {
+const cellClick = (row: any, column: any) => {
     if (column.property === 'name') {
         router.push({
             name: 'survey-detail',
@@ -145,35 +133,11 @@ const cellClick = (row: any, column: any, cell: any) => {
     }
 }
 
-const search = () => {
-    loading.value = true
-    Object.assign(
-        listQuery,
-        Object.fromEntries(Object.entries(dataSearch).map(([k, v]) => [k, v]))
-    )
-    listQuery.value.page = 1
-    getListData()
-}
-
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
     listQuery.value.page = 1
     getListData()
-}
-
-const resetForm = () => {
-    // this.$refs["dataSearch"].resetFields();
-    dataSearch.page = 1
-    dataSearch.text = ''
-    dataSearch.filters = [
-        { key: 'contact_datetime', data: { year: '', month: '', day: '' } },
-        { key: 'full_name_or_id', data: '' },
-    ]
-}
-
-const changeDate = (data: any) => {
-    dataSearch.filters[0].data = data.value
 }
 
 onMounted(async () => {
@@ -185,28 +149,3 @@ watch(data, async () => {
     await getListData()
 })
 </script>
-
-<style scoped lang="scss">
-.survey-list {
-    .survey-box {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 12px;
-    }
-    &:deep(.el-table__cell) {
-        &:nth-child(4) {
-            .cell {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-            }
-        }
-        .text-link {
-            cursor: pointer;
-            color: cornflowerblue;
-        }
-    }
-}
-</style>

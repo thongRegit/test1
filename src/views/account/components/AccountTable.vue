@@ -189,8 +189,8 @@ const columns = ref([
 ])
 
 const tableDataRef = ref(tableData)
-const cellClick = (row, column, cell) => {
-    //   emit('cellClick', row, column, cell)
+const cellClick = (row: any, column: any, cell: any) => {
+    console.log('row, column, cell :>> ', row, column, cell)
 }
 
 const handleCreate = () => {

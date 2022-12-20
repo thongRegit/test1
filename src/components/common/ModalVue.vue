@@ -19,23 +19,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRef } from 'vue'
+import { ref, defineProps, toRefs } from 'vue'
 
-// const { title, open, width } = defineProps(['title', 'open', 'width'])
-// apiUser: {
-//     title: String,
-//    type: Object
-//  }
-const props = defineProps({
-    title: String,
-    open: Boolean,
-    width: String,
-})
-
-const title = toRef(props, 'title')
-const dialogFormVisible = toRef(props, 'open')
-const width = toRef(props, 'width')
-
+const { title, open, width } = toRefs(defineProps(['title', 'open', 'width']))
 const emit = defineEmits(['cancel', 'submit', 'close'])
 
 const close = () => {

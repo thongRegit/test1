@@ -93,22 +93,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, defineProps, defineEmits, toRefs } from 'vue'
 import { useI18n } from 'vue3-i18n'
 
 const { t } = useI18n()
-const {
-    columns,
-    data,
-    buttons,
-    loading,
-    links,
-    showIndex,
-    showCheckbox,
-    hasCreate,
-} = defineProps({
+
+const props = defineProps({
     columns: { type: Array<any>, required: true, default: [] },
-    data: { type: Object, required: true, default: [] },
+    data: { type: Object, required: true },
     buttons: { type: Array<any>, required: false, default: [] },
     loading: { type: Boolean, required: true, default: true },
     links: { type: Array<any>, required: false, default: [] },
@@ -116,6 +108,10 @@ const {
     showCheckbox: { type: Boolean, required: false, default: true },
     hasCreate: { type: Boolean, required: false, default: false },
 })
+const { columns, data, buttons, loading, links, showIndex, showCheckbox } =
+    toRefs(props)
+
+console.log('data :>> ', data.value)
 
 const handleSelectionChange = (val: any[]) => {
     emit('clickCheckbox', val)
@@ -131,22 +127,25 @@ const emit = defineEmits([
     'clickCheckbox',
 ])
 
-const cellClick = (row, column, cell) => {
+const cellClick = (row: any, column: any, cell: any) => {
     emit('cellClick', row, column, cell)
 }
-const handleChangePage = (page) => emit('changePage', page)
-const indexMethod = (index) => (data.currentPage - 1) * data.perPage + index + 1
-const sortChange = (sortProps) => emit('sort', sortProps)
+const handleChangePage = (page: any) => emit('changePage', page)
+const indexMethod = (index: any) =>
+    (data.value.currentPage - 1) * data.value.perPage + index + 1
+const sortChange = (sortProps: any) => emit('sort', sortProps)
 
 const recordStart = computed(() =>
-    data.total > 0 ? (data.currentPage - 1) * data.perPage + 1 : 0
+    data.value.total > 0
+        ? (data.value.currentPage - 1) * data.value.perPage + 1
+        : 0
 )
 const recordEnd = computed(() =>
-    data.currentPage * data.perPage >= data.total
-        ? data.total
-        : data.currentPage * data.perPage
+    data.value.currentPage * data.value.perPage >= data.value.total
+        ? data.value.total
+        : data.value.currentPage * data.value.perPage
 )
-const widthButton = computed(() => (buttons.length > 1 ? 230 : 100))
+const widthButton = computed(() => (buttons.value.length > 1 ? 230 : 100))
 </script>
 
 <style lang="scss" scoped>

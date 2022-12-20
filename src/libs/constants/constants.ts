@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 export const START_YEAR = 1920
 export const CURRENT_YEAR = new Date().getFullYear()
@@ -11,10 +11,10 @@ export const MONTHS = Array.from({ length: 12 }, (item, i) => {
     return dayjs(new Date(0, i)).format('MM')
 })
 export const YEARS = Array(CURRENT_YEAR - START_YEAR + 1)
-    .fill((item) => item)
+    .fill((item: any) => item)
     .map((_, idx) => CURRENT_YEAR - idx)
 export const YEARS_START_FROM_2022 = Array(CURRENT_YEAR - 2022 + 1)
-    .fill((item) => item)
+    .fill((item: any) => item)
     .map((_, idx) => CURRENT_YEAR - idx)
 export const CURRENT_MONTH = dayjs(new Date()).format('MM')
 export const CURRENT_DAY = dayjs(new Date()).format('DD')
@@ -43,7 +43,7 @@ export const TYPE_QUESTION = {
     dropdown: 5,
 }
 
-export const FORMAT_DAY = (day, format = 'YYYY-MM-DD') => {
+export const FORMAT_DAY = (day: any, format = 'YYYY-MM-DD') => {
     return dayjs(new Date(day)).format(format)
 }
 

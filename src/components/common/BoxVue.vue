@@ -25,9 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, toRefs } from 'vue'
 
-const { type, title, description, padding, btnCreate, width } = defineProps([
+const props = defineProps([
     'type',
     'title',
     'description',
@@ -35,6 +35,7 @@ const { type, title, description, padding, btnCreate, width } = defineProps([
     'btnCreate',
     'width',
 ])
+const { type, title, description, padding, btnCreate, width } = toRefs(props)
 
 const emit = defineEmits(['onCreate'])
 </script>

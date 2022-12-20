@@ -1,4 +1,4 @@
-import Login from '@/views/Login.vue'
+import Login from '@/views/LoginVue.vue'
 import ChangePassword from '@/views/password/ChangePasswordVue.vue'
 import Home from '@/views/home/HomeVue.vue'
 import PageNotFound from '@/views/PageNotFound.vue'

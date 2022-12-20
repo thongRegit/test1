@@ -267,19 +267,16 @@
 </template>
 
 <script setup lang="ts">
-import BoxVue from '@/components/common/Box.vue'
+import BoxVue from '@/components/common/BoxVue.vue'
 import ShopSearchVue from './components/ShopSearch.vue'
-import Step2 from '@/views/Shop/components/ShopStep2.vue'
-import Step3 from '@/views/Shop/components/ShopStep3.vue'
-import Step4 from '@/views/Shop/components/ShopStep4.vue'
+import Step2 from '@/views/shop/components/ShopStepTwo.vue'
+import Step3 from '@/views/shop/components/ShopStepThree.vue'
+import Step4 from '@/views/shop/components/ShopStepFour.vue'
 
-import ModalVue from '@/components/common/Modal.vue'
+import ModalVue from '@/components/common/ModalVue.vue'
 
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import { useI18n } from 'vue3-i18n'
-
-const { t } = useI18n()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -288,8 +285,6 @@ const ruleForm = reactive({
     date: '2021-10-01',
     type: [],
 })
-
-const checked1 = ref(true)
 
 const rules = reactive<FormRules>({
     name: [
@@ -316,20 +311,4 @@ const rules = reactive<FormRules>({
         },
     ],
 })
-
-const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    await formEl.validate((valid, fields) => {
-        if (valid) {
-            console.log('submit!')
-        } else {
-            console.log('error submit!', fields)
-        }
-    })
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
-}
 </script>
