@@ -1,24 +1,23 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, computed } from 'vue'
 import type { LoginDto } from '../libs/interface/auth'
-import { API_LOGIN } from '../libs/constants/urlApi'
-import axios from '@/config/axios'
+import * as API from '@/api/auth'
 
 const tokenKey = 'access_token'
 
 export const useAuthStore = defineStore('auth', () => {
-    const token = ref(JSON.parse(localStorage.getItem(tokenKey)) || '')
+    const TOKEN_STR = localStorage.getItem(tokenKey)
+    const token = ref(JSON.parse(TOKEN_STR || '{}'))
 
-    const isAuthenticated = computed(() => !!token.value)
+    const isAuthenticated = computed(() => {
+        return Object.keys(token.value).length > 0 && !!token.value
+    })
 
     const login = async (payload: LoginDto | {}) => {
         try {
-            const data = await API_LOGIN.post(payload)
-            token.value = data['data']['access_token']
-            localStorage.setItem(
-                tokenKey,
-                JSON.stringify(data['data']['access_token'])
-            )
+            const data: any = await API.login('/auth/login', payload)
+            token.value = data.access_token
+            localStorage.setItem(tokenKey, JSON.stringify(data.access_token))
         } catch (error) {
             console.log(error)
             return error
@@ -27,17 +26,14 @@ export const useAuthStore = defineStore('auth', () => {
 
     const me = async () => {
         try {
-            if (!localStorage.getItem(tokenKey)) return null
-            const data: any = await axios.get('/auth/me')
+            const data: any = await API.getProfile('/auth/me')
             return data
         } catch (error) {
-            localStorage.removeItem(tokenKey)
             return null
         }
     }
 
     const logout = () => {
-        // localStorage.removeItem(tokenKey);
         localStorage.clear()
         token.value = ''
     }

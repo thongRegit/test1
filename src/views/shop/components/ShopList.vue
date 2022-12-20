@@ -6,7 +6,7 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <ShopSearchVue @submit="search" />
+            <ShopSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
     <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
@@ -37,17 +37,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, nextTick, defineProps } from 'vue'
+import { ref, reactive, onMounted, watch, nextTick } from 'vue'
 import { useShopStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
-import BoxVue from '@/components/common/Box.vue'
+import BoxVue from '@/components/common/BoxVue.vue'
 import ShopSearchVue from './ShopSearch.vue'
-
-// const shopStore = useShopStore()
-// shopStore.$subscribe((mutation, state) => {
-//   console.log('mutation, state :>> ', mutation, state.search);
-// })
+import type { ShopSearch } from '@/libs/interface/shops'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -55,7 +51,7 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     text: '',
-    filters: [{ key: 'name', data: '' }],
+    filters: [{ key: 'status', data: ['all'] }],
 })
 const data = ref({
     currentPage: 1,
@@ -91,18 +87,6 @@ const buttons = ref([
     { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
 ])
 const sortProp = reactive({ key: 'id', dir: 'descending' })
-const dataSearch = reactive({
-    page: 1,
-    text: '',
-    filters: [
-        { key: 'id', data: '' },
-        { key: 'name', data: '' },
-    ],
-} as {
-    page: Number
-    text: String
-    filters: Array<any> | String
-})
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
@@ -110,7 +94,7 @@ const handleClickButtonTable = (classList: any, row: any) => {
     }
 }
 
-const handleCheckbox = (val: any) => {}
+const handleCheckbox = () => {}
 
 const getListData = async () => {
     let query = {
@@ -146,7 +130,7 @@ const handleChangePage = (page: any) => {
     getListData()
 }
 
-const cellClick = (row: any, column: any, cell: any) => {
+const cellClick = (row: any, column: any) => {
     if (column.property === 'name') {
         router.push({
             name: 'survey-detail',
@@ -156,14 +140,11 @@ const cellClick = (row: any, column: any, cell: any) => {
     }
 }
 
-const search = () => {
+const search = (search: ShopSearch) => {
     loading.value = true
-    Object.assign(
-        listQuery,
-        (<any>Object).fromEntries(
-            (<any>Object).entries(dataSearch).map(([k, v]: any) => [k, v])
-        )
-    )
+    listQuery.value.text = search.name
+    listQuery.value.filters = [{ key: 'status', data: search.status }]
+    console.log('search :>> ', search)
     listQuery.value.page = 1
     getListData()
 }
@@ -177,17 +158,14 @@ const sort = (sortProps: any) => {
 }
 
 const resetForm = () => {
-    // this.$refs["dataSearch"].resetFields();
-    dataSearch.page = 1
-    dataSearch.text = ''
-    dataSearch.filters = [
-        { key: 'contact_datetime', data: { year: '', month: '', day: '' } },
-        { key: 'full_name_or_id', data: '' },
-    ]
+    listQuery.value.page = 1
+    listQuery.value.text = ''
+    listQuery.value.filters = [{ key: 'status', data: ['all'] }]
+    getListData()
 }
 
 const changeDate = (data: any) => {
-    dataSearch.filters[0].data = data.value
+    listQuery.value.filters[0].data = data.value
 }
 
 onMounted(async () => {

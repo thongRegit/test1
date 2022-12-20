@@ -10,7 +10,7 @@ import i18n from './lang/index'
 import { createPinia } from 'pinia'
 
 import TableData from '@/components/common/TableData.vue'
-import Modal from '@/components/common/Modal.vue'
+import Modal from '@/components/common/ModalVue.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -25,6 +25,6 @@ app.use(pinia)
 app.use(router)
 
 app.component('table-data', TableData)
-app.component('modal', Modal)
+app.component('modal-box', Modal)
 
 app.mount('#app')

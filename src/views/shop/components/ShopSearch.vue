@@ -73,11 +73,10 @@ const ruleForm = reactive({
 
 const rules = reactive<FormRules>({
     name: [
-        { message: 'Please input Activity name', trigger: 'blur' },
+        { message: 'Please input shop name', trigger: 'blur' },
         {
-            min: 3,
             max: 255,
-            message: 'Length should be 3 to 255',
+            message: 'Length max 255',
             trigger: 'blur',
         },
     ],
@@ -91,14 +90,10 @@ const rules = reactive<FormRules>({
     ],
 })
 
-// const shopStore = useShopStore()
-// shopStore.search = ruleForm
-
 const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate((valid: any, fields: any) => {
         if (valid) {
-            console.log('submit!', ruleForm)
             const shopStore = useShopStore()
             shopStore.updateSearch(ruleForm)
             emit('submit', ruleForm)
@@ -111,5 +106,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
+    emit('reset')
 }
 </script>

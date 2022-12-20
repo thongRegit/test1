@@ -10,8 +10,3 @@ export const clipTitle = (text: string) => {
     }
     return title
 }
-
-export const REGEX_PASSWORD =
-    /^(?=.*[0-9])(?=.*[A-Z|a-z])(?=.*[\!\@\#\$\%\^\&\*\(\){\}[\]:\;\<\>\,\.\?\/~\_\+\-\=\\])[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\){\}[\]:\;\<\>\,\.\?\/~\_\+\-\=\\]{8,255}$/
-
-export const REGEX_PHONE_NUMBER = /^[0-9\-]{1,}[0-9\-]{0,15}$/

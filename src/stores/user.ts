@@ -1,7 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
-import { findData } from '@/libs/utils/common'
 
 export const useUserStore = defineStore('question_type', () => {
     const users = ref([] as any)

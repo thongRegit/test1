@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, defineProps, toRefs } from 'vue'
 
-const { title, open, width } = defineProps(['title', 'open', 'width'])
+const { title, open, width } = toRefs(defineProps(['title', 'open', 'width']))
 const emit = defineEmits(['cancel', 'submit', 'close'])
 
 const dialogFormVisible = ref(open)

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import AccountTableVue from './components/AccountTable.vue'
-import BoxVue from '@/components/common/Box.vue'
+import BoxVue from '@/components/common/BoxVue.vue'
 
 const handleCreate = () => {
     console.log(1)
