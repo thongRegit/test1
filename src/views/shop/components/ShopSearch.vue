@@ -96,8 +96,7 @@ const rules = reactive<FormRules>({
 
 const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate((valid, fields) => {
-        console.log('1 :>> ', 1)
+    await formEl.validate((valid: any, fields: any) => {
         if (valid) {
             console.log('submit!', ruleForm)
             const shopStore = useShopStore()

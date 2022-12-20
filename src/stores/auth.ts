@@ -7,7 +7,7 @@ import axios from '@/config/axios'
 const tokenKey = 'access_token'
 
 export const useAuthStore = defineStore('auth', () => {
-    const token = ref(JSON.parse(localStorage.getItem(tokenKey) || ''))
+    const token = ref(JSON.parse(localStorage.getItem(tokenKey)) || '')
 
     const isAuthenticated = computed(() => !!token.value)
 

@@ -160,8 +160,8 @@ const search = () => {
     loading.value = true
     Object.assign(
         listQuery,
-        Object.fromEntries(
-            Object.entries(dataSearch).map(([k, v]: any) => [k, v])
+        (<any>Object).fromEntries(
+            (<any>Object).entries(dataSearch).map(([k, v]: any) => [k, v])
         )
     )
     listQuery.value.page = 1

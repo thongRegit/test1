@@ -155,6 +155,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                             }
                             .el-input__inner {
                                 color: #fff;
+                                background-color: unset !important;
                             }
                         }
                     }
