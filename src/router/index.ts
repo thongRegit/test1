@@ -17,6 +17,8 @@ import {
     ChangePassword,
     Login,
     PageNotFound,
+    PatternList,
+    PatternCreate,
 } from '@/views/index'
 
 const ifAuthenticated = (to: any, from: any, next: any) => {
@@ -160,6 +162,23 @@ const routes = [
                         name: 'reservation-update',
                         component: ReservationList,
                         beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'patterns',
+                children: [
+                    {
+                        path: '',
+                        component: PatternList,
+                        name: 'patterns',
+                        // beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        name: 'pattern-create',
+                        component: PatternCreate,
+                        // beforeEnter: ifAuthenticated,
                     },
                 ],
             },

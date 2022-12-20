@@ -1,5 +1,11 @@
 <template>
-    <el-dialog v-model="dialogFormVisible" :title="title" :width="width">
+    <el-dialog
+        v-model="dialogFormVisible"
+        :title="title"
+        :width="width"
+        :before-close="handleClose"
+        destroy-on-close
+    >
         <slot></slot>
         <template #footer>
             <span class="dialog-footer">
@@ -13,12 +19,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, toRef } from 'vue'
 
-const { title, open, width } = defineProps(['title', 'open', 'width'])
+// const { title, open, width } = defineProps(['title', 'open', 'width'])
+// apiUser: {
+//     title: String,
+//    type: Object
+//  }
+const props = defineProps({
+    title: String,
+    open: Boolean,
+    width: String,
+})
+
+const title = toRef(props, 'title')
+const dialogFormVisible = toRef(props, 'open')
+const width = toRef(props, 'width')
+
 const emit = defineEmits(['cancel', 'submit', 'close'])
-
-const dialogFormVisible = ref(open)
 
 const close = () => {
     emit('close')
@@ -26,6 +44,10 @@ const close = () => {
 
 const onSubmit = () => {
     emit('submit')
+}
+
+const handleClose = () => {
+    emit('close')
 }
 </script>
 <style scoped lang="scss">
