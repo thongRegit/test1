@@ -1,9 +1,7 @@
-export interface User {
+export interface Profile {
     id: number
     name: string
-    generation: number
-    line_user_id: string
-    avatar_image_url?: string
-    children_user_id?: number
+    mail_address: number
     created_at?: number
+    updated_at?: number
 }

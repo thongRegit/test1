@@ -83,10 +83,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import BoxVue from '@/components/common/Box.vue'
-import { useI18n } from 'vue3-i18n'
-
-const { t } = useI18n()
+import BoxVue from '@/components/common/BoxVue.vue'
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -120,20 +117,4 @@ const rules = reactive<FormRules>({
         },
     ],
 })
-
-const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    await formEl.validate((valid, fields) => {
-        if (valid) {
-            console.log('submit!')
-        } else {
-            console.log('error submit!', fields)
-        }
-    })
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
-}
 </script>

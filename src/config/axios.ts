@@ -10,11 +10,13 @@ const instance = axios.create({
 instance.interceptors.request.use(
     function (config: any) {
         try {
-            const token = JSON.parse(localStorage.getItem(ACCESS_TOKEN))
-            if (token) {
+            const token = JSON.parse(localStorage.getItem(ACCESS_TOKEN) || '{}')
+            if (Object.keys(token).length > 0) {
                 config.headers['Authorization'] = `Bearer ${token}`
             }
-        } catch (error) {}
+        } catch (error) {
+            throw Error('')
+        }
         return config
     },
     function (error) {
@@ -37,9 +39,5 @@ instance.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
-export const setLocaleApi = (locale: string) => {
-    instance.defaults.headers.common['lang'] = locale
-}
 
 export default instance

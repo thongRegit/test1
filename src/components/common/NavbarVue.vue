@@ -29,7 +29,7 @@
                 <el-avatar
                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
                 />
-                <span>{{ authStore.getFullName }}</span>
+                <span>{{ profile.name }}</span>
             </template>
             <el-menu-item index="3-1">Logout</el-menu-item>
             <el-menu-item index="3-2" route="/change-password"
@@ -40,15 +40,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import { useSettingStore } from './../../stores/setting'
+import { useSettingStore } from '../../stores/setting'
+import type { Profile } from '@/libs/interface/user'
 
 const router = useRouter()
 const settingStore = useSettingStore()
 const authStore = useAuthStore()
 const show = ref(true)
+const profile = ref({} as Profile)
 
 const handleCollapse = () => {
     show.value = !show.value
@@ -62,6 +64,10 @@ const handleSelect = (key: string, keyPath: string[]) => {
         router.push('/login')
     }
 }
+
+onMounted(async () => {
+    profile.value = await authStore.me()
+})
 </script>
 
 <style lang="scss" scoped>

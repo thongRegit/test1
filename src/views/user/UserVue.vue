@@ -20,6 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import BoxVue from '@/components/common/Box.vue'
+import BoxVue from '@/components/common/BoxVue.vue'
 import SaleSearchVue from './components/UserSearch.vue'
 </script>

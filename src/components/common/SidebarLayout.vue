@@ -26,7 +26,7 @@
             :router="true"
             :unique-opened="true"
         >
-            <template v-for="(item, i) in SIDE_MENU_ADMIN" :key="item.index">
+            <template v-for="item in SIDE_MENU_ADMIN" :key="item.index">
                 <el-menu-item
                     v-if="item.menu_childs.length === 0"
                     :index="item.index"
@@ -65,7 +65,7 @@
                         style="margin-right: 16px"
                         ><UserFilled
                     /></el-icon>
-                    <template #title>{{ this.$t(`${item.label}`) }}</template>
+                    <template #title>{{ t(`${item.label}`) }}</template>
                 </el-menu-item>
                 <el-sub-menu
                     v-else
@@ -83,23 +83,7 @@
                             <Comment v-else-if="item.index == '5'" />
                             <List v-else-if="item.index == '4'" />
                         </el-icon>
-                        <span> {{ this.$t(`${item.label}`) }}</span>
-                    </template>
-                    <template
-                        v-for="(item_child, i_child) in item.menu_childs"
-                        :key="item_child.index"
-                    >
-                        <el-menu-item
-                            :index="item_child.index"
-                            :route="item_child.route"
-                            :class="
-                                item_child.route ===
-                                router.currentRoute.value.path
-                                    ? 'is-active'
-                                    : ''
-                            "
-                            >{{ this.$t(`${item_child.label}`) }}</el-menu-item
-                        >
+                        <span> {{ t(`${item.label}`) }}</span>
                     </template>
                 </el-sub-menu>
             </template>
@@ -108,16 +92,13 @@
 </template>
 
 <script lang="ts" setup>
-import {
-    Document,
-    Menu as IconMenu,
-    Location,
-    Setting,
-} from '@element-plus/icons-vue'
 import { ref, onMounted } from 'vue'
 import { SIDE_MENU_ADMIN } from '@/libs/utils/links'
 import { useSettingStore } from './../../stores/setting'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue3-i18n'
+
+const { t } = useI18n()
 
 const settingStore = useSettingStore()
 const isCollapse = ref(settingStore.getCollapse)
@@ -140,16 +121,16 @@ const handleClose = (key: string, keyPath: string[]) => {
 
 onMounted(async () => {
     await router.isReady()
-    Object.keys(SIDE_MENU_ADMIN).forEach(function (key, index) {
-        const arr_child = SIDE_MENU_ADMIN[key].menu_childs
+    Object.keys(SIDE_MENU_ADMIN).forEach((key) => {
+        const arr_child = (<any>SIDE_MENU_ADMIN)[key].menu_childs
         if (arr_child.length === 0 && arr_child.route !== '') {
-            if (SIDE_MENU_ADMIN[key].route === route.path) {
-                isActive.value = SIDE_MENU_ADMIN[key].index
+            if ((<any>SIDE_MENU_ADMIN)[key].route === route.path) {
+                isActive.value = (<any>SIDE_MENU_ADMIN)[key].index
             }
         } else {
-            arr_child.forEach(function (key2, index2) {
+            arr_child.forEach(function (key2: any, index2: any) {
                 if (arr_child[index2].route === route.path) {
-                    isActive.value = SIDE_MENU_ADMIN[key].index
+                    isActive.value = (<any>SIDE_MENU_ADMIN)[key].index
                 }
             })
         }

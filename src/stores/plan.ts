@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
 
 export const usePlanStore = defineStore('question_type', () => {

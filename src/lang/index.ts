@@ -8,9 +8,8 @@ const messages = {
 }
 
 const i18n = createI18n({
-    locale: 'jp', // set locale
-    fallbackLocale: 'jp', // set fallback locale
-    messages, // set locale messages
+    locale: 'jp',
+    messages,
 })
 
 export default i18n

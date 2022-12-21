@@ -23,8 +23,10 @@ const authStore = useAuthStore()
 const settingStore = useSettingStore()
 const isLogin = ref(authStore.isAuthenticated)
 const isCollapse = ref(settingStore.getCollapse)
+console.log('authStore.isAuthenticated :>> ', authStore.isAuthenticated)
 
 authStore.$subscribe((mutations, state) => {
+    console.log('state.token :>> ', state.token)
     isLogin.value = !!state.token
 })
 

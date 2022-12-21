@@ -6,3 +6,8 @@ export interface Shop {
     status?: string
     created_at?: string
 }
+
+export interface ShopSearch {
+    name: string
+    status: []
+}
