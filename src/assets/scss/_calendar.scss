@@ -1,0 +1,23 @@
+.fc-scrollgrid-sync-inner {
+    background: var(--vt-c-black);
+    color: var(--vt-c-white);
+    .fc-col-header-cell-cushion {
+        font-weight: bold;
+    }
+}
+.fc-event-main-frame {
+    align-items: center;
+}
+.fc-event-title {
+    &.fc-sticky {
+        height: 100%;
+        align-items: center;
+        display: flex;
+        font-size: 16px;
+    }
+}
+.fc-direction-ltr {
+    .fc-timegrid-col-events {
+        margin: 0 20px !important;
+    }
+}

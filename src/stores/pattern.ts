@@ -1,17 +1,23 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, reactive } from 'vue'
 import axios from '@/config/axios'
+import type {
+    PeriodData,
+    PatternData,
+    patternPayload,
+    createPatternPayload,
+} from '@/libs/interface/patternInterface'
 
 export const usePatternStore = defineStore('question_type', () => {
-    const patterns = ref([] as any)
-    const pattern = ref({} as any)
+    const patterns = ref({} as PatternData)
+    const pattern = ref({})
+    const periods = ref({} as PeriodData)
 
-    const listPattern = async (payload: any) => {
+    const listPattern = async (payload: patternPayload) => {
         try {
             const data = await axios.get('/patterns', {
                 params: payload,
             })
-            console.log('data :>> ', data)
             patterns.value = data
         } catch (error) {
             console.log(error)
@@ -19,7 +25,10 @@ export const usePatternStore = defineStore('question_type', () => {
         }
     }
 
-    const createPattern = async (payload: any, cb?: Function) => {
+    const createPattern = async (
+        payload: createPatternPayload,
+        cb?: Function
+    ) => {
         try {
             // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
             const data = await axios.post('/patterns/create', payload)
@@ -33,10 +42,14 @@ export const usePatternStore = defineStore('question_type', () => {
         }
     }
 
-    const updatePattern = async (payload: any, id: any, cb?: Function) => {
+    const updatePattern = async (
+        payload: createPatternPayload,
+        id: number,
+        cb?: Function
+    ) => {
         try {
             const data = await axios.put(`patterns/${id}/update`, payload)
-            pattern.value = data
+            pattern.value = data.data
             if (cb) {
                 cb()
             }
@@ -46,11 +59,23 @@ export const usePatternStore = defineStore('question_type', () => {
         }
     }
 
+    const getPeriod = async () => {
+        try {
+            const data = await axios.get(`period/`)
+            periods.value = data
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
     return {
         patterns,
         pattern,
+        periods,
         listPattern,
         createPattern,
         updatePattern,
+        getPeriod,
     }
 })

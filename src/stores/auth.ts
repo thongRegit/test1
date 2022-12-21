@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, computed } from 'vue'
-import type { LoginDto } from '../libs/interface/auth'
+import type { LoginDto } from '../libs/interface/authInterface'
 import * as API from '@/api/auth'
 
 const tokenKey = 'access_token'

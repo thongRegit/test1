@@ -9,14 +9,14 @@
     >
         <el-form-item prop="status">
             <p class="label">{{ t('shops.ruleForm.status.title') }}</p>
-            <el-checkbox-group v-model="ruleForm.status">
-                <el-checkbox
+            <el-radio-group v-model="ruleForm.status">
+                <el-radio
                     :label="item.id"
                     :key="item.id"
                     v-for="item in statusArr"
-                    >{{ item.title }}</el-checkbox
+                    >{{ item.title }}</el-radio
                 >
-            </el-checkbox-group>
+            </el-radio-group>
         </el-form-item>
         <el-form-item prop="name">
             <p class="label">{{ t('shops.ruleForm.name.title') }}</p>
@@ -68,7 +68,7 @@ const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     name: '',
-    status: ['all'],
+    status: 'all',
 })
 
 const rules = reactive<FormRules>({
@@ -82,7 +82,7 @@ const rules = reactive<FormRules>({
     ],
     status: [
         {
-            type: 'array',
+            type: 'string',
             required: true,
             message: 'Please select at least one activity type',
             trigger: 'change',

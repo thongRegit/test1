@@ -18,7 +18,6 @@ import {
     Login,
     PageNotFound,
     PatternList,
-    PatternCreate,
 } from '@/views/index'
 
 const ifAuthenticated = (to: any, from: any, next: any) => {
@@ -172,13 +171,7 @@ const routes = [
                         path: '',
                         component: PatternList,
                         name: 'patterns',
-                        // beforeEnter: ifAuthenticated,
-                    },
-                    {
-                        path: 'create',
-                        name: 'pattern-create',
-                        component: PatternCreate,
-                        // beforeEnter: ifAuthenticated,
+                        beforeEnter: ifAuthenticated,
                     },
                 ],
             },

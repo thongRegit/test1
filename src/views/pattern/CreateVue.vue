@@ -10,7 +10,7 @@
             <div style="width: 79%; margin: 0 auto">
                 <el-form ref="ruleFormRef" status-icon>
                     <el-form-item>
-                        <el-row class="w-100">
+                        <el-row class="full-width">
                             <el-col span="24">
                                 <p class="label">パターン名</p>
                                 <el-form-item prop="name">
@@ -23,7 +23,7 @@
                         </el-row>
                     </el-form-item>
                     <el-form-item>
-                        <el-row class="w-100">
+                        <el-row class="full-width">
                             <el-col :span="11">
                                 <p class="label">営業時間</p>
                             </el-col>
@@ -32,9 +32,9 @@
                             </el-col>
                         </el-row>
                         <el-row
-                            class="w-100 sesion-row"
+                            class="full-width sesion-row"
                             v-for="(item, i) in sessionData"
-                            v-bind:key="i"
+                            :key="i"
                         >
                             <el-col :span="11">
                                 <el-row>
@@ -72,21 +72,17 @@
                                     class="pattern-input pattern-select"
                                 >
                                     <el-option
-                                        :key="'ontion_1'"
-                                        :label="'45分'"
-                                        :value="45"
-                                    />
-                                    <el-option
-                                        :key="'ontion_2'"
-                                        :label="'30分'"
-                                        :value="30"
+                                        v-for="item in periods"
+                                        :key="item.id"
+                                        :label="`${item.value}分`"
+                                        :value="item.id"
                                     />
                                 </el-select>
                             </el-col>
                         </el-row>
                     </el-form-item>
                     <el-form-item>
-                        <el-row class="w-100">
+                        <el-row class="full-width">
                             <el-col span="24">
                                 <span
                                     class="add-pattern-btn"
@@ -103,29 +99,47 @@
     </modal-box>
 </template>
 <script setup lang="ts">
-import { ref, defineExpose, reactive } from 'vue'
+import { ref, defineExpose, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { usePatternStore } from '@/stores'
+import type {
+    Period,
+    Session,
+    Pattern,
+} from '@/libs/interface/patternInterface'
 
+const patternStore = usePatternStore()
 const isShowModal = ref(false)
+const periods = ref([] as Array<Period>)
+
+const getPeriodData = async () => {
+    await patternStore.getPeriod()
+    periods.value = patternStore.periods.data.map((e: Period) => {
+        return {
+            id: e.id,
+            value: e.value,
+        }
+    })
+    console.log('periods: ', periods.value)
+}
 const oncloseModal = () => {
     isShowModal.value = false
     sessionData.value = [
         {
             start_time: '',
             end_time: '',
-            period_id: '45',
-            period_value: '45',
+            period_id: periods.value[0]?.id,
+            period_value: periods.value[0]?.value,
         },
     ]
     patternName.value = ''
 }
-let patternId: any = null
-const showCreateModal = (item: any) => {
+let patternId: number = 0
+const showCreateModal = (item: Pattern) => {
     if (item) {
         patternName.value = item.name
-        const tempArr: any[] = []
-        item.details.forEach((el: any) => {
+        const tempArr: Array<Session> = []
+        item.details.forEach((el: Session) => {
             tempArr.push({
                 start_time: el.start_time,
                 end_time: el.end_time,
@@ -136,13 +150,13 @@ const showCreateModal = (item: any) => {
         sessionData.value = tempArr
         patternId = item.id
     } else {
-        patternId = null
+        patternId = 0
         sessionData.value = [
             {
                 start_time: '',
                 end_time: '',
-                period_id: '45',
-                period_value: '45',
+                period_id: periods.value[0]?.id,
+                period_value: periods.value[0]?.value,
             },
         ]
     }
@@ -155,31 +169,29 @@ const addSessionBlock = () => {
     sessionData.value.push({
         start_time: '',
         end_time: '',
-        period_id: '45',
-        period_value: '45',
+        period_id: periods.value[0]?.id,
+        period_value: periods.value[0]?.value,
     })
 }
 
-const data = [
+const data: Array<Session> = [
     {
         start_time: '',
         end_time: '',
-        period_id: '45',
-        period_value: '45',
+        period_id: periods.value[0]?.id,
+        period_value: periods.value[0]?.value,
     },
 ]
 
 const sessionData = ref(data)
 
 const submitData = async (formEl: FormInstance | undefined) => {
-    const patternStore = usePatternStore()
     const patternData = {
         name: patternName.value,
         pattern_details: sessionData.value,
     }
-    let res = null
     if (patternId) {
-        res = await patternStore.updatePattern(patternData, patternId, () => {
+        await patternStore.updatePattern(patternData, patternId, () => {
             emit('onCreate')
             oncloseModal()
         })
@@ -195,12 +207,12 @@ defineExpose({
 })
 
 const emit = defineEmits(['onCreate'])
+
+onMounted(async () => {
+    getPeriodData()
+})
 </script>
 <style scoped lang="scss">
-.w-100 {
-    width: 100%;
-}
-
 .pattern-input {
     &.ml-auto {
         margin-left: auto;

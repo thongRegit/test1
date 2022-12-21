@@ -43,15 +43,15 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
 import ShopSearchVue from './ShopSearch.vue'
-import type { ShopSearch } from '@/libs/interface/shops'
+import type { ShopSearch } from '@/libs/interface/shopInterface'
 
 const { t } = useI18n()
 const router = useRouter()
 
 const listQuery = ref({
     page: 1,
-    text: '',
-    filters: [{ key: 'status', data: ['all'] }],
+    search: '',
+    filters: [{ key: 'status', data: 'all' }],
 })
 const data = ref({
     currentPage: 1,
@@ -101,7 +101,7 @@ const getListData = async () => {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
-        text: listQuery.value.text,
+        search: listQuery.value.search,
         per_page: 10,
         filters: '',
     }
@@ -142,7 +142,7 @@ const cellClick = (row: any, column: any) => {
 
 const search = (search: ShopSearch) => {
     loading.value = true
-    listQuery.value.text = search.name
+    listQuery.value.search = search.name
     listQuery.value.filters = [{ key: 'status', data: search.status }]
     console.log('search :>> ', search)
     listQuery.value.page = 1
@@ -153,19 +153,14 @@ const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
     // listQuery.value.page = 1
-    console.log('sortProps :>> ', sortProps)
     getListData()
 }
 
 const resetForm = () => {
     listQuery.value.page = 1
-    listQuery.value.text = ''
-    listQuery.value.filters = [{ key: 'status', data: ['all'] }]
+    listQuery.value.search = ''
+    listQuery.value.filters = [{ key: 'status', data: 'all' }]
     getListData()
-}
-
-const changeDate = (data: any) => {
-    listQuery.value.filters[0].data = data.value
 }
 
 onMounted(async () => {

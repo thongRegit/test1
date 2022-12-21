@@ -1,3 +1,28 @@
+.full-width {
+    width: 100% !important;
+}
+.expanded {
+    background-color: yellow;
+}
+.flex { display: flex !important; }
+.items-end { align-items: flex-end; }
+.justify-between { justify-content: space-between; }
+.text-right { text-align: right !important; }
+
+#wrapper {
+    margin-left: 240px;
+    transition: margin 1s;
+    &.isCollapse {
+        margin-left: calc(
+            var(--el-menu-icon-width) + var(--el-menu-base-level-padding) * 2 +
+                1px
+        );
+    }
+}
+#main {
+    padding: 0 30px 30px 30px;
+}
+
 .table {
     width: 100%;
     border-spacing: 0;

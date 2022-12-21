@@ -10,7 +10,7 @@
             <div
                 class="pattern-item"
                 v-for="(ptItem, index) in data.records"
-                v-bind:key="index"
+                :key="index"
             >
                 <div class="title-wrapper">
                     <h5>{{ ptItem?.name }}</h5>
@@ -34,14 +34,16 @@
                     </el-row>
                     <div class="sessions">
                         <el-row
-                            class="w-100 item"
+                            class="item"
                             v-for="(ssItem, index) in ptItem.details"
-                            v-bind:key="index"
+                            :key="index"
                         >
                             <el-col :span="11">
                                 <el-row>
                                     <el-col :span="10">
-                                        <span class="text-info">{{ ssItem.start_time }}</span>
+                                        <span class="text-info">
+                                            {{ ssItem.start_time }}</span
+                                        >
                                     </el-col>
                                     <el-col class="text-center" :span="4">
                                         <div
@@ -52,12 +54,16 @@
                                         </div>
                                     </el-col>
                                     <el-col :span="10">
-                                        <span class="text-info">{{ ssItem.end_time }}</span>
+                                        <span class="text-info">{{
+                                            ssItem.end_time
+                                        }}</span>
                                     </el-col>
                                 </el-row>
                             </el-col>
                             <el-col :span="13" style="padding-left: 60px">
-                                <span class="text-info">{{ ssItem.period.value }}分</span>
+                                <span class="text-info"
+                                    >{{ ssItem.period.value }}分</span
+                                >
                             </el-col>
                         </el-row>
                     </div>
@@ -65,14 +71,17 @@
             </div>
         </div>
     </div>
-    <create-pattern ref="createModalRef" @onCreate="onCreatePattern"/>
+    <create-pattern ref="createModalRef" @onCreate="onCreatePattern" />
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { ref, watch, onMounted, nextTick } from 'vue'
 import CreatePattern from './CreateVue.vue'
 import { usePatternStore } from '@/stores'
+import type { Pattern } from '@/libs/interface/patternInterface'
+import { useI18n } from 'vue3-i18n'
+
+const { t } = useI18n()
 const createModalRef = ref()
 const onClickCreateBtn = () => {
     createModalRef.value?.showCreateModal()
@@ -80,14 +89,14 @@ const onClickCreateBtn = () => {
 const patternStore = usePatternStore()
 const listQuery = ref({
     page: 1,
-    reloadFlag: false
+    reloadFlag: false,
 })
 
 const data = ref({
     currentPage: 1,
     lastPage: 0,
     perPage: 10,
-    records: [],
+    records: [] as Array<Pattern>,
     total: 0,
 })
 
@@ -101,7 +110,7 @@ const getListData = async () => {
     data.value.total = patternStore.patterns.total
     data.value.currentPage = patternStore.patterns.current_page
     data.value.perPage = patternStore.patterns.per_page
-    data.value.records = patternStore.patterns.data.map((e: any) => {
+    data.value.records = patternStore.patterns.data.map((e: Pattern) => {
         return {
             name: e.name,
             id: e.id,
@@ -110,7 +119,7 @@ const getListData = async () => {
     })
 }
 
-const onClickEditBtn = (item: any) => {
+const onClickEditBtn = (item: Pattern) => {
     // patternStore.setPatternItem(item)
     createModalRef.value?.showCreateModal(item)
 }

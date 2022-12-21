@@ -23,7 +23,6 @@ const authStore = useAuthStore()
 const settingStore = useSettingStore()
 const isLogin = ref(authStore.isAuthenticated)
 const isCollapse = ref(settingStore.getCollapse)
-console.log('authStore.isAuthenticated :>> ', authStore.isAuthenticated)
 
 authStore.$subscribe((mutations, state) => {
     console.log('state.token :>> ', state.token)
@@ -34,19 +33,3 @@ settingStore.$subscribe((mutations, state) => {
     isCollapse.value = state.collapse
 })
 </script>
-
-<style scoped lang="scss">
-#wrapper {
-    margin-left: 240px;
-    transition: margin 1s;
-    &.isCollapse {
-        margin-left: calc(
-            var(--el-menu-icon-width) + var(--el-menu-base-level-padding) * 2 +
-                1px
-        );
-    }
-}
-#main {
-    padding: 30px;
-}
-</style>
