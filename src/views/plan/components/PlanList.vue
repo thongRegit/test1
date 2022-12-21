@@ -52,7 +52,7 @@ const listQuery = ref({
     page: 1,
     search: '',
     filters: {
-        type: 0,
+        type: null as any,
         is_active: 1
     },
 })
@@ -95,7 +95,7 @@ const columns = ref([
 const buttons = ref([
     { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
 ])
-const sortProp = reactive({ key: 'id', dir: 'descending' })
+const sortProp = reactive({ key: 'created_at', dir: 'descending' })
 
 const formatNumber = (value: any, format = '') => {
     let formatter = new Intl.NumberFormat()
@@ -108,7 +108,7 @@ const getListData = async () => {
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
         search: listQuery.value.search,
-        per_page: 10,
+        per_page: 20,
         'filters[0][type]': listQuery.value.filters.type,
         'filters[0][is_active]': listQuery.value.filters.is_active,
     }
@@ -145,7 +145,7 @@ const search = (search: any) => {
     loading.value = true
     listQuery.value.page = 1
     listQuery.value.search = search.name
-    listQuery.value.filters.type = search.first_experience ? 1 : 0
+    listQuery.value.filters.type = search.first_experience ? 1 : null
     listQuery.value.filters.is_active = search.status[0]
     getListData()
 }
@@ -153,7 +153,6 @@ const search = (search: any) => {
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
-    console.log('sortProps :>> ', sortProps)
     getListData()
 }
 

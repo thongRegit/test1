@@ -81,7 +81,7 @@ export const jp = {
         account: 'アカウント管理',
         plan: 'Plan'
     },
-    shops: shops,
-    plans: plans,
+    shops,
+    plans,
     session,
 }

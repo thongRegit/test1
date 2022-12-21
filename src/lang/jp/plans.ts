@@ -30,5 +30,20 @@ export const plans = {
         }
     },
     active: '有効',
-    in_active: '無効'
+    in_active: '無効',
+    form: {
+        plans: 'プラン詳細',
+        basic_setting: '基本設定',
+        name: 'プラン名',
+        session: 'SESSION時間',
+        basic_charge: '基本料金(税抜)',
+        first_experience: '初回体験',
+        is_display: '（初回体験の対象のみ表示する）',
+        discount_settings: '割引設定',
+        frequency: '回数',
+        from: 'から',
+        fee: '料金(税抜)',
+        link: '割引設定を追加する'
+    }
+
 }

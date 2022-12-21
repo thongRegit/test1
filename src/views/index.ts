@@ -13,10 +13,10 @@ import SaleDetail from '@/views/sale/DetailVue.vue'
 import ReservationList from '@/views/reservation/ReservationVue.vue'
 import ReservationDetail from '@/views/reservation/DetailVue.vue'
 import AccountList from '@/views/account/AccountVue.vue'
-import PlanList from '@/views/plan/PlanVue.vue'
-import PlanCreate from '@/views/plan/CreateVue.vue'
-import PlanDetail from '@/views/plan/DetailVue.vue'
-import PlanUpdate from '@/views/plan/EditVue.vue'
+import PlanList from '@/views/plan/PlanView.vue'
+import PlanCreate from '@/views/plan/CreateView.vue'
+import PlanDetail from '@/views/plan/DetailView.vue'
+import PlanUpdate from '@/views/plan/EditView.vue'
 
 export {
     Home,

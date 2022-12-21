@@ -1,8 +1,8 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
 
-export const usePlanStore = defineStore('question_type', () => {
+export const usePlanStore = defineStore('plan_store', () => {
     const plans = ref([] as any)
     const plan = ref({} as any)
 
@@ -12,7 +12,6 @@ export const usePlanStore = defineStore('question_type', () => {
                 params: payload,
             })
             plans.value = data
-            console.log('data', data)
         } catch (error) {
             console.log(error)
             return error
@@ -40,7 +39,7 @@ export const usePlanStore = defineStore('question_type', () => {
         }
     }
 
-    const deletePlan = async (payload: any) => {
+    const deletePlan = async (payload: any, id: any) => {
         try {
             return await axios.delete(`/plans/${payload.id}`).then((res) => res)
         } catch (error) {

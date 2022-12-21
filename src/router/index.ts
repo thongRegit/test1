@@ -193,30 +193,27 @@ const routes = [
             },
             {
                 path: 'plans',
+                beforeEnter: ifAuthenticated,
                 children: [
                     {
                         path: '',
                         component: PlanList,
                         name: 'plans',
-                        beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
                         name: 'plans-create',
-                        component: PlanCreate,
-                        beforeEnter: ifAuthenticated,
+                        component: PlanCreate
                     },
                     {
                         path: ':id',
                         name: 'plans-detail',
                         component: PlanDetail,
-                        beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id/update',
                         name: 'plans-update',
-                        component: PlanUpdate,
-                        beforeEnter: ifAuthenticated,
+                        component: PlanUpdate
                     },
                 ],
             },
