@@ -44,7 +44,7 @@ import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 import { useSettingStore } from '../../stores/setting'
-import type { Profile } from '@/libs/interface/user'
+import type { Profile } from '@/libs/interface/userInterface'
 
 const router = useRouter()
 const settingStore = useSettingStore()

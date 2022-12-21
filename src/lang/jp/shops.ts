@@ -1,4 +1,4 @@
-export const shops = {
+export default {
     status: 'ステータス',
     keyword_search: 'キーワード検索',
     first_experience: '初回体験',
@@ -21,5 +21,8 @@ export const shops = {
         station_amount: 'セッション数',
         day: '休業曜日',
         status: '有効/無効',
+    },
+    placeholders: {
+        select: '店舗を選択してださい',
     },
 }

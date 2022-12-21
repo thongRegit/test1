@@ -45,7 +45,7 @@ import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import type { LoginDto } from '../libs/interface/auth'
+import type { LoginDto } from '../libs/interface/authInterface'
 import { useI18n } from 'vue3-i18n'
 import { Message, Lock } from '@element-plus/icons-vue'
 

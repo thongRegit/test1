@@ -9,5 +9,5 @@ export interface Shop {
 
 export interface ShopSearch {
     name: string
-    status: []
+    status: string
 }
