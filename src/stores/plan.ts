@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import axios from '@/config/axios'
 
 export const usePlanStore = defineStore('question_type', () => {
@@ -12,6 +12,7 @@ export const usePlanStore = defineStore('question_type', () => {
                 params: payload,
             })
             plans.value = data
+            console.log('data', data)
         } catch (error) {
             console.log(error)
             return error

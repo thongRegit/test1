@@ -13,6 +13,10 @@ import SaleDetail from '@/views/sale/DetailVue.vue'
 import ReservationList from '@/views/reservation/ReservationVue.vue'
 import ReservationDetail from '@/views/reservation/DetailVue.vue'
 import AccountList from '@/views/account/AccountVue.vue'
+import PlanList from '@/views/plan/PlanVue.vue'
+import PlanCreate from '@/views/plan/CreateVue.vue'
+import PlanDetail from '@/views/plan/DetailVue.vue'
+import PlanUpdate from '@/views/plan/EditVue.vue'
 
 export {
     Home,
@@ -30,4 +34,8 @@ export {
     ReservationList,
     ReservationDetail,
     AccountList,
+    PlanList,
+    PlanCreate,
+    PlanDetail,
+    PlanUpdate
 }

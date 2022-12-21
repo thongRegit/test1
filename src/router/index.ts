@@ -17,6 +17,10 @@ import {
     ChangePassword,
     Login,
     PageNotFound,
+    PlanList,
+    PlanDetail,
+    PlanCreate,
+    PlanUpdate
 } from '@/views'
 
 const ifAuthenticated = (to: any, from: any, next: any) => {
@@ -186,6 +190,35 @@ const routes = [
                 component: PageNotFound,
                 name: 'page-not-found',
                 beforeEnter: ifAuthenticated,
+            },
+            {
+                path: 'plans',
+                children: [
+                    {
+                        path: '',
+                        component: PlanList,
+                        name: 'plans',
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        name: 'plans-create',
+                        component: PlanCreate,
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: ':id',
+                        name: 'plans-detail',
+                        component: PlanDetail,
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'plans-update',
+                        component: PlanUpdate,
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
             },
         ],
     },

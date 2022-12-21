@@ -1,6 +1,7 @@
 // import { errors } from "./errors";
 import shops from './shops'
 import session from './session'
+import {plans} from './plans'
 
 export const jp = {
     login: 'ログイン',
@@ -78,7 +79,9 @@ export const jp = {
         shops: '店舗管理',
         reservation: '予約管理',
         account: 'アカウント管理',
+        plan: 'Plan'
     },
     shops: shops,
+    plans: plans,
     session,
 }
