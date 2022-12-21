@@ -3,10 +3,11 @@ import App from './App.vue'
 import './assets/main.css'
 import './assets/scss/app.scss'
 import 'element-plus/dist/index.css'
-import router from './router'
+import router from '@/router'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElemenentPlus from 'element-plus'
-import i18n from './lang/index'
+import jp from 'element-plus/dist/locale/ja.mjs'
+import i18n from '@/lang'
 import { createPinia } from 'pinia'
 
 import TableData from '@/components/common/TableData.vue'
@@ -19,7 +20,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
-app.use(ElemenentPlus)
+app.use(ElemenentPlus, { locale: jp })
 app.use(i18n)
 app.use(pinia)
 app.use(router)

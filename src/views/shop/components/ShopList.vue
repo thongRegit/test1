@@ -43,7 +43,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
 import ShopSearchVue from './ShopSearch.vue'
-import type { ShopSearch } from '@/libs/interface/shops'
+import type { ShopSearch } from '@/libs/interface/shopInterface'
 
 const { t } = useI18n()
 const router = useRouter()

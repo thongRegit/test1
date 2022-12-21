@@ -17,7 +17,7 @@ import {
     ChangePassword,
     Login,
     PageNotFound,
-} from '@/views/index'
+} from '@/views'
 
 const ifAuthenticated = (to: any, from: any, next: any) => {
     const authStore = useAuthStore()
