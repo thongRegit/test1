@@ -19,21 +19,27 @@ export const usePatternStore = defineStore('question_type', () => {
         }
     }
 
-    const createPattern = async (payload: any) => {
+    const createPattern = async (payload: any, cb?: Function) => {
         try {
             // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
             const data = await axios.post('/patterns/create', payload)
             pattern.value = data
+            if (cb) {
+                cb()
+            }
         } catch (error) {
             console.log(error)
             return error
         }
     }
 
-    const updatePattern = async (payload: any, id: any) => {
+    const updatePattern = async (payload: any, id: any, cb?: Function) => {
         try {
             const data = await axios.put(`patterns/${id}/update`, payload)
             pattern.value = data
+            if (cb) {
+                cb()
+            }
         } catch (error) {
             console.log(error)
             return error

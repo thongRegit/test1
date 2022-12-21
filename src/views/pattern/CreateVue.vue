@@ -22,10 +22,7 @@
                             </el-col>
                         </el-row>
                     </el-form-item>
-                    <el-form-item
-                        v-for="(item, i) in sessionData"
-                        v-bind:key="i"
-                    >
+                    <el-form-item>
                         <el-row class="w-100">
                             <el-col :span="11">
                                 <p class="label">営業時間</p>
@@ -34,7 +31,11 @@
                                 <p class="label">SESSION時間</p>
                             </el-col>
                         </el-row>
-                        <el-row class="w-100">
+                        <el-row
+                            class="w-100 sesion-row"
+                            v-for="(item, i) in sessionData"
+                            v-bind:key="i"
+                        >
                             <el-col :span="11">
                                 <el-row>
                                     <el-col :span="10">
@@ -102,10 +103,9 @@
     </modal-box>
 </template>
 <script setup lang="ts">
-import { ref, watch, defineExpose, reactive } from 'vue'
+import { ref, defineExpose, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { usePatternStore } from '@/stores'
-import { forEach } from 'lodash'
 
 const isShowModal = ref(false)
 const oncloseModal = () => {
@@ -171,19 +171,24 @@ const data = [
 
 const sessionData = ref(data)
 
-const submitData = (formEl: FormInstance | undefined) => {
+const submitData = async (formEl: FormInstance | undefined) => {
     const patternStore = usePatternStore()
     const patternData = {
         name: patternName.value,
         pattern_details: sessionData.value,
     }
+    let res = null
     if (patternId) {
-        const res = patternStore.updatePattern(patternData, patternId)
+        res = await patternStore.updatePattern(patternData, patternId, () => {
+            emit('onCreate')
+            oncloseModal()
+        })
     } else {
-        const res = patternStore.createPattern(patternData)
+        await patternStore.createPattern(patternData, () => {
+            emit('onCreate')
+            oncloseModal()
+        })
     }
-    oncloseModal()
-    emit('onCreate')
 }
 defineExpose({
     showCreateModal,
@@ -200,7 +205,6 @@ const emit = defineEmits(['onCreate'])
     &.ml-auto {
         margin-left: auto;
     }
-
     width: 147px;
 }
 
@@ -214,5 +218,12 @@ const emit = defineEmits(['onCreate'])
     color: #007bff;
     font-size: 16px;
     line-height: 1.5;
+}
+
+.sesion-row {
+    margin-bottom: 10px;
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 </style>
