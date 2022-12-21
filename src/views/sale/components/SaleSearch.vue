@@ -71,7 +71,6 @@
                             </div>
                         </el-col>
                         <el-col :span="10">
-                            asdasd
                             <el-form-item prop="name">
                                 <el-input
                                     v-model="ruleForm.name"
