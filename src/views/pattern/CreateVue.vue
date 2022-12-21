@@ -102,10 +102,9 @@
     </modal-box>
 </template>
 <script setup lang="ts">
-import { ref, watch, defineExpose, reactive } from 'vue'
+import { ref, defineExpose, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { usePatternStore } from '@/stores'
-import { forEach } from 'lodash'
 
 const isShowModal = ref(false)
 const oncloseModal = () => {
@@ -150,6 +149,7 @@ const showCreateModal = (item: any) => {
 }
 const ruleFormRef = ref<FormInstance>()
 const patternName = ref('')
+
 
 const addSessionBlock = () => {
     sessionData.value.push({
@@ -196,13 +196,16 @@ const emit = defineEmits(['onCreate'])
     width: 100%;
 }
 
+
 .pattern-input {
     &.ml-auto {
         margin-left: auto;
     }
 
+
     width: 147px;
 }
+
 
 .pattern-select {
     margin-bottom: 3px;
