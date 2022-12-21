@@ -2,16 +2,16 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, reactive } from 'vue'
 import axios from '@/config/axios'
 import type {
-    PeriodData,
     PatternData,
     patternPayload,
     createPatternPayload,
+    Period,
 } from '@/libs/interface/patternInterface'
 
 export const usePatternStore = defineStore('question_type', () => {
     const patterns = ref({} as PatternData)
     const pattern = ref({})
-    const periods = ref({} as PeriodData)
+    const periods = ref([] as Array<Period>)
 
     const listPattern = async (payload: patternPayload) => {
         try {
@@ -61,7 +61,7 @@ export const usePatternStore = defineStore('question_type', () => {
 
     const getPeriod = async () => {
         try {
-            const data = await axios.get(`period/`)
+            const data: Array<Period> = await axios.get(`period/`)
             periods.value = data
         } catch (error) {
             console.log(error)

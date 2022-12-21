@@ -13,8 +13,8 @@ const SaleDetail = () => import('@/views/sale/DetailVue.vue')
 const ReservationList = () => import('@/views/reservation/ReservationVue.vue')
 const ReservationDetail = () => import('@/views/reservation/DetailVue.vue')
 const AccountList = () => import('@/views/account/AccountVue.vue')
-const PatternList = () => import('@/views/pattern/PatternVue.vue')
-const PatternCreate = () => import('@/views/pattern/CreateVue.vue')
+const PatternList = () => import('@/views/pattern/PatternView.vue')
+const PatternCreate = () => import('@/views/pattern/CreateView.vue')
 
 export {
     Home,

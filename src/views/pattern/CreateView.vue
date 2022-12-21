@@ -1,6 +1,6 @@
 <template>
     <modal-box
-        title="パターン登録"
+        :title="t('pattern.pattern_registration')"
         width="1193"
         :open="isShowModal"
         @close="oncloseModal"
@@ -25,10 +25,14 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col :span="11">
-                                <p class="label">営業時間</p>
+                                <p class="label">
+                                    {{ t('pattern.business_hours') }}
+                                </p>
                             </el-col>
                             <el-col :span="13" style="padding-left: 60px">
-                                <p class="label">SESSION時間</p>
+                                <p class="label">
+                                    {{ t('pattern.session_time') }}
+                                </p>
                             </el-col>
                         </el-row>
                         <el-row
@@ -49,8 +53,7 @@
                                     </el-col>
                                     <el-col class="text-center" :span="4">
                                         <div
-                                            class="text-gray-500"
-                                            style="text-align: center"
+                                            class="text-gray-500 text-align-center"
                                         >
                                             ~
                                         </div>
@@ -88,7 +91,7 @@
                                     class="add-pattern-btn"
                                     @click="addSessionBlock"
                                 >
-                                    +営業時間を追加する
+                                    {{ t('pattern.add_business_hours') }}
                                 </span>
                             </el-col>
                         </el-row>
@@ -99,28 +102,30 @@
     </modal-box>
 </template>
 <script setup lang="ts">
-import { ref, defineExpose, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { usePatternStore } from '@/stores'
 import type {
     Period,
     Session,
     Pattern,
+    SessionEl,
 } from '@/libs/interface/patternInterface'
+import { useI18n } from 'vue3-i18n'
 
+const { t } = useI18n()
 const patternStore = usePatternStore()
 const isShowModal = ref(false)
 const periods = ref([] as Array<Period>)
 
 const getPeriodData = async () => {
     await patternStore.getPeriod()
-    periods.value = patternStore.periods.data.map((e: Period) => {
+    periods.value = patternStore.periods?.map((e: Period) => {
         return {
             id: e.id,
             value: e.value,
         }
     })
-    console.log('periods: ', periods.value)
 }
 const oncloseModal = () => {
     isShowModal.value = false
@@ -139,7 +144,7 @@ const showCreateModal = (item: Pattern) => {
     if (item) {
         patternName.value = item.name
         const tempArr: Array<Session> = []
-        item.details.forEach((el: Session) => {
+        item.details.forEach((el: SessionEl) => {
             tempArr.push({
                 start_time: el.start_time,
                 end_time: el.end_time,

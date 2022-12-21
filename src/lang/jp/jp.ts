@@ -1,6 +1,7 @@
 // import { errors } from "./errors";
 import shops from './shops'
 import session from './session'
+import pattern from './pattern'
 
 export const jp = {
     login: 'ログイン',
@@ -81,4 +82,5 @@ export const jp = {
     },
     shops: shops,
     session,
+    pattern,
 }

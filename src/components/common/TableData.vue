@@ -93,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, defineEmits, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue3-i18n'
 
 const { t } = useI18n()

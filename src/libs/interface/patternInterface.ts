@@ -18,10 +18,6 @@ export interface Detail {
     period: Period
 }
 
-export interface PeriodData {
-    data: Array<Period>
-}
-
 export interface Period {
     id: number
     value: number
@@ -32,6 +28,13 @@ export interface Session {
     end_time: string
     period_id: number
     period_value: number
+}
+
+export interface SessionEl {
+    id: number
+    start_time: string
+    end_time: string
+    period: Period
 }
 
 export interface patternPayload {

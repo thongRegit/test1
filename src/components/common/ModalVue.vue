@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, toRef } from 'vue'
+import { ref, toRef } from 'vue'
 
 const props = defineProps({
     title: String,
