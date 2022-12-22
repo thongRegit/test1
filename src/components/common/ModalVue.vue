@@ -1,24 +1,40 @@
 <template>
-    <el-dialog v-model="dialogFormVisible" :title="title" :width="width">
-        <slot></slot>
+    <el-dialog
+        v-model="dialogFormVisible"
+        :title="title"
+        :width="width"
+        :show-close="false"
+        :before-close="handleClose"
+        destroy-on-close
+    >
+        <template #header>
+            <div class="head-title">
+                <h4>{{ title }}</h4>
+            </div>
+        </template>
+        <slot name="body"></slot>
         <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="close">Cancel</el-button>
-                <el-button type="primary" @click="onSubmit">
-                    Confirm
-                </el-button>
-            </span>
+            <div class="dialog-footer">
+                <el-button @click="close">キャンセル</el-button>
+                <el-button type="primary" @click="onSubmit"> 更新 </el-button>
+            </div>
         </template>
     </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, toRefs } from 'vue'
+import { ref, toRef } from 'vue'
 
-const { title, open, width } = toRefs(defineProps(['title', 'open', 'width']))
+const props = defineProps({
+    title: String,
+    open: Boolean,
+    width: String,
+})
+
+const title = toRef(props, 'title')
+const dialogFormVisible = toRef(props, 'open')
+const width = toRef(props, 'width')
 const emit = defineEmits(['cancel', 'submit', 'close'])
-
-const dialogFormVisible = ref(open)
 
 const close = () => {
     emit('close')
@@ -26,6 +42,10 @@ const close = () => {
 
 const onSubmit = () => {
     emit('submit')
+}
+
+const handleClose = () => {
+    emit('close')
 }
 </script>
 <style scoped lang="scss">
@@ -43,5 +63,22 @@ const onSubmit = () => {
 
 .el-button {
     width: 92px;
+}
+
+.head-title {
+    text-align: center;
+    h4 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #212529;
+    }
+}
+
+.dialog-footer {
+    width: 79%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 70px 0;
 }
 </style>
