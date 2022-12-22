@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-import axios from '@/config/axios'
+import * as userAPI from '@/api/userApi'
 
 export const useUserStore = defineStore('question_type', () => {
     const users = ref([] as any)
@@ -8,7 +8,7 @@ export const useUserStore = defineStore('question_type', () => {
 
     const getUsers = async (payload: any) => {
         try {
-            const data = await axios.get('/user', {
+            const data = await userAPI.users('/users', {
                 params: payload,
             })
             users.value = data
@@ -18,29 +18,10 @@ export const useUserStore = defineStore('question_type', () => {
         }
     }
 
-    const createUser = async (payload: any) => {
-        try {
-            const data = await axios.post('/user', payload)
-            user.value = data
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
     const updateUser = async (payload: any, id: any) => {
         try {
-            const data = await axios.put(`user/${id}/update`, payload)
-            user.value = data
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const deleteUser = async (payload: any) => {
-        try {
-            return await axios.delete(`/user/${payload.id}`).then((res) => res)
+            await userAPI.update(`user/${id}/update`, payload)
+            user.value = await getUser({ id: id })
         } catch (error) {
             console.log(error)
             return error
@@ -49,7 +30,7 @@ export const useUserStore = defineStore('question_type', () => {
 
     const getUser = async (payload: any) => {
         try {
-            return await axios.get(`/user/${payload.id}`).then((res) => res)
+            return await userAPI.user(`/user/${payload.id}`)
         } catch (error) {
             console.log(error)
             return error
@@ -61,9 +42,7 @@ export const useUserStore = defineStore('question_type', () => {
         user,
         getUsers,
         getUser,
-        createUser,
         updateUser,
-        deleteUser,
     }
 })
 

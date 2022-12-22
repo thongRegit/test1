@@ -1,26 +1,16 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
 
 export const useShopStore = defineStore('question_type', () => {
     const shops = ref([] as any)
     const shop = ref({} as any)
-    const search = reactive({
-        name: '',
-        status: ['all'],
-    })
-
-    const updateSearch = async (payload: any) => {
-        search.name = payload.name
-        search.status = payload.status
-    }
 
     const listShop = async (payload: any) => {
         try {
             const data = await axios.get('/shops', {
                 params: payload,
             })
-            console.log('data :>> ', data)
             shops.value = data
         } catch (error) {
             console.log(error)
@@ -30,7 +20,6 @@ export const useShopStore = defineStore('question_type', () => {
 
     const createShop = async (payload: any) => {
         try {
-            // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
             const data = await axios.post('/shops', payload)
             shop.value = data
         } catch (error) {
@@ -70,13 +59,11 @@ export const useShopStore = defineStore('question_type', () => {
     return {
         shops,
         shop,
-        search,
         listShop,
         detailShop,
         createShop,
         updateShop,
         deleteShop,
-        updateSearch,
     }
 })
 

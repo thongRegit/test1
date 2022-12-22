@@ -1,12 +1,12 @@
 <template>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.user')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
-                <Document />
+                <UserFilled />
             </el-icon>
         </template>
         <template v-slot:body>
-            <ShopSearchVue @submit="search" @reset="resetForm" />
+            <UserSearch @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
     <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
@@ -42,8 +42,8 @@ import { useShopStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
-import ShopSearchVue from './ShopSearch.vue'
 import type { ShopSearch } from '@/libs/interface/shopInterface'
+import UserSearch from './UserSearch.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -133,7 +133,7 @@ const handleChangePage = (page: any) => {
 const cellClick = (row: any, column: any) => {
     if (column.property === 'name') {
         router.push({
-            name: 'shops-detail',
+            name: 'users-detail',
             params: { id: row.id },
             replace: true,
         })
@@ -144,7 +144,6 @@ const search = (search: ShopSearch) => {
     loading.value = true
     listQuery.value.search = search.name
     listQuery.value.filters = [{ key: 'status', data: search.status }]
-    console.log('search :>> ', search)
     listQuery.value.page = 1
     getListData()
 }

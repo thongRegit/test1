@@ -8,7 +8,7 @@
         status-icon
     >
         <el-form-item prop="type">
-            <p class="label">{{ t('shops.status') }}</p>
+            <p class="label">{{ t('shop.status') }}</p>
             <el-checkbox-group v-model="ruleForm.type">
                 <el-checkbox label="全て" name="type" />
                 <el-checkbox label="有効" name="type" />
@@ -16,7 +16,7 @@
             </el-checkbox-group>
         </el-form-item>
         <el-form-item prop="name">
-            <p class="label">{{ t('shops.keyword_search') }}</p>
+            <p class="label">{{ t('shop.keyword_search') }}</p>
             <el-col :span="10">
                 <el-input
                     class="base-input"

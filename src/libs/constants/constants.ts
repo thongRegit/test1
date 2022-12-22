@@ -46,9 +46,3 @@ export const TYPE_QUESTION = {
 export const FORMAT_DAY = (day: any, format = 'YYYY-MM-DD') => {
     return dayjs(new Date(day)).format(format)
 }
-
-export const SURVEY_CONFIG = {
-    iconWidth: 24,
-    iconDeleteOptionWidth: 22,
-    choiceMin: 1,
-}
