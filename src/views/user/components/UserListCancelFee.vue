@@ -1,14 +1,4 @@
 <template>
-    <BoxVue :title="t('homepage.user')" :type="'table'" :padding="20">
-        <template v-slot:header>
-            <el-icon :size="24">
-                <UserFilled />
-            </el-icon>
-        </template>
-        <template v-slot:body>
-            <UserSearch @submit="search" @reset="resetForm" />
-        </template>
-    </BoxVue>
     <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
@@ -42,8 +32,6 @@ import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
-import type { UserSearchParam } from '@/libs/interface/userInterface'
-import UserSearch from './UserSearch.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -159,25 +147,10 @@ const cellClick = (row: any, column: any) => {
     }
 }
 
-const search = (search: UserSearchParam) => {
-    loading.value = true
-    listQuery.value.search = search.name
-    listQuery.value.filters = [{ key: 'is_active', data: search.is_active }]
-    listQuery.value.page = 1
-    getListData()
-}
-
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
     listQuery.value.page = 1
-    getListData()
-}
-
-const resetForm = () => {
-    listQuery.value.page = 1
-    listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'is_active', data: 'all' }]
     getListData()
 }
 

@@ -1,7 +1,9 @@
 import request from '@/config/axios'
+import type { User } from '@/libs/interface/userInterface'
+import type { ResponseList } from '@/libs/interface/commonInterface'
 
 export const users = (url: string, payload: object | {}) => {
-    return request({
+    return request<ResponseList, ResponseList>({
         url,
         method: 'GET',
         params: payload,
@@ -9,7 +11,7 @@ export const users = (url: string, payload: object | {}) => {
 }
 
 export const user = (url: string) => {
-    return request({
+    return request<User, User, User>({
         url,
         method: 'GET',
     })

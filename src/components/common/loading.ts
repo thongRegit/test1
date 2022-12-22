@@ -8,9 +8,3 @@ export const LoadingVue = () => {
     })
     return loading
 }
-
-// const loading = LoadingVue()
-
-// setTimeout(() => {
-//     loading.close()
-// }, 2000)

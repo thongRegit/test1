@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, nextTick } from 'vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useShopStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
@@ -144,7 +144,6 @@ const search = (search: ShopSearch) => {
     loading.value = true
     listQuery.value.search = search.name
     listQuery.value.filters = [{ key: 'status', data: search.status }]
-    console.log('search :>> ', search)
     listQuery.value.page = 1
     getListData()
 }
@@ -165,10 +164,6 @@ const resetForm = () => {
 
 onMounted(async () => {
     await nextTick()
-    await getListData()
-})
-
-watch(data, async () => {
     await getListData()
 })
 </script>

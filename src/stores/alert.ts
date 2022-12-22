@@ -1,17 +1,11 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-
-interface alert {
-    title: String
-    type: String
-    effect?: String
-    showIcon?: Boolean
-}
+import type { Alert } from '@/libs/interface/alertInterface'
 
 export const useAlertStore = defineStore('alerts', () => {
-    const alerts = ref([] as alert[])
+    const alerts = ref([] as Alert[])
 
-    const createAlert = async (payload: alert) => {
+    const createAlert = async (payload: Alert) => {
         alerts.value = []
         alerts.value.push(payload)
     }

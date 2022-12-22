@@ -29,6 +29,13 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
 .items-end { align-items: flex-end; }
 .justify-between { justify-content: space-between; }
 .text-right { text-align: right !important; }
+.btn-status {
+    color: var(--vt-c-white);
+    background-color: var(--vt-c-blue);
+    border-radius: 10px;
+    padding: 2px 12px;
+    letter-spacing: 0px;
+}
 
 #wrapper {
     margin-left: 240px;

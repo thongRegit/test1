@@ -11,16 +11,10 @@
 
 <script setup lang="ts">
 import { toRefs } from 'vue'
-
-interface alert {
-    title: String
-    type: String
-    effect?: String
-    showIcon?: Boolean
-}
+import type { Alert } from '@/libs/interface/alertInterface'
 
 const props = defineProps(['title', 'type', 'effect', 'showIcon'])
-const { title, type, effect, showIcon } = toRefs(props as alert)
+const { title, type, effect, showIcon } = toRefs(props as Alert)
 </script>
 
 <style scoped>

@@ -1,12 +1,18 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import * as userAPI from '@/api/userApi'
+import type {
+    User,
+    UserUpdate,
+    ParamsUserList,
+} from '@/libs/interface/userInterface'
+import type { ResponseList } from '@/libs/interface/commonInterface'
 
-export const useUserStore = defineStore('question_type', () => {
-    const users = ref([] as any)
-    const user = ref({} as any)
+export const useUserStore = defineStore('users', () => {
+    const users = ref({} as ResponseList)
+    const user = ref({} as User)
 
-    const getUsers = async (payload: any) => {
+    const listUser = async (payload: ParamsUserList) => {
         try {
             const data = await userAPI.users('/users', {
                 params: payload,
@@ -18,19 +24,20 @@ export const useUserStore = defineStore('question_type', () => {
         }
     }
 
-    const updateUser = async (payload: any, id: any) => {
+    const updateUser = async (payload: UserUpdate, id: number) => {
         try {
             await userAPI.update(`user/${id}/update`, payload)
-            user.value = await getUser({ id: id })
+            await detailUser(id)
         } catch (error) {
             console.log(error)
             return error
         }
     }
 
-    const getUser = async (payload: any) => {
+    const detailUser = async (id: number) => {
         try {
-            return await userAPI.user(`/user/${payload.id}`)
+            const data = await userAPI.user(`/user/${id}`)
+            user.value = data
         } catch (error) {
             console.log(error)
             return error
@@ -40,8 +47,8 @@ export const useUserStore = defineStore('question_type', () => {
     return {
         users,
         user,
-        getUsers,
-        getUser,
+        listUser,
+        detailUser,
         updateUser,
     }
 })
