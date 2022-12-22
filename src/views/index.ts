@@ -15,6 +15,7 @@ const ReservationDetail = () => import('@/views/reservation/DetailVue.vue')
 const AccountList = () => import('@/views/account/AccountVue.vue')
 const PatternList = () => import('@/views/pattern/PatternView.vue')
 const PatternCreate = () => import('@/views/pattern/CreateView.vue')
+const CoachList = () => import('@/views/coach/CoachVue.vue')
 
 export {
     Home,
@@ -34,4 +35,5 @@ export {
     AccountList,
     PatternList,
     PatternCreate,
+    CoachList,
 }

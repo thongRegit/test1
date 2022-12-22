@@ -5,6 +5,7 @@ import { usePlanStore } from './plan'
 import { useShopStore } from './shop'
 import { usePatternStore } from './pattern'
 import { useAlertStore } from './alert'
+import { useCoachStore } from './coach'
 
 export {
     useSettingStore,
@@ -14,4 +15,5 @@ export {
     useShopStore,
     usePatternStore,
     useAlertStore,
+    useCoachStore,
 }
