@@ -90,7 +90,7 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push(`/shops/${row.id}/update`)
+        router.push({ name: 'shops-update', params: { id: row.id } })
     }
 }
 

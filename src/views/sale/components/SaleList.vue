@@ -83,7 +83,7 @@ const handleClickButtonTable = (type: any, row: any) => {
             })
     }
     if (type === 'info') {
-        router.push(`/plans/${row.id}/update`)
+        router.push({ name: 'plans-update', params: { id: row.id } })
     }
 }
 

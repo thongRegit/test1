@@ -4,24 +4,26 @@
         :model="ruleForm"
         :rules="rules"
         class="demo-ruleForm"
-        :size="formSize"
         status-icon
     >
         <el-form-item prop="type">
-            <p class="label">{{ t('shop.status') }}</p>
-            <el-checkbox-group v-model="ruleForm.type">
-                <el-checkbox label="全て" name="type" />
-                <el-checkbox label="有効" name="type" />
-                <el-checkbox label="無効" name="type" />
-            </el-checkbox-group>
+            <p class="label">{{ t('user.status') }}</p>
+            <el-radio-group v-model="ruleForm.status">
+                <el-radio
+                    :label="item.id"
+                    :key="item.id"
+                    v-for="item in statusArr"
+                    >{{ item.title }}</el-radio
+                >
+            </el-radio-group>
         </el-form-item>
         <el-form-item prop="name">
-            <p class="label">{{ t('shop.keyword_search') }}</p>
+            <p class="label">{{ t('user.keyword_search') }}</p>
             <el-col :span="10">
                 <el-input
                     class="base-input"
                     v-model="ruleForm.name"
-                    :placeholder="'名前'"
+                    :placeholder="t('user.ruleForm.name.placeholder')"
                 />
             </el-col>
         </el-form-item>
@@ -40,14 +42,29 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
+import { useAlertStore } from '@/stores/index'
 
 const { t } = useI18n()
 
-const formSize = ref('default')
+const statusArr = [
+    {
+        id: 'all',
+        title: t('user.ruleForm.status.value.all'),
+    },
+    {
+        id: '0',
+        title: t('user.ruleForm.status.value.0'),
+    },
+    {
+        id: '1',
+        title: t('user.ruleForm.status.value.1'),
+    },
+]
+
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
-    name: 'Hello',
-    type: [],
+    name: '',
+    status: 'all',
 })
 
 const rules = reactive<FormRules>({
@@ -77,14 +94,20 @@ const rules = reactive<FormRules>({
 })
 
 const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    await formEl.validate((valid, fields) => {
-        if (valid) {
-            console.log('submit!')
-        } else {
-            console.log('error submit!', fields)
-        }
+    const alertStore = useAlertStore()
+    await alertStore.createAlert({
+        title: 'Hello',
+        type: 'success',
     })
+
+    if (!formEl) return
+    // await formEl.validate((valid, fields) => {
+    //     if (valid) {
+    //         console.log('submit!')
+    //     } else {
+    //         console.log('error submit!', fields)
+    //     }
+    // })
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
