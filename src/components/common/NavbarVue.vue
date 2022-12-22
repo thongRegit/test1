@@ -61,7 +61,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
     // console.log(key, keyPath)
     if (key === '3-1') {
         authStore.logout()
-        router.push('/login')
+        router.push({ name: 'login' })
     }
 }
 

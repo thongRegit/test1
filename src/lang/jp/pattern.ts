@@ -4,6 +4,6 @@ export default {
     session_time: 'SESSION時間',
     minute: '分',
     create_new: '新規作成',
-    add_business_hours: "+営業時間を追加する",
-    pattern_registration: "パターン登録",
+    add_business_hours: '+営業時間を追加する',
+    pattern_registration: 'パターン登録',
 }

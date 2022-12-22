@@ -21,12 +21,6 @@ export const CURRENT_DAY = dayjs(new Date()).format('DD')
 export const IMAGE_EXTENSIONS = ['jpeg', 'png', 'jpg']
 export const AGES = 18
 
-export const CONTACT_TYPES = {
-    type_user: 1,
-    type_partner: 2,
-    type_other: 3,
-}
-
 export const HTTP_STATUS = {
     success: 200,
 }
@@ -35,20 +29,6 @@ export const MAX_SIZE_IMAGE = 10 //MB
 
 export const MAX_SIZE_IMAGE_BYTE = 10485760 //KB
 
-export const TYPE_QUESTION = {
-    text: 1,
-    textarea: 2,
-    checkbox: 3,
-    radiobox: 4,
-    dropdown: 5,
-}
-
 export const FORMAT_DAY = (day: any, format = 'YYYY-MM-DD') => {
     return dayjs(new Date(day)).format(format)
-}
-
-export const SURVEY_CONFIG = {
-    iconWidth: 24,
-    iconDeleteOptionWidth: 22,
-    choiceMin: 1,
 }
