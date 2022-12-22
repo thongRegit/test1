@@ -25,4 +25,8 @@ export default {
     placeholders: {
         select: '店舗を選択してださい',
     },
+    details: {
+        "store_details": "店舗詳細",
+        "renew": "更新"
+    }
 }
