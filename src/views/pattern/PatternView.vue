@@ -104,8 +104,7 @@ const data = ref({
 
 const getListData = async () => {
     let query = {
-        page: listQuery.value.page,
-        per_page: 10,
+        page: listQuery.value.page
     }
 
     await patternStore.listPattern(query)

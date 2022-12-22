@@ -38,7 +38,6 @@ export interface SessionEl {
 }
 
 export interface patternPayload {
-    per_page: number
     page: number
 }
 
