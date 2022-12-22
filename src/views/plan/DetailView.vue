@@ -1,6 +1,6 @@
 <template>
     <BoxVue :type="'table'" :padding="20" :width="'800px'">
-        <template v-slot:header> {{t('plans.form.plans')}}</template>
+        <template v-slot:header> {{t('plan.form.plans')}}</template>
         <template v-slot:body>
             <el-form
                 ref="ruleFormRef"
@@ -11,41 +11,48 @@
                 status-icon
             >
                 <div class="el-group-title-child">
-                    <h4>{{t('plans.form.basic_setting')}}</h4>
+                    <h4>{{t('plan.form.basic_setting')}}</h4>
                 </div>
                 <el-form-item prop="name">
-                    <p class="label">{{t('plans.form.name')}}</p>
+                    <p class="label">{{t('plan.form.name')}}</p>
                     <el-col :span="10">
                         <el-input v-model="ruleForm.name" class="base-input" />
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="session">
-                    <p class="label">{{t('plans.form.session_time')}}</p>
+                    <p class="label">{{t('plan.form.session_time')}}</p>
                     <el-col :span="10">
-                        <el-input v-model="ruleForm.session_time" class="base-input" />
+                        <el-input v-model="ruleForm.period_value" class="base-input" />
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="amount">
-                    <p class="label">{{t('plans.form.basic_charge')}}</p>
+                    <p class="label">{{t('plan.form.basic_charge')}}</p>
                     <el-col :span="10">
                         <el-input v-model="ruleForm.amount" class="base-input" />
                     </el-col>
                 </el-form-item>
-                <el-form-item prop="name">
-                    <el-checkbox label="初回体験" name="type" v-model="ruleForm.first_experience"/>
-                    <span class="text-note"
-                    >{{t('plans.form.is_display')}}</span
-                    >
+                <el-form-item prop="type">
+                    <el-radio-group v-model="ruleForm.type">
+                        <el-radio
+                            :label="item.id"
+                            :key="item.id"
+                            v-for="item in types"
+                        >{{ item.title }}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item prop="active">
+                    <p class="label">{{t('plan.form.active')}}</p>
+                    <el-switch v-model="ruleForm.is_active" />
                 </el-form-item>
                 <div class="el-group-title-child">
-                    <h4>{{t('plans.form.discount_settings')}}</h4>
+                    <h4>{{t('plan.form.discount_settings')}}</h4>
                 </div>
                 <el-form-item required v-for="item in ruleForm.plan_discounts">
                     <el-col :span="22">
                         <el-row>
                             <el-col :span="10">
                                 <el-form-item prop="name">
-                                    <p class="label">{{t('plans.form.frequency')}}</p>
+                                    <p class="label">{{t('plan.form.frequency')}}</p>
                                     <el-input
                                         v-model="item.frequency"
                                         class="base-input"
@@ -53,11 +60,11 @@
                                 </el-form-item>
                             </el-col>
                             <el-col class="text-center" :span="2">
-                                <span class="text-gray-500">{{t('plans.form.from')}}</span>
+                                <span class="text-gray-500">{{t('plan.form.from')}}</span>
                             </el-col>
                             <el-col :span="11">
                                 <el-form-item prop="name">
-                                    <p class="label">{{t('plans.form.fee')}}</p>
+                                    <p class="label">{{t('plan.form.fee')}}</p>
                                     <el-input
                                         v-model="item.discount_amount"
                                         class="base-input"
@@ -66,14 +73,6 @@
                             </el-col>
                         </el-row>
                     </el-col>
-                </el-form-item>
-                <el-form-item>
-                    <el-link
-                        href="https://element.eleme.io"
-                        target="_blank"
-                        type="primary"
-                    >{{t('plans.form.link')}}</el-link
-                    >
                 </el-form-item>
             </el-form>
         </template>
@@ -87,6 +86,7 @@ import BoxVue from "@/components/common/BoxVue.vue";
 import {useI18n} from 'vue3-i18n'
 import {usePlanStore} from "@/stores";
 import {useRoute} from "vue-router";
+import type {Payload} from "@/libs/interface/planInterface";
 
 const { t } = useI18n()
 const route = useRoute()
@@ -94,16 +94,17 @@ const route = useRoute()
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 let ruleForm = reactive({
-    name: 'Hello',
-    type: [],
-    session_time: '',
+    name: '',
+    type: 1,
+    period_value: '',
     amount: '',
-    first_experience: false,
     plan_discounts: [{
         frequency: '',
-        discount_amount: ''}]
+        discount_amount: ''}],
+    is_active: true,
+    period_id: ''
 })
-const payload = {} as any
+const payload = ref({} as Payload)
 
 const rules = reactive<FormRules>({
     name: [
@@ -116,7 +117,7 @@ const rules = reactive<FormRules>({
     ],
     type: [
         {
-            type: 'array',
+            type: 'number',
             required: true,
             message: 'Please select at least one activity type',
             trigger: 'change',
@@ -131,10 +132,25 @@ const rules = reactive<FormRules>({
     ],
 })
 
+const types = [
+    {
+        id: 1,
+        title: t('plan.types.first_experience'),
+    },
+    {
+        id: 2,
+        title: t('plan.types.general'),
+    },
+    {
+        id: 3,
+        title: t('plan.types.subscription'),
+    },
+]
+
 onMounted(async () => {
     await nextTick()
-    payload.id = route.params.id
-    await getPlanDetail(payload)
+    payload.value.id = Number(route.params.id)
+    await getPlanDetail(payload.value)
 })
 
 const getPlanDetail = async (payload: any) => {
@@ -142,8 +158,8 @@ const getPlanDetail = async (payload: any) => {
     await planStore.detailPlan(payload)
     const data = planStore.plan
     ruleForm.name = data.name
-    ruleForm.first_experience = data.type == 1 ? true : false
-    ruleForm.session_time = data.period_value
+    ruleForm.type = data.type
+    ruleForm.period_value = data.period_value
     ruleForm.amount = data.amount
     ruleForm.plan_discounts = data.plan_discounts
 }

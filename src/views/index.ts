@@ -6,7 +6,7 @@ const ShopList = () => import('@/views/shop/ShopVue.vue')
 const ShopDetail = () => import('@/views/shop/DetailVue.vue')
 const ShopCreate = () => import('@/views/shop/CreateVue.vue')
 const ShopUpdate = () => import('@/views/shop/EditVue.vue')
-const UserDetail = () => import('@/views/user/DetailVue.vue')
+const UserDetail = () => import('@/views/user/UserDetail.vue')
 const UserList = () => import('@/views/user/UserVue.vue')
 const SaleList = () => import('@/views/sale/SaleVue.vue')
 const SaleDetail = () => import('@/views/sale/DetailVue.vue')
@@ -28,8 +28,8 @@ export {
     ShopDetail,
     ShopCreate,
     ShopUpdate,
-    UserDetail,
     UserList,
+    UserDetail,
     SaleList,
     SaleDetail,
     ReservationList,

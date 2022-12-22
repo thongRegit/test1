@@ -6,16 +6,6 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <ShopSearchVue @submit="search" @reset="resetForm" />
-        </template>
-    </BoxVue>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
-        <template v-slot:body>
             <section class="box-list">
                 <table-data
                     :data="data"
@@ -38,12 +28,10 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useShopStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
-import ShopSearchVue from './ShopSearch.vue'
-import type { ShopSearch } from '@/libs/interface/shopInterface'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -51,7 +39,7 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'status', data: 'all' }],
+    filters: [{ key: 'is_active', data: 'all' }],
 })
 const data = ref({
     currentPage: 1,
@@ -59,26 +47,43 @@ const data = ref({
     perPage: 10,
     records: [],
     total: 0,
-})
+} as any)
 
 const loading = ref(true)
 const columns = ref([
     {
-        prop: 'name',
-        label: t('shops.columns.name'),
+        prop: 'full_name',
+        label: t('user.columns.full_name'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'station_amount',
-        label: t('shops.columns.station_amount'),
+        prop: 'tel',
+        label: t('user.columns.tel'),
         sortable: false,
         class: '',
     },
-    { prop: 'day', label: t('shops.columns.day'), sortable: false, class: '' },
     {
-        prop: 'status',
-        label: t('shops.columns.status'),
+        prop: 'created_at',
+        label: t('user.columns.created_at'),
+        sortable: false,
+        class: '',
+    },
+    {
+        prop: 'first_experience_date',
+        label: t('user.columns.first_experience_date'),
+        sortable: false,
+        class: '',
+    },
+    {
+        prop: 'last_session_date',
+        label: t('user.columns.last_session_date'),
+        sortable: false,
+        class: '',
+    },
+    {
+        prop: 'is_active',
+        label: t('user.columns.is_active'),
         sortable: false,
         class: '',
     },
@@ -90,14 +95,14 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'shops-update', params: { id: row.id } })
+        router.push({ name: 'users-update', params: { id: row.id } })
     }
 }
 
 const handleCheckbox = () => {}
 
 const getListData = async () => {
-    let query = {
+    let query: any = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -107,18 +112,20 @@ const getListData = async () => {
     }
     query.filters = JSON.stringify(listQuery.value.filters)
 
-    const shopStore = useShopStore()
-    await shopStore.listShop(query)
-    data.value.total = shopStore.shops.total
-    data.value.currentPage = shopStore.shops.current_page
-    data.value.perPage = shopStore.shops.per_page
-    data.value.records = shopStore.shops.data.map((e: any) => {
+    const userStore = useUserStore()
+    await userStore.listUser(query)
+    data.value.total = userStore.users.total
+    data.value.currentPage = userStore.users.current_page
+    data.value.perPage = userStore.users.per_page
+    data.value.records = userStore.users.data.map((e: any) => {
         return {
             id: e.id,
-            name: `<a class="text-link">${e.name}</a>`,
-            station_amount: e.station_amount,
-            day: e.day,
-            status: e.status,
+            full_name: e.full_name,
+            tel: e.tel,
+            created_at: e.created_at,
+            first_experience_date: e.first_experience_date,
+            last_session_date: e.last_session_date,
+            is_active: `<span class="btn-status">${e.is_active}</span>`,
         }
     })
     loading.value = false
@@ -133,32 +140,17 @@ const handleChangePage = (page: any) => {
 const cellClick = (row: any, column: any) => {
     if (column.property === 'name') {
         router.push({
-            name: 'shops-detail',
+            name: 'users-detail',
             params: { id: row.id },
             replace: true,
         })
     }
 }
 
-const search = (search: ShopSearch) => {
-    loading.value = true
-    listQuery.value.search = search.name
-    listQuery.value.filters = [{ key: 'status', data: search.status }]
-    listQuery.value.page = 1
-    getListData()
-}
-
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
-    // listQuery.value.page = 1
-    getListData()
-}
-
-const resetForm = () => {
     listQuery.value.page = 1
-    listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'status', data: 'all' }]
     getListData()
 }
 

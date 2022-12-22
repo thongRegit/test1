@@ -1,4 +1,4 @@
-export const plans = {
+export default {
     status: 'ステータス',
     keyword_search: 'キーワード検索',
     first_experience: '初回体験',
@@ -43,7 +43,12 @@ export const plans = {
         frequency: '回数',
         from: 'から',
         fee: '料金(税抜)',
-        link: '割引設定を追加する'
+        link: '割引設定を追加する',
+        active: '有効'
+    },
+    types: {
+        first_experience: '初回体験',
+        general: '一般',
+        subscription: 'サブスクリプション'
     }
-
 }

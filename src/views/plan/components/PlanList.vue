@@ -51,10 +51,7 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: {
-        type: null as any,
-        is_active: 1
-    },
+    filters: [{ key: 'is_active', data: '1' }]
 })
 const data = ref({
     currentPage: 1,
@@ -68,26 +65,26 @@ const loading = ref(true)
 const columns = ref([
     {
         prop: 'name',
-        label: t('plans.columns.name'),
+        label: t('plan.columns.name'),
         sortable: false,
         class: '',
     },
     {
         prop: 'time',
-        label: t('plans.columns.time'),
+        label: t('plan.columns.time'),
         sortable: false,
         class: '',
     },
-    { prop: 'basic_charge', label: t('plans.columns.basic_charge'), sortable: false, class: '' },
+    { prop: 'basic_charge', label: t('plan.columns.basic_charge'), sortable: false, class: '' },
     {
         prop: 'first_experience',
-        label: t('plans.columns.first_experience'),
+        label: t('plan.columns.first_experience'),
         sortable: false,
         class: '',
     },
     {
         prop: 'status',
-        label: t('plans.columns.status'),
+        label: t('plan.columns.status'),
         sortable: false,
         class: '',
     }
@@ -104,14 +101,15 @@ const formatNumber = (value: any, format = '') => {
 
 const getListData = async () => {
     let query = {
-        'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
         search: listQuery.value.search,
         per_page: 20,
-        'filters[0][type]': listQuery.value.filters.type,
-        'filters[0][is_active]': listQuery.value.filters.is_active,
+        filters: ''
+        // 'filters[0][type]': listQuery.value.filters.type,
+        // 'filters[0][is_active]': listQuery.value.filters.is_active,
     }
+    query.filters = JSON.stringify(listQuery.value.filters)
 
     const planStore = usePlanStore()
     await planStore.listPlan(query)
@@ -121,11 +119,11 @@ const getListData = async () => {
     data.value.records = planStore.plans.data.map((e: any) => {
         return {
             id: e.id,
-            name: `<a class="text-link">${e.name}</a>`,
+            name: `<a class="text-link cursor-pointer">${e.name}</a>`,
             time: e.period_value,
             basic_charge: formatNumber(e.amount),
-            first_experience: e.type == 1 ? t('plans.type_plan.first_experience.can_be') : t('plans.type_plan.first_experience.none'),
-            status: e.is_active ? t('plans.active') : t('plans.in_active')
+            first_experience: e.type == 1 ? t('plan.type_plan.first_experience.can_be') : t('plan.type_plan.first_experience.none'),
+            status: e.is_active ? t('plan.active') : t('plan.in_active')
         }
     })
     loading.value = false
@@ -138,15 +136,29 @@ const handleChangePage = (page: any) => {
 }
 
 const cellClick = (row: any, column: any, cell: any) => {
-    router.push('/plans/' + row.id)
+    if (column.property === 'name') {
+        router.push({
+            name: 'plans-detail',
+            params: { id: row.id },
+            replace: true
+        })
+    }
+}
+
+const handleClickButtonTable = (type: any, row: any) => {
+    router.push({
+        name: 'plans-update',
+        params: { id: row.id },
+        replace: true
+    })
 }
 
 const search = (search: any) => {
     loading.value = true
     listQuery.value.page = 1
     listQuery.value.search = search.name
-    listQuery.value.filters.type = search.first_experience ? 1 : null
-    listQuery.value.filters.is_active = search.status[0]
+    // listQuery.value.filters.type = search.type
+    listQuery.value.filters = [{ key: 'is_active', data: search.status }]
     getListData()
 }
 
@@ -158,12 +170,15 @@ const sort = (sortProps: any) => {
 
 const resetForm = () => {
     listQuery.value.search = ''
-    listQuery.value.filters.type = 0
-    listQuery.value.filters.is_active = 1
+    // listQuery.value.filters.type = 1
+    listQuery.value.filters = [{ key: 'is_active', data: '1' }]
 }
 
 const handleCreate = () => {
-    router.push(`/plans/create`)
+    router.push({
+        name: 'plans-create',
+        replace: true
+    })
 }
 
 

@@ -31,7 +31,7 @@ export const usePlanStore = defineStore('plan_store', () => {
 
     const updatePlan = async (payload: any, id: any) => {
         try {
-            const data = await axios.put(`plans/${id}/update`, payload)
+            const data = await axios.put(`plans/${id}`, payload)
             plan.value = data
         } catch (error) {
             console.log(error)
