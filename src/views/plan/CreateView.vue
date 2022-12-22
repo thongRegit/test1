@@ -19,34 +19,34 @@
                         <el-input v-model="ruleForm.name" class="base-input" />
                     </el-col>
                 </el-form-item>
-                <el-form-item prop="name">
+                <el-form-item prop="session_time">
                     <p class="label">{{t('plans.form.session')}}</p>
                     <el-col :span="10">
-                        <el-input v-model="ruleForm.name" class="base-input" />
+                        <el-input v-model="ruleForm.period_id" class="base-input" />
                     </el-col>
                 </el-form-item>
-                <el-form-item prop="name">
+                <el-form-item prop="amount">
                     <p class="label">{{t('plans.form.basic_charge')}}</p>
                     <el-col :span="10">
-                        <el-input v-model="ruleForm.name" class="base-input" />
+                        <el-input v-model="ruleForm.amount" class="base-input" />
                     </el-col>
                 </el-form-item>
-                <el-form-item prop="name">
-                    <el-checkbox label="初回体験" name="type" />
+                <el-form-item prop="first_experience">
+                    <el-checkbox label="初回体験" name="type" v-model="ruleForm.first_experience"/>
                     <span class="text-note"
                     >{{t('plans.form.is_display')}}</span>
                 </el-form-item>
                 <div class="el-group-title-child">
                     <h4>{{t('plans.form.discount_settings')}}</h4>
                 </div>
-                <el-form-item required>
+                <el-form-item required v-for="item in ruleForm.plan_discounts">
                     <el-col :span="22">
                         <el-row>
                             <el-col :span="10">
-                                <el-form-item prop="name">
+                                <el-form-item prop="frequency">
                                     <p class="label">{{t('plans.form.frequency')}}</p>
                                     <el-input
-                                        v-model="ruleForm.name"
+                                        v-model="item.frequency"
                                         class="base-input"
                                     />
                                 </el-form-item>
@@ -55,10 +55,10 @@
                                 <span class="text-gray-500">{{t('plans.form.from')}}</span>
                             </el-col>
                             <el-col :span="11">
-                                <el-form-item prop="name">
+                                <el-form-item prop="discount_amount">
                                     <p class="label">{{t('plans.form.fee')}}</p>
                                     <el-input
-                                        v-model="ruleForm.name"
+                                        v-model="item.discount_amount"
                                         class="base-input"
                                     />
                                 </el-form-item>
@@ -68,11 +68,19 @@
                 </el-form-item>
                 <el-form-item>
                     <el-link
-                        href="https://element.eleme.io"
+                       @click="addBlock"
                         target="_blank"
                         type="primary"
                     >{{t('plans.form.link')}}</el-link
                     >
+                </el-form-item>
+                <el-form-item class="justify-center">
+                    <el-button @click="resetForm(ruleFormRef)">{{
+                            t('btn_clear')
+                        }}</el-button>
+                    <el-button type="primary" @click="submitForm(ruleFormRef)">{{
+                            t('btn_search')
+                        }}</el-button>
                 </el-form-item>
             </el-form>
         </template>
@@ -90,9 +98,16 @@ const { t } = useI18n()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
-const ruleForm = reactive({
-    name: 'Hello',
-    type: [],
+let ruleForm = reactive({
+    name: '',
+    type : 0,
+    period_id: '',
+    amount: '',
+    first_experience: false,
+    plan_discounts: [{
+        frequency: '',
+        discount_amount: ''}],
+    is_active: 1
 })
 
 const rules = reactive<FormRules>({
@@ -131,6 +146,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             console.log('submit!')
+            ruleForm.type = ruleForm.first_experience ? 1 : 2
+            const planStore = usePlanStore()
+            planStore.createPlan(ruleForm)
         } else {
             console.log('error submit!', fields)
         }
@@ -140,6 +158,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
+}
+
+const addBlock = () => {
+    ruleForm.plan_discounts.push({
+        frequency: '',
+        discount_amount: ''})
 }
 </script>
 

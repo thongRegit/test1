@@ -1,6 +1,7 @@
 // import { errors } from "./errors";
 import shops from './shops'
 import session from './session'
+import pattern from './pattern'
 import {plans} from './plans'
 
 export const jp = {
@@ -79,9 +80,10 @@ export const jp = {
         shops: '店舗管理',
         reservation: '予約管理',
         account: 'アカウント管理',
-        plan: 'Plan'
+        plan: '店舗管理'
     },
     shops,
     plans,
     session,
+    pattern,
 }

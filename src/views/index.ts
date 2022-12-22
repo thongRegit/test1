@@ -1,23 +1,24 @@
-import Login from '@/views/LoginVue.vue'
-import ChangePassword from '@/views/password/ChangePasswordVue.vue'
-import Home from '@/views/home/HomeVue.vue'
-import PageNotFound from '@/views/PageNotFound.vue'
-import ShopList from '@/views/shop/ShopVue.vue'
-import ShopDetail from '@/views/shop/DetailVue.vue'
-import ShopCreate from '@/views/shop/CreateVue.vue'
-import ShopUpdate from '@/views/shop/EditVue.vue'
-import UserDetail from '@/views/user/DetailVue.vue'
-import UserList from '@/views/user/UserVue.vue'
-import SaleList from '@/views/sale/SaleVue.vue'
-import SaleDetail from '@/views/sale/DetailVue.vue'
-import ReservationList from '@/views/reservation/ReservationVue.vue'
-import ReservationDetail from '@/views/reservation/DetailVue.vue'
-import AccountList from '@/views/account/AccountVue.vue'
-import PlanList from '@/views/plan/PlanView.vue'
-import PlanCreate from '@/views/plan/CreateView.vue'
-import PlanDetail from '@/views/plan/DetailView.vue'
-import PlanUpdate from '@/views/plan/EditView.vue'
-
+const Login = () => import('@/views/LoginVue.vue')
+const ChangePassword = () => import('@/views/password/ChangePasswordVue.vue')
+const Home = () => import('@/views/home/HomeVue.vue')
+const PageNotFound = () => import('@/views/PageNotFound.vue')
+const ShopList = () => import('@/views/shop/ShopVue.vue')
+const ShopDetail = () => import('@/views/shop/DetailVue.vue')
+const ShopCreate = () => import('@/views/shop/CreateVue.vue')
+const ShopUpdate = () => import('@/views/shop/EditVue.vue')
+const UserDetail = () => import('@/views/user/DetailVue.vue')
+const UserList = () => import('@/views/user/UserVue.vue')
+const SaleList = () => import('@/views/sale/SaleVue.vue')
+const SaleDetail = () => import('@/views/sale/DetailVue.vue')
+const ReservationList = () => import('@/views/reservation/ReservationVue.vue')
+const ReservationDetail = () => import('@/views/reservation/DetailVue.vue')
+const AccountList = () => import('@/views/account/AccountVue.vue')
+const PatternList = () => import('@/views/pattern/PatternView.vue')
+const PatternCreate = () => import('@/views/pattern/CreateView.vue')
+const PlanList = () => import('@/views/plan/PlanView.vue')
+const PlanCreate = () => import('@/views/plan/CreateView.vue')
+const PlanDetail = () => import('@/views/plan/DetailView.vue')
+const PlanUpdate = () => import('@/views/plan/EditView.vue')
 export {
     Home,
     Login,
@@ -34,6 +35,8 @@ export {
     ReservationList,
     ReservationDetail,
     AccountList,
+    PatternList,
+    PatternCreate,
     PlanList,
     PlanCreate,
     PlanDetail,

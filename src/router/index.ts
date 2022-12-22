@@ -17,6 +17,7 @@ import {
     ChangePassword,
     Login,
     PageNotFound,
+    PatternList,
     PlanList,
     PlanDetail,
     PlanCreate,
@@ -163,6 +164,17 @@ const routes = [
                         path: ':id/update',
                         name: 'reservation-update',
                         component: ReservationList,
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'patterns',
+                children: [
+                    {
+                        path: '',
+                        component: PatternList,
+                        name: 'patterns',
                         beforeEnter: ifAuthenticated,
                     },
                 ],

@@ -122,7 +122,7 @@ const getListData = async () => {
         return {
             id: e.id,
             name: `<a class="text-link">${e.name}</a>`,
-            time: e.time ?  e.time + '分' : '',
+            time: e.period_value,
             basic_charge: formatNumber(e.amount),
             first_experience: e.type == 1 ? t('plans.type_plan.first_experience.can_be') : t('plans.type_plan.first_experience.none'),
             status: e.is_active ? t('plans.active') : t('plans.in_active')
