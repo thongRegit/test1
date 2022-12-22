@@ -27,6 +27,8 @@ export default {
     },
     details: {
         "store_details": "店舗詳細",
-        "renew": "更新"
+        "renew": "更新",
+        "basic_settings": "基本設定",
+        "number_stations": "ステーション数",
     }
 }
