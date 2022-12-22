@@ -38,7 +38,7 @@ import BoxVue from '@/components/common/BoxVue.vue'
 import CoachSearchVue from './CoachSearchVue.vue'
 import type { CoachSearch } from '@/libs/interface/coachInterface'
 import { useI18n } from 'vue3-i18n'
-import { ACTIVE_STATUS } from '@/libs/constants/constants'
+import { findStatus } from '@/libs/utils/common'
 
 const { t } = useI18n()
 
@@ -124,7 +124,7 @@ const getListData = async () => {
     data.value.currentPage = coachStore.coaches.current_page
     data.value.perPage = coachStore.coaches.per_page
     data.value.records = coachStore.coaches.data.map((e: any) => {
-        const status = ACTIVE_STATUS.find(el => el.is_active == e.is_active);
+        const status = findStatus(e.is_active)
         return {
             id: e.id,
             full_name: e.full_name,
