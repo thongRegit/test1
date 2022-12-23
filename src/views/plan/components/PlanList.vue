@@ -51,7 +51,7 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'is_active', data: '1' }]
+    filters: [{ key: 'is_active', data: 'all' }]
 })
 const data = ref({
     currentPage: 1,
@@ -101,13 +101,9 @@ const formatNumber = (value: any, format = '') => {
 
 const getListData = async () => {
     let query = {
-        'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
         search: listQuery.value.search,
-        per_page: 20,
         filters: ''
-        // 'filters[0][type]': listQuery.value.filters.type,
-        // 'filters[0][is_active]': listQuery.value.filters.is_active,
     }
     query.filters = JSON.stringify(listQuery.value.filters)
 
@@ -171,7 +167,7 @@ const sort = (sortProps: any) => {
 const resetForm = () => {
     listQuery.value.search = ''
     // listQuery.value.filters.type = 1
-    listQuery.value.filters = [{ key: 'is_active', data: '1' }]
+    listQuery.value.filters = [{ key: 'is_active', data: 'all' }]
 }
 
 const handleCreate = () => {

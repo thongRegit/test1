@@ -110,9 +110,10 @@ import type { FormInstance, FormRules } from 'element-plus'
 import BoxVue from "@/components/common/BoxVue.vue";
 import { useI18n } from 'vue3-i18n'
 import {usePatternStore, usePlanStore} from "@/stores";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {Period, Payload, PlanDetailPayload} from "@/libs/interface/planInterface";
 const route = useRoute()
+const router = useRouter()
 const { t } = useI18n()
 
 const formSize = ref('default')
@@ -188,6 +189,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         if (valid) {
             const planStore = usePlanStore()
             planStore.updatePlan(ruleForm.value, ruleForm.value.id)
+            router.push({name: 'plans', replace: true})
         } else {
             console.log('error submit!', fields)
         }

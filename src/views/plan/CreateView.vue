@@ -56,7 +56,7 @@
                 <div class="el-group-title-child">
                     <h4>{{t('plan.form.discount_settings')}}</h4>
                 </div>
-                <el-form-item required v-for="item in ruleForm.plan_discounts">
+                <div required v-for="(item, index) in ruleForm.plan_discounts" :key="'plan-create-'+ index">
                     <el-col :span="22">
                         <el-row>
                             <el-col :span="10">
@@ -82,7 +82,7 @@
                             </el-col>
                         </el-row>
                     </el-col>
-                </el-form-item>
+                </div>
                 <el-form-item>
                     <el-link
                        @click="addBlock"
@@ -110,13 +110,25 @@ import type { FormInstance, FormRules } from 'element-plus'
 import BoxVue from "@/components/common/BoxVue.vue";
 import { useI18n } from 'vue3-i18n'
 import {usePatternStore, usePlanStore} from "@/stores";
-import {Period, PlanDetailPayload} from "@/libs/interface/planInterface";
+import {Period} from "@/libs/interface/planInterface";
+import {useRouter} from "vue-router";
+const router = useRouter()
 
 const { t } = useI18n()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
-let ruleForm = ref({} as PlanDetailPayload)
+let ruleForm = reactive({
+    name: '',
+    period_id: 1,
+    amount: null,
+    type: 1,
+    is_active: true,
+    plan_discounts: [{
+        frequency: null,
+        discount_amount: null
+    }]
+})
 const rules = reactive<FormRules>({
     name: [
         {
@@ -168,7 +180,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             const planStore = usePlanStore()
-            planStore.createPlan(ruleForm.value)
+            planStore.createPlan(ruleForm)
+            router.push({name: 'plans'})
         } else {
             console.log('error submit!', fields)
         }
@@ -181,9 +194,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
 }
 
 const addBlock = () => {
-    ruleForm.value.plan_discounts.push({
-        frequency: undefined,
-        discount_amount: undefined})
+    ruleForm.plan_discounts.push({
+        frequency: null,
+        discount_amount: null})
 }
 const periods = ref([] as Array<Period>)
 const getPeriodData = async () => {

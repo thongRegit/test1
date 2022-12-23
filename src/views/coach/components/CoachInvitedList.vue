@@ -5,13 +5,11 @@
             :loading="loading"
             :columns="columns"
             :showIndex="false"
-            :showCheckbox="true"
+            :showCheckbox="false"
             @cell-click="cellClick"
             @change-page="handleChangePage"
             @sort="sort"
-            :buttons="buttons"
             :hasCreate="false"
-            @click-button="handleClickButtonTable"
             @click-checkbox="handleCheckbox"
         ></table-data>
     </section>
@@ -19,7 +17,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useUserStore } from '@/stores'
+import { useCoachStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 
@@ -42,46 +40,20 @@ const data = ref({
 const loading = ref(true)
 const columns = ref([
     {
-        prop: 'date',
-        label: t('user.columns.sessions.date'),
+        prop: 'full_name',
+        label: t('coach.columns.invited.full_name'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'shop_name',
-        label: t('user.columns.sessions.shop_name'),
-        sortable: false,
-        class: '',
-    },
-    {
-        prop: 'plan_name',
-        label: t('user.columns.sessions.plan_name'),
-        sortable: false,
-        class: '',
-    },
-    {
-        prop: 'coach_name',
-        label: t('user.columns.sessions.coach_name'),
-        sortable: false,
-        class: '',
-    },
-    {
-        prop: 'status',
-        label: t('user.columns.sessions.status'),
+        prop: 'created_at',
+        label: t('coach.columns.invited.created_at'),
         sortable: false,
         class: '',
     },
 ])
-const buttons = ref([
-    { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
-])
-const sortProp = reactive({ key: 'id', dir: 'descending' })
 
-const handleClickButtonTable = (classList: any, row: any) => {
-    if (classList.includes('btn-update')) {
-        router.push({ name: 'users-update', params: { id: row.id } })
-    }
-}
+const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleCheckbox = () => {}
 
@@ -98,19 +70,16 @@ const getListData = async () => {
 
     const id = router.currentRoute.value.params.id
 
-    const userStore = useUserStore()
-    await userStore.listUserSession(query, id)
-    data.value.total = userStore.session_users.total
-    data.value.currentPage = userStore.session_users.current_page
-    data.value.perPage = userStore.session_users.per_page
-    data.value.records = userStore.session_users.data.map((e: any) => {
+    const coachStore = useCoachStore()
+    await coachStore.listCoachInvited(query, id)
+    data.value.total = coachStore.invited_coaches.total
+    data.value.currentPage = coachStore.invited_coaches.current_page
+    data.value.perPage = coachStore.invited_coaches.per_page
+    data.value.records = coachStore.invited_coaches.data.map((e: any) => {
         return {
             id: e.id,
-            date: e.date,
-            shop_name: e.shop_name,
-            plan_name: e.plan_name,
-            coach_name: e.coach_first_name + ' ' + e.coach_last_name,
-            status: e.status,
+            created_at: e.created_at,
+            full_name: e.full_name,
         }
     })
     loading.value = false

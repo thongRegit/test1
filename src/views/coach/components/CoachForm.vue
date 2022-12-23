@@ -9,7 +9,7 @@
     >
         <el-col :span="12">
             <div>
-                <p class="label">{{ t('user.detail.label.name') }}</p>
+                <p class="label">{{ t('user.status') }}</p>
                 <el-row style="width: 100%" :gutter="16">
                     <el-col :span="10">
                         <el-form-item prop="first_name">
@@ -32,9 +32,9 @@
                 </el-row>
             </div>
             <div>
-                <p class="label">{{ t('user.detail.label.name_furigana') }}</p>
+                <p class="label">{{ t('user.status') }}</p>
                 <el-row style="width: 100%" :gutter="16">
-                    <el-col :span="11">
+                    <el-col :span="10">
                         <el-form-item prop="first_name_furigana">
                             <el-input
                                 class="base-input"
@@ -43,7 +43,7 @@
                             />
                         </el-form-item>
                     </el-col>
-                    <el-col :span="11">
+                    <el-col :span="10">
                         <el-form-item prop="last_name_furigana">
                             <el-input
                                 class="base-input"
@@ -55,7 +55,7 @@
                 </el-row>
             </div>
             <div>
-                <p class="label">{{ t('user.detail.label.birthday') }}</p>
+                <p class="label">{{ t('user.status') }}</p>
                 <el-row style="width: 100%" :gutter="16">
                     <el-col :span="8">
                         <el-form-item prop="day">
@@ -87,8 +87,8 @@
                 </el-row>
             </div>
             <div>
-                <p class="label">{{ t('user.detail.label.tel') }}</p>
-                <el-col :span="18">
+                <p class="label">{{ t('user.keyword_search') }}</p>
+                <el-col :span="8">
                     <el-form-item prop="tel">
                         <el-input
                             class="base-input"
@@ -98,33 +98,29 @@
                     </el-form-item>
                 </el-col>
             </div>
-            <el-form-item prop="line_name">
-                <p class="label">{{ t('user.detail.label.line_name') }}</p>
-                <el-col :span="14">
-                    <el-input
-                        class="base-input"
-                        v-model="ruleForm.line_name"
-                        :placeholder="'名前'"
-                    />
-                </el-col>
-            </el-form-item>
-            <el-form-item prop="gender">
-                <p class="label">{{ t('user.detail.label.gender') }}</p>
-                <el-radio-group v-model="ruleForm.gender">
-                    <el-radio label="1">{{ t('gender.male') }}</el-radio>
-                    <el-radio label="2">{{ t('gender.female') }}</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item prop="status">
-                <p class="label">{{ t('user.detail.label.status') }}</p>
-                <el-radio-group v-model="ruleForm.status">
-                    <el-radio label="1">{{ t('status.active') }}</el-radio>
-                    <el-radio label="0">{{ t('status.inactive') }}</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item prop="is_active">
-                <el-switch v-model="ruleForm.is_active" /> <span>{{ t('user.detail.label.is_active') }}</span>
-            </el-form-item>
+            <div>
+                <p class="label">{{ t('user.status') }}</p>
+                <el-row style="width: 100%" :gutter="16">
+                    <el-col :span="12">
+                        <el-form-item prop="first_name_furigana">
+                            <el-input
+                                class="base-input"
+                                v-model="ruleForm.first_name_furigana"
+                                :placeholder="'名前'"
+                            />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item prop="last_name_furigana">
+                            <el-input
+                                class="base-input"
+                                v-model="ruleForm.last_name_furigana"
+                                :placeholder="'名前'"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </div>
             <el-form-item>
                 <el-button @click="resetForm(ruleFormRef)">{{
                     t('btn_clear')
@@ -188,6 +184,7 @@ const rules = reactive<FormRules>({
     ],
     first_name_furigana: [
         {
+            required: true,
             message: 'Please input first_name_furigana',
             trigger: 'blur',
         },
@@ -195,6 +192,7 @@ const rules = reactive<FormRules>({
     ],
     last_name_furigana: [
         {
+            required: true,
             message: 'Please input last_name_furigana',
             trigger: 'blur',
         },
@@ -211,7 +209,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
             ruleForm.birthday = (<any>Object).values(ruleForm.birthdays).join("/")
             const userStore = useUserStore()
             await userStore.updateUser(ruleForm, id)
-            await getData()
         } else {
             console.log('error submit!')
             return false
@@ -224,9 +221,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
     formEl.resetFields()
 }
 
-const getData = async () => {
-    const id = router.currentRoute.value.params.id
+onMounted(async () => {
+    await nextTick()
     const useStore = useUserStore()
+    const id = router.currentRoute.value.params.id
     await useStore.detailUser(id)
     ruleForm.first_name = useStore.user.first_name
     ruleForm.last_name = useStore.user.last_name
@@ -244,13 +242,8 @@ const getData = async () => {
     ruleForm.birthdays.year = dayjs(new Date(useStore.user.birthday)).format(
         'YYYY'
     )
-    ruleForm.gender = `${useStore.user.gender}`
-    ruleForm.status = `${useStore.user.status}`
+    ruleForm.gender = useStore.user.gender
+    ruleForm.status = useStore.user.status
     ruleForm.is_active = !!useStore.user.is_active
-}
-
-onMounted(async () => {
-    await nextTick()
-    await getData()
 })
 </script>

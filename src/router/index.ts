@@ -8,12 +8,11 @@ import {
     ShopCreate,
     UserList,
     UserDetail,
-    SaleList,
-    SaleDetail,
-    ReservationList,
-    ReservationDetail,
+    ReserveList,
+    ReserveDetail,
     AccountList,
     CoachList,
+    CoachDetail,
     ShopUpdate,
     ChangePassword,
     Login,
@@ -83,46 +82,6 @@ const routes = [
                 ],
             },
             {
-                path: 'coaches',
-                children: [
-                    {
-                        path: '',
-                        component: CoachList,
-                        name: 'coaches',
-                        beforeEnter: ifAuthenticated,
-                    },
-                ],
-            },
-            {
-                path: 'sale',
-                children: [
-                    {
-                        path: '',
-                        component: SaleList,
-                        name: 'sale',
-                        beforeEnter: ifAuthenticated,
-                    },
-                    {
-                        path: 'create',
-                        name: 'sale-create',
-                        component: SaleList,
-                        beforeEnter: ifAuthenticated,
-                    },
-                    {
-                        path: ':id',
-                        name: 'sale-detail',
-                        component: SaleDetail,
-                        beforeEnter: ifAuthenticated,
-                    },
-                    {
-                        path: ':id/update',
-                        name: 'sale-update',
-                        component: SaleList,
-                        beforeEnter: ifAuthenticated,
-                    },
-                ],
-            },
-            {
                 path: 'users',
                 children: [
                     {
@@ -140,30 +99,98 @@ const routes = [
                 ],
             },
             {
-                path: 'reservation',
+                path: 'reserves',
                 children: [
                     {
                         path: '',
-                        component: ReservationList,
-                        name: 'reservation',
+                        component: ReserveList,
+                        name: 'reserves',
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
-                        name: 'reservation-create',
-                        component: ReservationList,
+                        name: 'reserves-create',
+                        component: ReserveList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id',
-                        name: 'reservation-detail',
-                        component: ReservationDetail,
+                        name: 'reserves-detail',
+                        component: ReserveDetail,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id/update',
-                        name: 'reservation-update',
-                        component: ReservationList,
+                        name: 'reserves-update',
+                        component: ReserveList,
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'sessions',
+                children: [
+                    {
+                        path: '',
+                        component: PatternList,
+                        name: 'sessions',
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        component: PatternList,
+                        name: 'sessions-create',
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'shifts',
+                children: [
+                    {
+                        path: '',
+                        component: PatternList,
+                        name: 'shifts',
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        component: PatternList,
+                        name: 'shifts-create',
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'coaches',
+                children: [
+                    {
+                        path: '',
+                        component: CoachList,
+                        name: 'coaches',
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: ':id',
+                        component: CoachDetail,
+                        name: 'coaches-detail',
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'plans',
+                children: [
+                    {
+                        path: '',
+                        component: PatternList,
+                        name: 'plans',
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        component: PatternList,
+                        name: 'plans-create',
                         beforeEnter: ifAuthenticated,
                     },
                 ],
@@ -175,6 +202,12 @@ const routes = [
                         path: '',
                         component: PatternList,
                         name: 'patterns',
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        component: PatternList,
+                        name: 'patterns-create',
                         beforeEnter: ifAuthenticated,
                     },
                 ],
