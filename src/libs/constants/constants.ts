@@ -37,11 +37,13 @@ export const ACTIVE_STATUS = [
     {
         is_active: 0,
         label: '無効',
-        display: '<span class="status-label" style="background-color:#FF0000">無効</span>'
+        display:
+            '<span class="status-label" style="background-color:#FF0000">無効</span>',
     },
     {
         is_active: 1,
         label: '有効',
-        display: '<span class="status-label" style="background-color:#007BFF">有効</span>'
+        display:
+            '<span class="status-label" style="background-color:#007BFF">有効</span>',
     },
 ]

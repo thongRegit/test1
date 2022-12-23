@@ -23,7 +23,6 @@
                     :columns="columns"
                     :showIndex="false"
                     :showCheckbox="true"
-                    @cell-click="cellClick"
                     @change-page="handleChangePage"
                     @sort="sort"
                     :buttons="buttons"
@@ -107,7 +106,7 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'users-update', params: { id: row.id } })
+        router.push({ name: 'users-detail', params: { id: row.id } })
     }
 }
 
@@ -149,19 +148,9 @@ const handleChangePage = (page: any) => {
     getListData()
 }
 
-const cellClick = (row: any, column: any) => {
-    if (column.property === 'name') {
-        router.push({
-            name: 'users-detail',
-            params: { id: row.id },
-            replace: true,
-        })
-    }
-}
-
 const search = (search: UserSearchParam) => {
     loading.value = true
-    listQuery.value.search = search.name
+    listQuery.value.search = search.search
     listQuery.value.filters = [{ key: 'is_active', data: search.is_active }]
     listQuery.value.page = 1
     getListData()

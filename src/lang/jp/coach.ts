@@ -24,5 +24,21 @@ export default {
         created_at: '登録日',
         status: '有効/無効',
         edit: '編集',
+        invited: {
+            created_at: '日時',
+            full_name: '店舗',
+        },
+        sessions: {
+            date: '日時',
+            shop_name: '店舗',
+            plan_name: 'コース',
+            full_name: 'コース',
+            order_status: 'ステータス',
+        },
+    },
+    tabs: {
+        1: '基本設定',
+        2: '紹介者登録状況',
+        3: 'セッション',
     },
 }

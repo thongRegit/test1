@@ -23,6 +23,8 @@
                     :columns="columns"
                     :showIndex="false"
                     :showCheckbox="false"
+                    :buttons="buttons"
+                    @click-button="handleClickButtonTable"
                     @change-page="handleChangePage"
                     @sort="sort"
                 ></table-data>
@@ -39,8 +41,10 @@ import CoachSearchVue from './CoachSearchVue.vue'
 import type { CoachSearch } from '@/libs/interface/coachInterface'
 import { useI18n } from 'vue3-i18n'
 import { findStatus } from '@/libs/utils/common'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
 
 const loading = ref(true)
 
@@ -75,12 +79,6 @@ const columns = ref([
         sortable: true,
         class: '',
     },
-    {
-        prop: 'edit',
-        label: t('coach.columns.edit'),
-        sortable: false,
-        class: '',
-    },
 ])
 
 const listQuery = ref({
@@ -91,13 +89,23 @@ const listQuery = ref({
 
 const sortProp = reactive({ key: 'id', dir: 'descending' })
 
+const buttons = ref([
+    { id: '1', label: '編集', class: 'btn-action btn-update' },
+])
+
+const handleClickButtonTable = (classList: any, row: any) => {
+    if (classList.includes('btn-update')) {
+        router.push({ name: 'coaches-detail', params: { id: row.id } })
+    }
+}
+
 const data = ref({
     currentPage: 1,
     lastPage: 0,
     perPage: 20,
     records: [],
     total: 0,
-})
+} as any)
 
 const search = (search: CoachSearch) => {
     loading.value = true
@@ -108,7 +116,7 @@ const search = (search: CoachSearch) => {
 }
 
 const getListData = async () => {
-    let query = {
+    let query: any = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -124,7 +132,7 @@ const getListData = async () => {
     data.value.currentPage = coachStore.coaches.current_page
     data.value.perPage = coachStore.coaches.per_page
     data.value.records = coachStore.coaches.data.map((e: any) => {
-        const status = findStatus(e.is_active)
+        const status: any = findStatus(e.is_active)
         return {
             id: e.id,
             full_name: e.full_name,
@@ -163,7 +171,6 @@ onMounted(async () => {
     await nextTick()
     await getListData()
 })
-
 </script>
 
 <style></style>
