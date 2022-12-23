@@ -13,6 +13,7 @@ import {
     ReservationList,
     ReservationDetail,
     AccountList,
+    CoachList,
     ShopUpdate,
     ChangePassword,
     Login,
@@ -77,6 +78,17 @@ const routes = [
                         path: ':id/update',
                         name: 'shops-update',
                         component: ShopUpdate,
+                        beforeEnter: ifAuthenticated,
+                    },
+                ],
+            },
+            {
+                path: 'coaches',
+                children: [
+                    {
+                        path: '',
+                        component: CoachList,
+                        name: 'coaches',
                         beforeEnter: ifAuthenticated,
                     },
                 ],

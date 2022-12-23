@@ -2,6 +2,7 @@ import shop from './shop'
 import session from './session'
 import pattern from './pattern'
 import user from './user'
+import coach from './coach'
 import plan from "./plan";
 
 export const jp = {
@@ -84,5 +85,6 @@ export const jp = {
     session,
     pattern,
     user,
+    coach,
     plan
 }

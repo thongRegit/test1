@@ -47,7 +47,7 @@
                 <div class="el-group-title-child">
                     <h4>{{t('plan.form.discount_settings')}}</h4>
                 </div>
-                <el-form-item required v-for="item in ruleForm.plan_discounts">
+                <el-form-item required v-for="(item, index) in ruleForm.plan_discounts" :key="'plan-detail-'+ index">
                     <el-col :span="22">
                         <el-row>
                             <el-col :span="10">

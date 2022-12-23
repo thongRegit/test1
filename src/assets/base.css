@@ -87,3 +87,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.status-label {
+  color: white;
+  border-radius: 6px;
+  padding: 5px;
+}
