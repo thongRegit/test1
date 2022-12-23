@@ -53,7 +53,7 @@ export const jp = {
     update: '編集',
     gender: {
         male: '男性',
-        famale: '女性',
+        female: '女性',
         no_select: '選択なし',
     },
     no_file_choose: '選択されていません',

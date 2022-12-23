@@ -2,7 +2,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import * as userAPI from '@/api/userApi'
 import type {
-    User,
+    UserDetail,
     UserUpdate,
     ParamsUserList,
 } from '@/libs/interface/userInterface'
@@ -10,13 +10,13 @@ import type { ResponseList } from '@/libs/interface/commonInterface'
 
 export const useUserStore = defineStore('users', () => {
     const users = ref({} as ResponseList)
-    const user = ref({} as User)
+    const session_users = ref({} as ResponseList)
+    const cancel_fee_users = ref({} as ResponseList)
+    const user = ref({} as UserDetail)
 
     const listUser = async (payload: ParamsUserList) => {
         try {
-            const data = await userAPI.users('/users', {
-                params: payload,
-            })
+            const data = await userAPI.users(payload)
             users.value = data
         } catch (error) {
             console.log(error)
@@ -24,9 +24,38 @@ export const useUserStore = defineStore('users', () => {
         }
     }
 
-    const updateUser = async (payload: UserUpdate, id: number) => {
+    const listUserSession = async (
+        payload: ParamsUserList,
+        id: string | string[] | number
+    ) => {
         try {
-            await userAPI.update(`user/${id}/update`, payload)
+            const data = await userAPI.sessionUsers(payload, id)
+            session_users.value = data
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
+    const listUserCancelFee = async (
+        payload: ParamsUserList,
+        id: string | string[] | number
+    ) => {
+        try {
+            const data = await userAPI.cancelFeeUsers(payload, id)
+            cancel_fee_users.value = data
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
+    const updateUser = async (
+        payload: UserUpdate,
+        id: string | string[] | number
+    ) => {
+        try {
+            await userAPI.update(payload, id)
             await detailUser(id)
         } catch (error) {
             console.log(error)
@@ -34,9 +63,9 @@ export const useUserStore = defineStore('users', () => {
         }
     }
 
-    const detailUser = async (id: number) => {
+    const detailUser = async (id: string | string[] | number) => {
         try {
-            const data = await userAPI.user(`/user/${id}`)
+            const data = await userAPI.user(id)
             user.value = data
         } catch (error) {
             console.log(error)
@@ -46,8 +75,12 @@ export const useUserStore = defineStore('users', () => {
 
     return {
         users,
+        session_users,
+        cancel_fee_users,
         user,
         listUser,
+        listUserSession,
+        listUserCancelFee,
         detailUser,
         updateUser,
     }

@@ -6,11 +6,19 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <UserForm />
+            <el-tabs type="border-card">
+                <el-tab-pane :label="t('user.tabs.1')">
+                    <UserForm />
+                </el-tab-pane>
+                <el-tab-pane :label="t('user.tabs.2')">
+                    <UserListSession />
+                </el-tab-pane>
+                <el-tab-pane :label="t('user.tabs.3')">
+                    <UserListCancelFee />
+                </el-tab-pane>
+            </el-tabs>
         </template>
     </BoxVue>
-    <UserListSession />
-    <UserListCancelFee />
 </template>
 
 <script setup lang="ts">

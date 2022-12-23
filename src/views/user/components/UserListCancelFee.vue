@@ -1,29 +1,20 @@
 <template>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
-        <template v-slot:body>
-            <section class="box-list">
-                <table-data
-                    :data="data"
-                    :loading="loading"
-                    :columns="columns"
-                    :showIndex="false"
-                    :showCheckbox="true"
-                    @cell-click="cellClick"
-                    @change-page="handleChangePage"
-                    @sort="sort"
-                    :buttons="buttons"
-                    :hasCreate="false"
-                    @click-button="handleClickButtonTable"
-                    @click-checkbox="handleCheckbox"
-                ></table-data>
-            </section>
-        </template>
-    </BoxVue>
+    <section class="box-list">
+        <table-data
+            :data="data"
+            :loading="loading"
+            :columns="columns"
+            :showIndex="false"
+            :showCheckbox="true"
+            @cell-click="cellClick"
+            @change-page="handleChangePage"
+            @sort="sort"
+            :buttons="buttons"
+            :hasCreate="false"
+            @click-button="handleClickButtonTable"
+            @click-checkbox="handleCheckbox"
+        ></table-data>
+    </section>
 </template>
 
 <script setup lang="ts">
@@ -31,7 +22,6 @@ import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
-import BoxVue from '@/components/common/BoxVue.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -52,38 +42,32 @@ const data = ref({
 const loading = ref(true)
 const columns = ref([
     {
-        prop: 'full_name',
-        label: t('user.columns.full_name'),
+        prop: 'date',
+        label: t('user.columns.cancel_fees.date'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'tel',
-        label: t('user.columns.tel'),
+        prop: 'shop_name',
+        label: t('user.columns.cancel_fees.shop_name'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'created_at',
-        label: t('user.columns.created_at'),
+        prop: 'plan_name',
+        label: t('user.columns.cancel_fees.plan_name'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'first_experience_date',
-        label: t('user.columns.first_experience_date'),
+        prop: 'amount',
+        label: t('user.columns.cancel_fees.amount'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'last_session_date',
-        label: t('user.columns.last_session_date'),
-        sortable: false,
-        class: '',
-    },
-    {
-        prop: 'is_active',
-        label: t('user.columns.is_active'),
+        prop: 'cancelling_pay_status',
+        label: t('user.columns.cancel_fees.cancelling_pay_status'),
         sortable: false,
         class: '',
     },
@@ -112,20 +96,21 @@ const getListData = async () => {
     }
     query.filters = JSON.stringify(listQuery.value.filters)
 
+    const id = router.currentRoute.value.params.id
+
     const userStore = useUserStore()
-    await userStore.listUser(query)
-    data.value.total = userStore.users.total
-    data.value.currentPage = userStore.users.current_page
-    data.value.perPage = userStore.users.per_page
-    data.value.records = userStore.users.data.map((e: any) => {
+    await userStore.listUserCancelFee(query, id)
+    data.value.total = userStore.cancel_fee_users.total
+    data.value.currentPage = userStore.cancel_fee_users.current_page
+    data.value.perPage = userStore.cancel_fee_users.per_page
+    data.value.records = userStore.cancel_fee_users.data.map((e: any) => {
         return {
             id: e.id,
-            full_name: e.full_name,
-            tel: e.tel,
-            created_at: e.created_at,
-            first_experience_date: e.first_experience_date,
-            last_session_date: e.last_session_date,
-            is_active: `<span class="btn-status">${e.is_active}</span>`,
+            date: e.date,
+            shop_name: e.shop_name,
+            plan_name: e.plan_name,
+            amount: e.amount,
+            cancelling_pay_status: e.cancelling_pay_status,
         }
     })
     loading.value = false
