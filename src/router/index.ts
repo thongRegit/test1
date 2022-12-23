@@ -18,7 +18,11 @@ import {
     Login,
     PageNotFound,
     PatternList,
-} from '@/views/index'
+    PlanList,
+    PlanDetail,
+    PlanCreate,
+    PlanUpdate
+} from '@/views'
 
 const ifAuthenticated = (to: any, from: any, next: any) => {
     const authStore = useAuthStore()
@@ -231,6 +235,32 @@ const routes = [
                 component: PageNotFound,
                 name: 'page-not-found',
                 beforeEnter: ifAuthenticated,
+            },
+            {
+                path: 'plans',
+                beforeEnter: ifAuthenticated,
+                children: [
+                    {
+                        path: '',
+                        component: PlanList,
+                        name: 'plans',
+                    },
+                    {
+                        path: 'create',
+                        name: 'plans-create',
+                        component: PlanCreate
+                    },
+                    {
+                        path: ':id',
+                        name: 'plans-detail',
+                        component: PlanDetail,
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'plans-update',
+                        component: PlanUpdate
+                    },
+                ],
             },
         ],
     },

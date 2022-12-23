@@ -83,6 +83,12 @@
                         style="margin-right: 16px"
                         ><Checked
                     /></el-icon>
+                    <el-icon
+                        v-else-if="item.index == '6'"
+                        :size="24"
+                        style="margin-right: 16px"
+                    ><Document
+                    /></el-icon>
                     <template #title>{{ t(`${item.label}`) }}</template>
                 </el-menu-item>
                 <el-sub-menu

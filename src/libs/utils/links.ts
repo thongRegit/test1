@@ -55,4 +55,11 @@ export const SIDE_MENU_ADMIN = {
         class: '',
         menu_childs: [],
     },
+    plan: {
+        index: '6',
+        label: 'homepage.plan',
+        route: '/plans',
+        class: '',
+        menu_childs: [],
+    },
 }
