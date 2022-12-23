@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, reactive } from 'vue'
-import type { Shop } from '@/libs/interface/shopInterface'
+import type { Shop, updateShopPayload } from '@/libs/interface/shopInterface'
 import axios from '@/config/axios'
 export const useShopStore = defineStore('shops', () => {
     const shops = ref([] as any)
@@ -38,9 +38,9 @@ export const useShopStore = defineStore('shops', () => {
         }
     }
 
-    const updateShop = async (payload: any, id: any) => {
+    const updateShop = async (payload: updateShopPayload, id: number) => {
         try {
-            const data = await axios.put(`shops/${id}/update`, payload)
+            const data = await axios.put(`shops/${id}/`, payload)
             shop.value = data
         } catch (error) {
             console.log(error)
