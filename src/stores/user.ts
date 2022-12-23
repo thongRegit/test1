@@ -1,14 +1,20 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-import axios from '@/config/axios'
+import * as userAPI from '@/api/userApi'
+import type {
+    User,
+    UserUpdate,
+    ParamsUserList,
+} from '@/libs/interface/userInterface'
+import type { ResponseList } from '@/libs/interface/commonInterface'
 
-export const useUserStore = defineStore('question_type', () => {
-    const users = ref([] as any)
-    const user = ref({} as any)
+export const useUserStore = defineStore('users', () => {
+    const users = ref({} as ResponseList)
+    const user = ref({} as User)
 
-    const getUsers = async (payload: any) => {
+    const listUser = async (payload: ParamsUserList) => {
         try {
-            const data = await axios.get('/user', {
+            const data = await userAPI.users('/users', {
                 params: payload,
             })
             users.value = data
@@ -18,38 +24,20 @@ export const useUserStore = defineStore('question_type', () => {
         }
     }
 
-    const createUser = async (payload: any) => {
+    const updateUser = async (payload: UserUpdate, id: number) => {
         try {
-            const data = await axios.post('/user', payload)
+            await userAPI.update(`user/${id}/update`, payload)
+            await detailUser(id)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
+    const detailUser = async (id: number) => {
+        try {
+            const data = await userAPI.user(`/user/${id}`)
             user.value = data
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const updateUser = async (payload: any, id: any) => {
-        try {
-            const data = await axios.put(`user/${id}/update`, payload)
-            user.value = data
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const deleteUser = async (payload: any) => {
-        try {
-            return await axios.delete(`/user/${payload.id}`).then((res) => res)
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const getUser = async (payload: any) => {
-        try {
-            return await axios.get(`/user/${payload.id}`).then((res) => res)
         } catch (error) {
             console.log(error)
             return error
@@ -59,11 +47,9 @@ export const useUserStore = defineStore('question_type', () => {
     return {
         users,
         user,
-        getUsers,
-        getUser,
-        createUser,
+        listUser,
+        detailUser,
         updateUser,
-        deleteUser,
     }
 })
 

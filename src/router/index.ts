@@ -6,8 +6,8 @@ import {
     ShopList,
     ShopDetail,
     ShopCreate,
-    UserDetail,
     UserList,
+    UserDetail,
     SaleList,
     SaleDetail,
     ReservationList,
@@ -107,30 +107,18 @@ const routes = [
                 ],
             },
             {
-                path: 'user',
+                path: 'users',
                 children: [
                     {
                         path: '',
                         component: UserList,
-                        name: 'user',
-                        beforeEnter: ifAuthenticated,
-                    },
-                    {
-                        path: 'create',
-                        name: 'user-create',
-                        component: UserList,
+                        name: 'users',
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id',
-                        name: 'user-detail',
+                        name: 'users-detail',
                         component: UserDetail,
-                        beforeEnter: ifAuthenticated,
-                    },
-                    {
-                        path: ':id/update',
-                        name: 'user-update',
-                        component: UserList,
                         beforeEnter: ifAuthenticated,
                     },
                 ],

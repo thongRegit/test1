@@ -34,6 +34,7 @@ const props = defineProps({
 const title = toRef(props, 'title')
 const dialogFormVisible = toRef(props, 'open')
 const width = toRef(props, 'width')
+
 const emit = defineEmits(['cancel', 'submit', 'close'])
 
 const close = () => {

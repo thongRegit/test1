@@ -1,31 +1,3 @@
-export const LINKS_SIDEBAR = [
-    {
-        index: 1,
-        path: '/',
-        name: 'Home',
-    },
-    {
-        index: 2,
-        path: '/contacts',
-        name: 'Contact',
-    },
-    {
-        index: 3,
-        path: '/categories',
-        name: 'Category',
-    },
-    {
-        index: 4,
-        path: '/products',
-        name: 'Product',
-    },
-    {
-        index: -1,
-        path: '/login',
-        name: 'Login',
-    },
-]
-
 export const SIDE_MENU_ADMIN = {
     sales: {
         index: '1',
@@ -37,7 +9,7 @@ export const SIDE_MENU_ADMIN = {
     user: {
         index: '2',
         label: 'homepage.user',
-        route: '/user',
+        route: '/users',
         class: '',
         menu_childs: [],
     },

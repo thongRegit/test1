@@ -1,3 +1,4 @@
+import type { Pattern } from '@/libs/interface/patternInterface'
 export interface Shop {
     id: number
     name: string
@@ -29,4 +30,11 @@ export interface businessHourDetail {
 export interface ShopSearch {
     name: string
     status: string
+}
+
+export interface IndividuaSetting {
+    dayName: string,
+    isShowDetail: boolean,
+    patternList?: Array<Pattern> | [],
+    currentPattern?: Pattern | Object,
 }

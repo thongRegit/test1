@@ -1,5 +1,5 @@
 <template>
-    <h4 class="title mb-3">{{ t('shops.details.store_details') }}</h4>
+    <h4 class="title mb-3">{{ t('shop.details.store_details') }}</h4>
     <div class="shop-detail-block pb-18 mb-7">
         <div class="header-wrapper flex justify-between align-items-center p-4">
             <h4 class="title">{{ t('shops.details.basic_settings') }}</h4>
@@ -26,10 +26,19 @@
             </el-form-item>
 
             <el-form-item class="small-input">
-                <p>ステーション数</p>
-                <el-select v-model="numberStations" placeholder="選択">
-                    <el-option label="Zone one" value="shanghai" />
-                    <el-option label="Zone two" value="beijing" />
+                <p>営業時間設定</p>
+                <el-select
+                    v-model="currentPattern.id"
+                    placeholder="Session"
+                    class="pattern-input pattern-select"
+                    @change="updatePattern"
+                >
+                    <el-option
+                        v-for="(item, index) in patternList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="index"
+                    />
                 </el-select>
             </el-form-item>
             <div class="detail-session-wrapper mt-7">
@@ -42,11 +51,17 @@
                     </el-col>
                 </el-row>
                 <div class="sessions">
-                    <el-row class="item">
+                    <el-row
+                        class="item"
+                        v-for="(ssItem, index) in currentPattern.details"
+                        :key="index"
+                    >
                         <el-col :span="11">
                             <el-row class="align-items-center">
                                 <el-col :span="10">
-                                    <span class="text-info"> zxczxczxc</span>
+                                    <span class="text-info">
+                                        {{ ssItem.start_time }}
+                                    </span>
                                 </el-col>
                                 <el-col :span="4">
                                     <div
@@ -59,13 +74,17 @@
                                     <span
                                         class="text-info"
                                         style="margin-left: auto"
-                                        >asdasdasd</span
+                                    >
+                                        {{ ssItem.end_time }}
+                                    </span
                                     >
                                 </el-col>
                             </el-row>
                         </el-col>
                         <el-col :span="13" style="padding-left: 60px">
-                            <span class="text-info"> xcvs </span>
+                            <span class="text-info"> 
+                                {{ ssItem?.period?.value }}
+                            </span>
                         </el-col>
                     </el-row>
                 </div>
@@ -136,7 +155,7 @@ import { useI18n } from 'vue3-i18n'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useShopStore, usePatternStore } from '@/stores'
-import type { Shop } from '@/libs/interface/shopInterface'
+import type { Shop, IndividuaSetting } from '@/libs/interface/shopInterface'
 import type { Pattern } from '@/libs/interface/patternInterface'
 
 const shopStore = useShopStore()
@@ -150,6 +169,7 @@ const numberStations = ref('')
 const checked1 = ref(true)
 const shopDetail = ref({} as Shop)
 const patternList = ref([] as Array<Pattern>)
+const currentPattern = ref({} as Pattern)
 
 const getShopDetail = async () => {
     await shopStore.getdetailShop({ id })
@@ -171,6 +191,57 @@ const getListPattern = async () => {
     })
     console.log('patternList.value: ', patternList.value)
 }
+
+const updatePattern = (index: any) => {
+    if(patternList.value.length) {
+        currentPattern.value = patternList.value[index]
+    }
+}
+const individualData: Array<IndividuaSetting> = [
+    {
+        dayName: "Sunday",
+        isShowDetail: false,
+        patternList: [],
+        currentPattern: {},
+    },
+    {
+        dayName: "Monday",
+        isShowDetail: false,
+        patternList: [],
+        currentPattern: {},
+    },
+    {
+        dayName: "Tuesday",
+        isShowDetail: false,
+        currentPattern: {},
+    },
+    {
+        dayName: "Wednesday",
+        isShowDetail: false,
+        patternList: [],
+        currentPattern: {},
+    },
+    {
+        dayName: "Thursday",
+        isShowDetail: false,
+        patternList: [],
+        currentPattern: {},
+    },
+    {
+        dayName: "Friday",
+        isShowDetail: false,
+        patternList: [],
+        currentPattern: {},
+    },
+    {
+        dayName: "Saturday",
+        isShowDetail: false,
+        patternList: [],
+        currentPattern: {},
+    }
+]
+
+const individuaSettings = ref(individualData)
 
 onMounted(() => {
     getShopDetail()

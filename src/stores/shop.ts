@@ -21,7 +21,6 @@ export const useShopStore = defineStore('shops', () => {
             const data = await axios.get('/shops', {
                 params: payload,
             })
-            console.log('data :>> ', data)
             shops.value = data
         } catch (error) {
             console.log(error)
@@ -31,7 +30,6 @@ export const useShopStore = defineStore('shops', () => {
 
     const createShop = async (payload: any) => {
         try {
-            // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
             const data = await axios.post('/shops', payload)
             shop.value = data
         } catch (error) {
@@ -79,7 +77,6 @@ export const useShopStore = defineStore('shops', () => {
         createShop,
         updateShop,
         deleteShop,
-        updateSearch,
     }
 })
 
