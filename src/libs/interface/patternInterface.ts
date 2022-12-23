@@ -43,5 +43,5 @@ export interface patternPayload {
 
 export interface createPatternPayload {
     name: string
-    pattern_details: Array<Session>,
+    pattern_details: Array<Session>
 }

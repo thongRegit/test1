@@ -1,7 +1,7 @@
-// import { errors } from "./errors";
-import shops from './shops'
+import shop from './shop'
 import session from './session'
 import pattern from './pattern'
+import user from './user'
 
 export const jp = {
     login: 'ログイン',
@@ -21,7 +21,6 @@ export const jp = {
     is_here: 'こちら',
     format_password: '半角英数字記号8文字以上',
     send_mail_completed: 'メール通知が完了しました',
-    // errors: errors,
     noti_from_admin: '運営からのお知らせ',
     show_all_noti: '過去のお知らせはこちら',
     reset_account_completed:
@@ -39,7 +38,6 @@ export const jp = {
     btn_search: '検索',
     btn_clear: 'クリア',
     btn_create: '新規登録',
-    // companies: companies,
     table: {
         no_data: '該当のデータがありません。',
     },
@@ -80,7 +78,8 @@ export const jp = {
         reservation: '予約管理',
         account: 'アカウント管理',
     },
-    shops: shops,
+    shop,
     session,
     pattern,
+    user,
 }

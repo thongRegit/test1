@@ -4,6 +4,7 @@ import SidebarLayoutVue from './SidebarLayout.vue'
 import NavbarVue from './NavbarVue.vue'
 import BreadcrumbVue from './BreadcrumbVue.vue'
 import Image from './ImageVue.vue'
+import AlertVue from './AlertVue.vue'
 
 export {
     AppFooterVue,
@@ -12,4 +13,5 @@ export {
     NavbarVue,
     BreadcrumbVue,
     Image,
+    AlertVue,
 }
