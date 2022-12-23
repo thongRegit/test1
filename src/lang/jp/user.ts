@@ -44,4 +44,16 @@ export default {
         2: 'セッション',
         3: 'キャンセル料',
     },
+    detail: {
+        label: {
+            name: 'お名前',
+            name_furigana: 'お名前（ふりがな',
+            birthday: '生年月日',
+            tel: '電話番号',
+            line_name: 'LINE名',
+            gender: '性別',
+            status: 'ステータス',
+            is_active: '',
+        },
+    },
 }

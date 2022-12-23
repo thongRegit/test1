@@ -7,6 +7,8 @@ import type {
     ParamsUserList,
 } from '@/libs/interface/userInterface'
 import type { ResponseList } from '@/libs/interface/commonInterface'
+import { useAlertStore } from './alert'
+import { LoadingVue } from '@/components/common/loading'
 
 export const useUserStore = defineStore('users', () => {
     const users = ref({} as ResponseList)
@@ -54,9 +56,20 @@ export const useUserStore = defineStore('users', () => {
         payload: UserUpdate,
         id: string | string[] | number
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
+        payload.gender = Number(payload.gender)
+        payload.status = Number(payload.status)
+        payload.is_active = payload.is_active ? 1 : 0
+        console.log('payload >> ', payload)
         try {
             await userAPI.update(payload, id)
             await detailUser(id)
+            alertStore.createAlert({
+                title: `Update ${user.value.first_name} ${user.value.last_name} successfully!`,
+                type: 'success',
+            })
+            loading.close()
         } catch (error) {
             console.log(error)
             return error

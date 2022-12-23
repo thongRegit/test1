@@ -31,9 +31,9 @@ export interface UserDetail {
     birthdays: Date
     tel: string
     line_name: string
-    gender: string
-    status: string
-    is_active: boolean
+    gender: string | number
+    status: string | number
+    is_active: boolean | number
 }
 
 export interface UserUpdate {
@@ -43,9 +43,9 @@ export interface UserUpdate {
     last_name_furigana: string
     tel: string
     birthday: string
-    gender: string
-    status: string
-    is_active: boolean
+    gender: string | number
+    status: string | number
+    is_active: boolean | number
 }
 
 export interface ParamsOrders {
