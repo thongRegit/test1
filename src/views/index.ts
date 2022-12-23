@@ -8,10 +8,8 @@ const ShopCreate = () => import('@/views/shop/CreateVue.vue')
 const ShopUpdate = () => import('@/views/shop/EditVue.vue')
 const UserDetail = () => import('@/views/user/UserDetail.vue')
 const UserList = () => import('@/views/user/UserVue.vue')
-const SaleList = () => import('@/views/sale/SaleVue.vue')
-const SaleDetail = () => import('@/views/sale/DetailVue.vue')
-const ReservationList = () => import('@/views/reservation/ReservationVue.vue')
-const ReservationDetail = () => import('@/views/reservation/DetailVue.vue')
+const ReserveList = () => import('@/views/reserves/ReservesVue.vue')
+const ReserveDetail = () => import('@/views/reserves/DetailVue.vue')
 const AccountList = () => import('@/views/account/AccountVue.vue')
 const PatternList = () => import('@/views/pattern/PatternView.vue')
 const PatternCreate = () => import('@/views/pattern/CreateView.vue')
@@ -28,10 +26,8 @@ export {
     ShopUpdate,
     UserList,
     UserDetail,
-    SaleList,
-    SaleDetail,
-    ReservationList,
-    ReservationDetail,
+    ReserveList,
+    ReserveDetail,
     AccountList,
     PatternList,
     PatternCreate,
