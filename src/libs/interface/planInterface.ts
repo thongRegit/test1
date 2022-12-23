@@ -11,13 +11,12 @@ export interface PlanDiscount {
     frequency?: number
     discount_amount?: number
 }
-export interface PlanDetail {
+export interface PlanDetailPayload {
     id: number
     name: string
     type: number
-    period_value: string
+    period_id: number
     amount: number
     plan_discounts: Array<PlanDiscount>
-
-    first_experience?: boolean
+    is_active: boolean
 }

@@ -111,24 +111,13 @@ import BoxVue from "@/components/common/BoxVue.vue";
 import { useI18n } from 'vue3-i18n'
 import {usePatternStore, usePlanStore} from "@/stores";
 import {useRoute} from "vue-router";
-import {Period, Payload} from "@/libs/interface/planInterface";
+import {Period, Payload, PlanDetailPayload} from "@/libs/interface/planInterface";
 const route = useRoute()
 const { t } = useI18n()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
-let ruleForm = reactive({
-    name: '',
-    type: 1,
-    period_value: '',
-    period_id: 1,
-    amount: '',
-    plan_discounts:[{
-        frequency: '',
-        discount_amount: ''
-    }],
-    is_active: true
-})
+let ruleForm = ref({} as PlanDetailPayload)
 const rules = reactive<FormRules>({
     name: [
         {
@@ -171,20 +160,7 @@ const types = [
 ]
 
 const payload = ref({} as Payload)
-const data = ref({
-    id: null,
-    name: '',
-    type: 1,
-    period_value: '',
-    period_id: '',
-    amount: '',
-    plan_discounts:[{
-        frequency: '',
-        discount_amount: ''
-    }]
-})
 
-const planStore = usePlanStore()
 onMounted(async () => {
     await nextTick()
     payload.value.id = Number(route.params.id)
@@ -193,13 +169,17 @@ onMounted(async () => {
 })
 
 const getPlanDetail = async (payload: any) => {
+    const planStore = usePlanStore()
     await planStore.detailPlan(payload)
-    data.value = planStore.plan
-    ruleForm.name = data.value.name
-    ruleForm.type = data.value.type
-    ruleForm.period_id = data.value.period.id
-    ruleForm.amount = data.value.amount
-    ruleForm.plan_discounts = data.value.plan_discounts
+    ruleForm.value = {
+            id: planStore.plan.id,
+            name: planStore.plan.name,
+            type: planStore.plan.type,
+            period_id: planStore.plan.period.id,
+            amount: planStore.plan.amount,
+            plan_discounts: planStore.plan.plan_discounts,
+            is_active: Boolean(planStore.plan.is_active)
+    }
 }
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -207,28 +187,22 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             const planStore = usePlanStore()
-            planStore.updatePlan(ruleForm, data.value.id)
+            planStore.updatePlan(ruleForm.value, ruleForm.value.id)
         } else {
             console.log('error submit!', fields)
         }
     })
 }
 
-const resetForm = () => {
-    ruleForm.name = ''
-    ruleForm.type = 1
-    ruleForm.period_value =''
-    ruleForm.amount = ''
-    ruleForm.plan_discounts =[{
-        frequency: '',
-        discount_amount: ''
-    }]
+const resetForm = (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    formEl.resetFields()
 }
 
 const addBlock = () => {
-    ruleForm.plan_discounts.push({
-        frequency: '',
-        discount_amount: ''
+    ruleForm.value.plan_discounts.push({
+        frequency: undefined,
+        discount_amount: undefined
     })
 }
 

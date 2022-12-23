@@ -110,23 +110,13 @@ import type { FormInstance, FormRules } from 'element-plus'
 import BoxVue from "@/components/common/BoxVue.vue";
 import { useI18n } from 'vue3-i18n'
 import {usePatternStore, usePlanStore} from "@/stores";
-import {Period} from "@/libs/interface/planInterface";
+import {Period, PlanDetailPayload} from "@/libs/interface/planInterface";
 
 const { t } = useI18n()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
-let ruleForm = reactive({
-    name: '',
-    type : 1,
-    period_id: 1,
-    amount: '',
-    plan_discounts: [{
-        frequency: '',
-        discount_amount: ''}],
-    is_active: true
-})
-
+let ruleForm = ref({} as PlanDetailPayload)
 const rules = reactive<FormRules>({
     name: [
         {
@@ -178,29 +168,22 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             const planStore = usePlanStore()
-            planStore.createPlan(ruleForm)
-            resetForm()
+            planStore.createPlan(ruleForm.value)
         } else {
             console.log('error submit!', fields)
         }
     })
 }
 
-const resetForm = () => {
-    ruleForm.name = ''
-    ruleForm.type = 1
-    ruleForm.period_id = 1
-    ruleForm.amount = ''
-    ruleForm.plan_discounts =[{
-        frequency: '',
-        discount_amount: ''
-    }]
+const resetForm = (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    formEl.resetFields()
 }
 
 const addBlock = () => {
-    ruleForm.plan_discounts.push({
-        frequency: '',
-        discount_amount: ''})
+    ruleForm.value.plan_discounts.push({
+        frequency: undefined,
+        discount_amount: undefined})
 }
 const periods = ref([] as Array<Period>)
 const getPeriodData = async () => {

@@ -22,7 +22,16 @@
                 <el-form-item prop="session">
                     <p class="label">{{t('plan.form.session_time')}}</p>
                     <el-col :span="10">
-                        <el-input v-model="ruleForm.period_value" class="base-input" />
+                        <el-select
+                            v-model="ruleForm.period_id"
+                            :placeholder="t('shops.placeholders.select')">
+                            <el-option
+                                v-for="item in periods"
+                                :key="item.id"
+                                :label="`${item.value}分`"
+                                :value="item.id"
+                            />
+                        </el-select>
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="amount">
@@ -84,26 +93,17 @@ import {nextTick, onMounted, reactive, ref,} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import BoxVue from "@/components/common/BoxVue.vue";
 import {useI18n} from 'vue3-i18n'
-import {usePlanStore} from "@/stores";
+import {usePatternStore, usePlanStore} from "@/stores";
 import {useRoute} from "vue-router";
 import type {Payload} from "@/libs/interface/planInterface";
+import {Period, PlanDetailPayload} from "@/libs/interface/planInterface";
 
 const { t } = useI18n()
 const route = useRoute()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
-let ruleForm = reactive({
-    name: '',
-    type: 1,
-    period_value: '',
-    amount: '',
-    plan_discounts: [{
-        frequency: '',
-        discount_amount: ''}],
-    is_active: true,
-    period_id: null
-})
+let ruleForm = ref({} as PlanDetailPayload)
 const payload = ref({} as Payload)
 
 const rules = reactive<FormRules>({
@@ -151,17 +151,21 @@ onMounted(async () => {
     await nextTick()
     payload.value.id = Number(route.params.id)
     await getPlanDetail(payload.value)
+    await getPeriodData()
 })
 
 const getPlanDetail = async (payload: any) => {
     const planStore = usePlanStore()
     await planStore.detailPlan(payload)
-    const data = planStore.plan
-    ruleForm.name = data.name
-    ruleForm.type = data.type
-    ruleForm.period_value = data.period.value + '分'
-    ruleForm.amount = data.amount
-    ruleForm.plan_discounts = data.plan_discounts
+    ruleForm.value = {
+        id: planStore.plan.id,
+        name: planStore.plan.name,
+        type: planStore.plan.type,
+        period_id: planStore.plan.period.id,
+        amount: planStore.plan.amount,
+        plan_discounts: planStore.plan.plan_discounts,
+        is_active: Boolean(planStore.plan.is_active)
+    }
 }
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -178,5 +182,17 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
+}
+
+const periods = ref([] as Array<Period>)
+const getPeriodData = async () => {
+    const patternStore = usePatternStore()
+    await patternStore.getPeriod()
+    periods.value = patternStore.periods?.map((e: Period) => {
+        return {
+            id: e.id,
+            value: e.value,
+        }
+    })
 }
 </script>
