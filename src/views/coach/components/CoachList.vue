@@ -163,7 +163,6 @@ onMounted(async () => {
     await nextTick()
     await getListData()
 })
-
 </script>
 
 <style></style>

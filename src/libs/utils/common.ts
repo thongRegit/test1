@@ -10,5 +10,5 @@ export const findIndex = (arr: any, index: number): number => {
 }
 
 export const findStatus = (isActive: number) => {
-    return ACTIVE_STATUS.find(item => item.is_active == isActive)
+    return ACTIVE_STATUS.find((item) => item.is_active == isActive)
 }
