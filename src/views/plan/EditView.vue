@@ -136,7 +136,7 @@ const rules = reactive<FormRules>({
             message: 'Please input Activity name',
             trigger: 'blur',
         },
-        { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+        { min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur' },
     ],
     type: [
         {
@@ -152,23 +152,7 @@ const rules = reactive<FormRules>({
             message: 'Please input activity form',
             trigger: 'blur',
         },
-    ],
-    frequency: [
-        {
-            type: 'number',
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-        },
-    ],
-    discount_amount: [
-        {
-            type: 'number',
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-        },
-    ],
+    ]
 })
 
 const types = [
@@ -192,6 +176,7 @@ const data = ref({
     name: '',
     type: 1,
     period_value: '',
+    period_id: '',
     amount: '',
     plan_discounts:[{
         frequency: '',
@@ -212,7 +197,7 @@ const getPlanDetail = async (payload: any) => {
     data.value = planStore.plan
     ruleForm.name = data.value.name
     ruleForm.type = data.value.type
-    ruleForm.period_value = data.value.period_value
+    ruleForm.period_id = data.value.period.id
     ruleForm.amount = data.value.amount
     ruleForm.plan_discounts = data.value.plan_discounts
 }

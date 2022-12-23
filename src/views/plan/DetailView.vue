@@ -102,7 +102,7 @@ let ruleForm = reactive({
         frequency: '',
         discount_amount: ''}],
     is_active: true,
-    period_id: ''
+    period_id: null
 })
 const payload = ref({} as Payload)
 
@@ -113,7 +113,7 @@ const rules = reactive<FormRules>({
             message: 'Please input Activity name',
             trigger: 'blur',
         },
-        { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+        { min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur' },
     ],
     type: [
         {
@@ -159,7 +159,7 @@ const getPlanDetail = async (payload: any) => {
     const data = planStore.plan
     ruleForm.name = data.name
     ruleForm.type = data.type
-    ruleForm.period_value = data.period_value
+    ruleForm.period_value = data.period.value + '分'
     ruleForm.amount = data.amount
     ruleForm.plan_discounts = data.plan_discounts
 }

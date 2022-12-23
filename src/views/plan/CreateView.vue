@@ -134,7 +134,7 @@ const rules = reactive<FormRules>({
             message: 'Please input Activity name',
             trigger: 'blur',
         },
-        { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+        { min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur' },
     ],
     type: [
         {
@@ -150,21 +150,7 @@ const rules = reactive<FormRules>({
             message: 'Please input activity form',
             trigger: 'blur',
         },
-    ],
-    frequency: [
-        {
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-        },
-    ],
-    discount_amount: [
-        {
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-        }
-    ],
+    ]
 })
 
 const types = [
@@ -193,6 +179,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         if (valid) {
             const planStore = usePlanStore()
             planStore.createPlan(ruleForm)
+            resetForm()
         } else {
             console.log('error submit!', fields)
         }
