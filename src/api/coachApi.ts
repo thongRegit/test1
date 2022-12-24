@@ -1,9 +1,9 @@
 import request from '@/config/axios'
-import type { UserDetail } from '@/libs/interface/userInterface'
+import type { CoachDetail } from '@/libs/interface/coachInterface'
 import type { ResponseList } from '@/libs/interface/commonInterface'
 
-export const users = (payload: object | {}) => {
-    const url = '/users'
+export const coaches = (payload: object | {}) => {
+    const url = '/coaches'
     return request<ResponseList, ResponseList>({
         url,
         method: 'GET',
@@ -11,11 +11,11 @@ export const users = (payload: object | {}) => {
     })
 }
 
-export const sessionUsers = (
+export const sessionCoaches = (
     payload: object | {},
     id: string | string[] | number
 ) => {
-    const url = `/users/${id}/sessions`
+    const url = `/coaches/${id}/sessions`
     return request<ResponseList, ResponseList>({
         url,
         method: 'GET',
@@ -23,11 +23,11 @@ export const sessionUsers = (
     })
 }
 
-export const cancelFeeUsers = (
+export const invitedCoaches = (
     payload: object | {},
     id: string | string[] | number
 ) => {
-    const url = `/users/${id}/cancel-fee`
+    const url = `/coaches/${id}/invited`
     return request<ResponseList, ResponseList>({
         url,
         method: 'GET',
@@ -35,9 +35,9 @@ export const cancelFeeUsers = (
     })
 }
 
-export const user = (id: string | string[] | number) => {
-    const url = `/users/${id}`
-    return request<UserDetail, UserDetail, UserDetail>({
+export const coach = (id: string | string[] | number) => {
+    const url = `/coaches/${id}`
+    return request<CoachDetail, CoachDetail, CoachDetail>({
         url,
         method: 'GET',
     })
@@ -47,7 +47,7 @@ export const update = (
     payload: object | {},
     id: string | string[] | number
 ) => {
-    const url = `/users/${id}`
+    const url = `/coaches/${id}/update`
     return request({
         url,
         method: 'PUT',

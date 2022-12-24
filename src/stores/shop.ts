@@ -2,6 +2,9 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, reactive } from 'vue'
 import type { Shop, updateShopPayload } from '@/libs/interface/shopInterface'
 import axios from '@/config/axios'
+import { LoadingVue } from '@/components/common/loading'
+import { useAlertStore } from './alert'
+
 export const useShopStore = defineStore('shops', () => {
     const shops = ref([] as any)
     const shop = ref({} as any)
@@ -39,9 +42,17 @@ export const useShopStore = defineStore('shops', () => {
     }
 
     const updateShop = async (payload: updateShopPayload, id: number) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
+
         try {
             const data = await axios.put(`shops/${id}/`, payload)
             shop.value = data
+            alertStore.createAlert({
+                title: `Update successfully!`,
+                type: 'success',
+            })
+            loading.close()
         } catch (error) {
             console.log(error)
             return error

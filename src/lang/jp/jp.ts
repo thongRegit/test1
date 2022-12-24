@@ -2,6 +2,8 @@ import shop from './shop'
 import session from './session'
 import pattern from './pattern'
 import user from './user'
+import coach from './coach'
+import plan from "./plan";
 
 export const jp = {
     login: 'ログイン',
@@ -52,7 +54,7 @@ export const jp = {
     update: '編集',
     gender: {
         male: '男性',
-        famale: '女性',
+        female: '女性',
         no_select: '選択なし',
     },
     no_file_choose: '選択されていません',
@@ -72,14 +74,21 @@ export const jp = {
         },
     },
     homepage: {
-        sales: '売上管理',
-        user: 'ユーザー一覧',
         shops: '店舗管理',
-        reservation: '予約管理',
-        account: 'アカウント管理',
+        sessions: 'セッション管理',
+        shifts: 'シフト管理',
+        users: 'ユーザ管理',
+        user_detail: 'ユーザー詳細　高木慎太郎（{age}歳）',
+        coaches: 'スタッフ管理',
+        coach_detail: 'エナジスト詳細　高木慎太郎',
+        reserves: '予約管理',
+        plans: 'プラン管理',
+        patterns: 'パータン管理',
     },
     shop,
     session,
     pattern,
     user,
+    coach,
+    plan
 }
