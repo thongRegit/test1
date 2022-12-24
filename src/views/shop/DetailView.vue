@@ -82,7 +82,11 @@
                         </el-col>
                         <el-col :span="13" style="padding-left: 60px">
                             <span class="text-info">
-                                {{ ssItem?.period?.value }}
+                                {{
+                                    `${ssItem?.period?.value} ${t(
+                                        'pattern.minute'
+                                    )}`
+                                }}
                             </span>
                         </el-col>
                     </el-row>
@@ -165,7 +169,11 @@
                         </el-col>
                         <el-col :span="13" style="padding-left: 60px">
                             <span class="text-info">
-                                {{ ssItem?.period?.value }}
+                                {{
+                                    `${ssItem?.period?.value} ${t(
+                                        'pattern.minute'
+                                    )}`
+                                }}
                             </span>
                         </el-col>
                     </el-row>
