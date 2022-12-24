@@ -43,7 +43,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
 import ShopSearchVue from './ShopSearch.vue'
-import type { ShopSearch } from '@/libs/interface/shopInterface'
+import type { ShopSearch, ShopListPayload } from '@/libs/interface/shopInterface'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -90,14 +90,14 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'shops-update', params: { id: row.id } })
+        router.push({ name: 'shops-detail', params: { id: row.id } })
     }
 }
 
 const handleCheckbox = () => {}
 
 const getListData = async () => {
-    let query = {
+    let query: ShopListPayload = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,

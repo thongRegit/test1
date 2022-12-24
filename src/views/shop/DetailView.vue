@@ -191,7 +191,7 @@ import { useShopStore, usePatternStore } from '@/stores'
 import type {
     Shop,
     BusinessHour,
-    updateShopPayload,
+    UpdateShopPayload,
     BusinessHourForAPI,
 } from '@/libs/interface/shopInterface'
 import type { Pattern } from '@/libs/interface/patternInterface'
@@ -210,7 +210,7 @@ const currentPatternIndex = ref()
 
 const individuaSettings = ref(individualData)
 const getShopDetail = async () => {
-    await shopStore.getdetailShop({ id })
+    await shopStore.getDetailShop(id: number)
     shopDetail.value = shopStore.shopDetail
     shopStore.shopDetail.business_hours.forEach((el: BusinessHour) => {
         individuaSettings.value[el.day - 1].currentSessionsList = [
@@ -282,7 +282,7 @@ const updateShopDetail = async () => {
         }
     })
 
-    const payloadData: updateShopPayload = {
+    const payloadData: UpdateShopPayload = {
         id: shopDetail.value.id,
         name: shopDetail.value.name,
         station_amount: shopDetail.value.station_amount,

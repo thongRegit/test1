@@ -1,29 +1,18 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, reactive } from 'vue'
-import type { Shop, updateShopPayload } from '@/libs/interface/shopInterface'
-import axios from '@/config/axios'
+import { ref } from 'vue'
+import type { Shop, UpdateShopPayload, ShopListPayload } from '@/libs/interface/shopInterface'
 import { LoadingVue } from '@/components/common/loading'
 import { useAlertStore } from './alert'
+import * as shopApi from '@/api/shopApi'
 
 export const useShopStore = defineStore('shops', () => {
     const shops = ref([] as any)
     const shop = ref({} as any)
     const shopDetail = ref({} as Shop)
-    const search = reactive({
-        name: '',
-        status: ['all'],
-    })
 
-    const updateSearch = async (payload: any) => {
-        search.name = payload.name
-        search.status = payload.status
-    }
-
-    const listShop = async (payload: any) => {
+    const listShop = async (payload: ShopListPayload) => {
         try {
-            const data = await axios.get('/shops', {
-                params: payload,
-            })
+            const data = await shopApi.getListShop(payload)
             shops.value = data
         } catch (error) {
             console.log(error)
@@ -31,22 +20,11 @@ export const useShopStore = defineStore('shops', () => {
         }
     }
 
-    const createShop = async (payload: any) => {
-        try {
-            const data = await axios.post('/shops', payload)
-            shop.value = data
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const updateShop = async (payload: updateShopPayload, id: number) => {
+    const updateShop = async (payload: UpdateShopPayload, id: number) => {
         const alertStore = useAlertStore()
         const loading = LoadingVue()
-
         try {
-            const data = await axios.put(`shops/${id}/`, payload)
+            const data = await shopApi.updateShop(id, payload)
             shop.value = data
             alertStore.createAlert({
                 title: `Update successfully!`,
@@ -59,18 +37,9 @@ export const useShopStore = defineStore('shops', () => {
         }
     }
 
-    const deleteShop = async (payload: any) => {
+    const getDetailShop = async (id: number) => {
         try {
-            return await axios.delete(`/shops/${payload.id}`).then((res) => res)
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const getdetailShop = async (payload: any) => {
-        try {
-            const data = await axios.get(`/shops/${payload.id}`)
+            const data = await shopApi.getShopDetail(id)
             shopDetail.value = data
         } catch (error) {
             console.log(error)
@@ -81,13 +50,10 @@ export const useShopStore = defineStore('shops', () => {
     return {
         shops,
         shop,
-        search,
         shopDetail,
         listShop,
-        getdetailShop,
-        createShop,
+        getDetailShop,
         updateShop,
-        deleteShop,
     }
 })
 

@@ -44,7 +44,7 @@ export interface IndividuaSetting {
     patternIndex?: number
 }
 
-export interface updateShopPayload {
+export interface UpdateShopPayload {
     id: number
     name: string
     station_amount: number
@@ -58,3 +58,12 @@ export interface BusinessHourForAPI {
     start_time?: string
     end_time?: string
 }
+
+export interface ShopListPayload {
+    ['orders[0][key]']: string
+    ['orders[0][dir]']: string
+    page: number
+    search: string
+    per_page: 10
+    filters: string
+} 
