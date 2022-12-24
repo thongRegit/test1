@@ -283,6 +283,16 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
     }
 }
 
+.justify-center {
+    .el-form-item__content {
+        justify-content: center;
+    }
+}
+
+.text-align-center {
+    text-align: center
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

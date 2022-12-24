@@ -39,31 +39,55 @@
                         v-if="item.index == '1'"
                         :size="24"
                         style="margin-right: 16px"
-                        ><Histogram
+                        ><Discount
                     /></el-icon>
                     <el-icon
                         v-else-if="item.index == '2'"
                         :size="24"
                         style="margin-right: 16px"
-                        ><UserFilled
+                        ><Collection
                     /></el-icon>
                     <el-icon
                         v-else-if="item.index == '3'"
                         :size="24"
                         style="margin-right: 16px"
-                        ><Document
+                        ><Postcard
                     /></el-icon>
                     <el-icon
                         v-else-if="item.index == '4'"
                         :size="24"
                         style="margin-right: 16px"
-                        ><Document
+                        ><UserFilled
                     /></el-icon>
                     <el-icon
                         v-else-if="item.index == '5'"
                         :size="24"
                         style="margin-right: 16px"
-                        ><UserFilled
+                        ><Avatar
+                    /></el-icon>
+                    <el-icon
+                        v-else-if="item.index == '6'"
+                        :size="24"
+                        style="margin-right: 16px"
+                        ><Reading
+                    /></el-icon>
+                    <el-icon
+                        v-else-if="item.index == '7'"
+                        :size="24"
+                        style="margin-right: 16px"
+                        ><DocumentAdd
+                    /></el-icon>
+                    <el-icon
+                        v-else-if="item.index == '8'"
+                        :size="24"
+                        style="margin-right: 16px"
+                        ><Checked
+                    /></el-icon>
+                    <el-icon
+                        v-else-if="item.index == '6'"
+                        :size="24"
+                        style="margin-right: 16px"
+                    ><Document
                     /></el-icon>
                     <template #title>{{ t(`${item.label}`) }}</template>
                 </el-menu-item>

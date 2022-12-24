@@ -34,6 +34,21 @@ export const FORMAT_DAY = (day: any, format = 'YYYY-MM-DD') => {
     return dayjs(new Date(day)).format(format)
 }
 
+export const ACTIVE_STATUS = [
+    {
+        is_active: 0,
+        label: '無効',
+        display:
+            '<span class="status-label" style="background-color:#FF0000">無効</span>',
+    },
+    {
+        is_active: 1,
+        label: '有効',
+        display:
+            '<span class="status-label" style="background-color:#007BFF">有効</span>',
+    },
+]
+
 // individual setting for ShopDetail screen
 export const individualData: Array<IndividuaSetting> = [
     {

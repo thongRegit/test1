@@ -5,8 +5,7 @@
             :loading="loading"
             :columns="columns"
             :showIndex="false"
-            :showCheckbox="true"
-            @cell-click="cellClick"
+            :showCheckbox="false"
             @change-page="handleChangePage"
             @sort="sort"
             :buttons="buttons"
@@ -19,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useUserStore } from '@/stores'
+import { useCoachStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 
@@ -43,31 +42,31 @@ const loading = ref(true)
 const columns = ref([
     {
         prop: 'date',
-        label: t('user.columns.sessions.date'),
+        label: t('coach.columns.sessions.date'),
+        sortable: false,
+        class: '',
+    },
+    {
+        prop: 'full_name',
+        label: t('coach.columns.sessions.full_name'),
         sortable: false,
         class: '',
     },
     {
         prop: 'shop_name',
-        label: t('user.columns.sessions.shop_name'),
+        label: t('coach.columns.sessions.shop_name'),
         sortable: false,
         class: '',
     },
     {
         prop: 'plan_name',
-        label: t('user.columns.sessions.plan_name'),
+        label: t('coach.columns.sessions.plan_name'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'coach_name',
-        label: t('user.columns.sessions.coach_name'),
-        sortable: false,
-        class: '',
-    },
-    {
-        prop: 'status',
-        label: t('user.columns.sessions.status'),
+        prop: 'order_status',
+        label: t('coach.columns.sessions.order_status'),
         sortable: false,
         class: '',
     },
@@ -98,19 +97,19 @@ const getListData = async () => {
 
     const id = router.currentRoute.value.params.id
 
-    const userStore = useUserStore()
-    await userStore.listUserSession(query, id)
-    data.value.total = userStore.session_users.total
-    data.value.currentPage = userStore.session_users.current_page
-    data.value.perPage = userStore.session_users.per_page
-    data.value.records = userStore.session_users.data.map((e: any) => {
+    const userStore = useCoachStore()
+    await userStore.listCoachSession(query, id)
+    data.value.total = userStore.session_coaches.total
+    data.value.currentPage = userStore.session_coaches.current_page
+    data.value.perPage = userStore.session_coaches.per_page
+    data.value.records = userStore.session_coaches.data.map((e: any) => {
         return {
             id: e.id,
-            date: e.date,
+            date: e.start_time + ' - ' + e.end_time,
             shop_name: e.shop_name,
-            plan_name: e.plan_name,
-            coach_name: e.coach_first_name + ' ' + e.coach_last_name,
-            status: e.status,
+            plan_name: e.plan_type,
+            full_name: 'full_name',
+            order_status: e.order_status,
         }
     })
     loading.value = false
@@ -120,16 +119,6 @@ const handleChangePage = (page: any) => {
     loading.value = true
     listQuery.value.page = page
     getListData()
-}
-
-const cellClick = (row: any, column: any) => {
-    if (column.property === 'name') {
-        router.push({
-            name: 'users-detail',
-            params: { id: row.id },
-            replace: true,
-        })
-    }
 }
 
 const sort = (sortProps: any) => {

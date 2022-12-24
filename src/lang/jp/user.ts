@@ -24,5 +24,36 @@ export default {
         last_session_date: '最終セッション日',
         is_active: '有効/無効',
         edit: '編集',
+        sessions: {
+            date: '日時',
+            shop_name: '店舗',
+            plan_name: 'コース',
+            coach_name: 'エナジスト',
+            status: 'ステータス',
+        },
+        cancel_fees: {
+            date: '日時',
+            shop_name: '店舗',
+            plan_name: 'コース',
+            amount: '料金',
+            cancelling_pay_status: 'ステータス',
+        },
+    },
+    tabs: {
+        1: '基本設定',
+        2: 'セッション',
+        3: 'キャンセル料',
+    },
+    detail: {
+        label: {
+            name: 'お名前',
+            name_furigana: 'お名前（ふりがな',
+            birthday: '生年月日',
+            tel: '電話番号',
+            line_name: 'LINE名',
+            gender: '性別',
+            status: 'ステータス',
+            is_active: '',
+        },
     },
 }

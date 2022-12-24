@@ -16,17 +16,36 @@ export interface User {
     created_at: number
 }
 
+export interface Date {
+    day: string
+    month: string
+    year: string
+}
+export interface UserDetail {
+    id?: number
+    first_name: string
+    last_name: string
+    first_name_furigana: string
+    last_name_furigana: string
+    birthday: string
+    birthdays: Date
+    tel: string
+    line_name: string
+    gender: string | number
+    status: string | number
+    is_active: boolean | number
+}
+
 export interface UserUpdate {
     first_name: string
     last_name: string
     first_name_furigana: string
     last_name_furigana: string
     tel: string
-    avatar_url: string
-    gender: number
     birthday: string
-    status: number
-    is_active: number
+    gender: string | number
+    status: string | number
+    is_active: boolean | number
 }
 
 export interface ParamsOrders {
@@ -49,6 +68,6 @@ export interface ParamsUserList {
 }
 
 export interface UserSearchParam {
-    name: string
+    search: string
     is_active: string
 }
