@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
 import type {
     PatternData,
@@ -10,6 +10,7 @@ import type {
 import { useAlertStore } from './alert'
 import { LoadingVue } from '@/components/common/loading'
 import { makeNotification } from '@/libs/constants/constants'
+import * as patternAPI from '@/api/patternAPI'
 
 export const usePatternStore = defineStore('question_type', () => {
     const patterns: any = ref({} as PatternData)
@@ -18,9 +19,7 @@ export const usePatternStore = defineStore('question_type', () => {
 
     const listPattern = async (payload: patternPayload) => {
         try {
-            const data = await axios.get('/patterns', {
-                params: payload,
-            })
+            const data = await patternAPI.getListPattern(payload)
             patterns.value = data
         } catch (error) {
             makeNotification('error', 'Error', error?.message)
@@ -35,8 +34,7 @@ export const usePatternStore = defineStore('question_type', () => {
         const alertStore = useAlertStore()
         const loading = LoadingVue()
         try {
-            // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
-            const data = await axios.post('/patterns/create', payload)
+            const data = await patternAPI.createPattern(payload)
             pattern.value = data
             if (cb) {
                 cb()
@@ -61,7 +59,7 @@ export const usePatternStore = defineStore('question_type', () => {
         const alertStore = useAlertStore()
         const loading = LoadingVue()
         try {
-            const data = await axios.put(`patterns/${id}/update`, payload)
+            const data = await patternAPI.updatePattern(payload, id)
             pattern.value = data.data
             if (cb) {
                 cb()
