@@ -7,6 +7,8 @@ import type {
     createPatternPayload,
     Period,
 } from '@/libs/interface/patternInterface'
+import { useAlertStore } from './alert'
+import { LoadingVue } from '@/components/common/loading'
 
 export const usePatternStore = defineStore('question_type', () => {
     const patterns: any = ref({} as PatternData)
@@ -29,6 +31,8 @@ export const usePatternStore = defineStore('question_type', () => {
         payload: createPatternPayload,
         cb?: Function
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
         try {
             // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
             const data = await axios.post('/patterns/create', payload)
@@ -36,6 +40,11 @@ export const usePatternStore = defineStore('question_type', () => {
             if (cb) {
                 cb()
             }
+            alertStore.createAlert({
+                title: `Create pattern successfully!`,
+                type: 'success',
+            })
+            loading.close()
         } catch (error) {
             console.log(error)
             return error
@@ -47,12 +56,19 @@ export const usePatternStore = defineStore('question_type', () => {
         id: number,
         cb?: Function
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
         try {
             const data = await axios.put(`patterns/${id}/update`, payload)
             pattern.value = data.data
             if (cb) {
                 cb()
             }
+            alertStore.createAlert({
+                title: `Update pattern successfully!`,
+                type: 'success',
+            })
+            loading.close()
         } catch (error) {
             console.log(error)
             return error

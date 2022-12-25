@@ -2,7 +2,7 @@
     <div class="pattern-list-wrapper">
         <div class="header">
             <h4>{{ t('pattern.pattern_management') }}</h4>
-            <el-button type="primary" @click="onClickCreateBtn">
+            <el-button color="#007BFF" @click="onClickCreateBtn">
                 {{ t('pattern.create_new') }}
             </el-button>
         </div>
@@ -25,10 +25,10 @@
                 </div>
                 <div class="detail-wrapper">
                     <el-row class="title">
-                        <el-col :span="11">
+                        <el-col :span="10">
                             <p>{{ t('pattern.business_hours') }}</p>
                         </el-col>
-                        <el-col :span="13" style="padding-left: 60px">
+                        <el-col :span="5" style="padding-left: 60px">
                             <p>{{ t('pattern.session_time') }}</p>
                         </el-col>
                     </el-row>
@@ -38,7 +38,7 @@
                             v-for="(ssItem, index) in ptItem.details"
                             :key="index"
                         >
-                            <el-col :span="11">
+                            <el-col :span="10">
                                 <el-row>
                                     <el-col :span="10">
                                         <span class="text-info">
@@ -53,13 +53,13 @@
                                         </div>
                                     </el-col>
                                     <el-col :span="10">
-                                        <span class="text-info">{{
+                                        <span class="text-info last">{{
                                             ssItem.end_time
                                         }}</span>
                                     </el-col>
                                 </el-row>
                             </el-col>
-                            <el-col :span="13" style="padding-left: 60px">
+                            <el-col :span="5" style="padding-left: 60px">
                                 <span class="text-info">
                                     {{
                                         `${ssItem.period.value}${t(
@@ -150,7 +150,7 @@ onMounted(async () => {
         margin-bottom: 45px;
 
         h4 {
-            color: #171725;
+            color: #212529;
             font-size: 24px;
             font-weight: bold;
         }
@@ -163,7 +163,7 @@ onMounted(async () => {
             border: 1px solid #707070;
             background: white;
             font-size: 16px;
-            padding: 22px 68px;
+            padding: 22px 68px 22px 20px;
             margin-bottom: 15px;
             &:last-child {
                 margin-bottom: 0;
@@ -171,10 +171,10 @@ onMounted(async () => {
             .title-wrapper {
                 display: flex;
                 align-items: center;
-
+                max-width: 950px;
                 h5 {
                     font-size: 16px;
-                    color: #171725;
+                    color: #212529;
                     font-weight: bold;
                     margin-right: 20px;
                 }
@@ -182,9 +182,11 @@ onMounted(async () => {
 
             .detail-wrapper {
                 margin-top: 26px;
-
+                padding-left: 48px;
+                max-width: 950px;
                 .title {
                     margin-bottom: 10px;
+                    color: #212529;
                     p {
                         font-weight: bold;
                     }
@@ -200,8 +202,12 @@ onMounted(async () => {
                         padding: 0 18px;
                         border-radius: 5px;
                         color: white;
+                        &.last {
+                            margin-left: auto;
+                        }
                     }
                     .item {
+                        align-items: center;
                         margin-bottom: 20px;
                         &:last-child {
                             margin-bottom: 0;
