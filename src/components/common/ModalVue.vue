@@ -15,8 +15,8 @@
         <slot name="body"></slot>
         <template #footer>
             <div class="dialog-footer">
-                <el-button @click="close">キャンセル</el-button>
-                <el-button type="primary" @click="onSubmit"> 更新 </el-button>
+                <el-button color="#717171" @click="close">キャンセル</el-button>
+                <el-button color="#0069D9" @click="onSubmit"> 更新 </el-button>
             </div>
         </template>
     </el-dialog>

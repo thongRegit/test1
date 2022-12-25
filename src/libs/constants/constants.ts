@@ -47,3 +47,19 @@ export const ACTIVE_STATUS = [
             '<span class="status-label" style="background-color:#007BFF">有効</span>',
     },
 ]
+
+export function generateTimeArr() {
+    let startTime = dayjs('00:00', 'HH:mm')
+    const endTime = dayjs('12:00', 'HH:mm')
+
+    if (endTime.isBefore(startTime)) {
+        endTime.add(1, 'day')
+    }
+    const timeArr = []
+
+    while (endTime.diff(startTime, 'minutes') >= 0) {
+        timeArr.push(dayjs(startTime).format('HH:mm'))
+        startTime = startTime.add(30, 'minute')
+    }
+    return timeArr
+}
