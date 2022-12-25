@@ -142,7 +142,6 @@ import type {
     Pattern,
     SessionEl,
 } from '@/libs/interface/patternInterface'
-import { generateTimeArr } from '@/libs/constants/constants'
 import { useI18n } from 'vue3-i18n'
 
 const ruleFormRef = ref<FormInstance>()
@@ -150,7 +149,6 @@ const { t } = useI18n()
 const patternStore = usePatternStore()
 const isShowModal = ref(false)
 const periods = ref([] as Array<Period>)
-const timeArr = generateTimeArr()
 
 const getPeriodData = async () => {
     await patternStore.getPeriod()
@@ -162,6 +160,7 @@ const getPeriodData = async () => {
     })
 }
 const oncloseModal = () => {
+    patternId = 0
     isShowModal.value = false
 }
 let patternId: number = 0
@@ -285,6 +284,7 @@ onMounted(async () => {
 .label {
     color: #212529;
 }
+
 .pattern-input {
     &.ml-auto {
         margin-left: auto;

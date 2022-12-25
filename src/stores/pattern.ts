@@ -9,6 +9,7 @@ import type {
 } from '@/libs/interface/patternInterface'
 import { useAlertStore } from './alert'
 import { LoadingVue } from '@/components/common/loading'
+import { makeNotification } from '@/libs/constants/constants'
 
 export const usePatternStore = defineStore('question_type', () => {
     const patterns: any = ref({} as PatternData)
@@ -22,7 +23,7 @@ export const usePatternStore = defineStore('question_type', () => {
             })
             patterns.value = data
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -46,7 +47,8 @@ export const usePatternStore = defineStore('question_type', () => {
             })
             loading.close()
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
+            loading.close()
             return error
         }
     }
@@ -70,7 +72,8 @@ export const usePatternStore = defineStore('question_type', () => {
             })
             loading.close()
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
+            loading.close()
             return error
         }
     }
@@ -80,7 +83,7 @@ export const usePatternStore = defineStore('question_type', () => {
             const data: Array<Period> = await axios.get(`period/`)
             periods.value = data
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }

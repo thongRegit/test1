@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { ElNotification } from 'element-plus'
 
 export const START_YEAR = 1920
 export const CURRENT_YEAR = new Date().getFullYear()
@@ -48,18 +49,10 @@ export const ACTIVE_STATUS = [
     },
 ]
 
-export function generateTimeArr() {
-    let startTime = dayjs('00:00', 'HH:mm')
-    const endTime = dayjs('12:00', 'HH:mm')
-
-    if (endTime.isBefore(startTime)) {
-        endTime.add(1, 'day')
-    }
-    const timeArr = []
-
-    while (endTime.diff(startTime, 'minutes') >= 0) {
-        timeArr.push(dayjs(startTime).format('HH:mm'))
-        startTime = startTime.add(30, 'minute')
-    }
-    return timeArr
+export function makeNotification(type: string, title: string, message: string) {
+    ElNotification({
+        title: title,
+        message: message,
+        type: type,
+    })
 }
