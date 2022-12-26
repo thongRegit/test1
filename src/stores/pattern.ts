@@ -12,8 +12,8 @@ import { LoadingVue } from '@/components/common/loading'
 import { makeNotification } from '@/libs/constants/constants'
 import * as patternAPI from '@/api/patternAPI'
 
-export const usePatternStore = defineStore('question_type', () => {
-    const patterns: any = ref({} as PatternData)
+export const usePatternStore = defineStore('patterns', () => {
+    const patterns = ref({} as PatternData)
     const pattern = ref({})
     const periods = ref([] as Array<Period>)
 

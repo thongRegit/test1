@@ -23,7 +23,7 @@
                         <Edit />
                     </el-icon>
                 </div>
-                <div class="detail-wrapper">
+                <div class="detail-session-wrapper mt-7">
                     <el-row class="title">
                         <el-col :span="10">
                             <p>{{ t('pattern.business_hours') }}</p>
@@ -177,42 +177,6 @@ onMounted(async () => {
                     color: #212529;
                     font-weight: bold;
                     margin-right: 20px;
-                }
-            }
-
-            .detail-wrapper {
-                margin-top: 26px;
-                padding-left: 48px;
-                max-width: 950px;
-                .title {
-                    margin-bottom: 10px;
-                    color: #212529;
-                    p {
-                        font-weight: bold;
-                    }
-                }
-
-                .sessions {
-                    .text-info {
-                        display: flex;
-                        align-items: center;
-                        width: 147px;
-                        height: 36px;
-                        background: #7f7f7f;
-                        padding: 0 18px;
-                        border-radius: 5px;
-                        color: white;
-                        &.last {
-                            margin-left: auto;
-                        }
-                    }
-                    .item {
-                        align-items: center;
-                        margin-bottom: 20px;
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
-                    }
                 }
             }
         }
