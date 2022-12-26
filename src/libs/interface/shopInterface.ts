@@ -67,3 +67,7 @@ export interface ShopListPayload {
     per_page: 10
     filters: string
 } 
+
+export interface ShopDetailPayload {
+    id: number
+}
