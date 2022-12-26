@@ -244,9 +244,9 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
     &.is-disabled {
         cursor: unset !important;
         .el-input__wrapper {
-            background-color: unset !important;
+            // background-color: unset !important;
             box-shadow: unset !important;
-            border-bottom: unset !important;
+            // border-bottom: unset !important;
             padding: 0 !important;
             .el-input__inner {
                 cursor: unset !important;
@@ -355,6 +355,12 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
             margin-bottom: 0;
         }
     }
+}
+
+.err_msg {
+    color: var(--vt-c-red);
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .text-bold {

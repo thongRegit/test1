@@ -13,7 +13,7 @@ export interface BusinessHour {
     name?: string
     shop_id: number | undefined
     details?: Array<BusinessHourDetail>
-    day: number | undefined
+    day: number
     created_at?: string
     updated_at?: string
     business_hour_details?: Array<BusinessHourDetail>
@@ -37,7 +37,7 @@ export interface ShopSearch {
 
 export interface IndividuaSetting {
     id: number
-    dayName: string
+    dayName: string | number
     isShowDetail: boolean
     // patternList?: Array<Pattern> | []
     currentSessionsList: Array<BusinessHourDetail> | []
@@ -66,8 +66,8 @@ export interface ShopListPayload {
     search: string
     per_page: 10
     filters: string
-} 
+}
 
 export interface ShopDetailPayload {
-    id: number
+    id: number | string | string[]
 }

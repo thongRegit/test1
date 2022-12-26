@@ -1,10 +1,12 @@
 import request from '@/config/axios'
-import type { UserDetail } from '@/libs/interface/userInterface'
-import type { ResponseList } from '@/libs/interface/commonInterface'
+import type {
+    UserDetail,
+    ResponseUserList,
+} from '@/libs/interface/userInterface'
 
 export const users = (payload: object | {}) => {
     const url = '/users'
-    return request<ResponseList, ResponseList>({
+    return request<ResponseUserList, ResponseUserList>({
         url,
         method: 'GET',
         params: payload,
@@ -16,7 +18,7 @@ export const sessionUsers = (
     id: string | string[] | number
 ) => {
     const url = `/users/${id}/sessions`
-    return request<ResponseList, ResponseList>({
+    return request<ResponseUserList, ResponseUserList>({
         url,
         method: 'GET',
         params: payload,
@@ -28,7 +30,7 @@ export const cancelFeeUsers = (
     id: string | string[] | number
 ) => {
     const url = `/users/${id}/cancel-fee`
-    return request<ResponseList, ResponseList>({
+    return request<ResponseUserList, ResponseUserList>({
         url,
         method: 'GET',
         params: payload,

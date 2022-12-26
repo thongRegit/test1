@@ -41,4 +41,22 @@ export default {
         2: '紹介者登録状況',
         3: 'セッション',
     },
+    detail: {
+        label: {
+            name: 'お名前',
+            name_furigana: 'お名前（ふりがな）',
+            birthday: '生年月日',
+            tel: '電話番号',
+            invite: 'LINE名',
+            is_active: '有効/無効',
+            invitation_code: '紹介用URL',
+            people_invited: '今月の紹介実績',
+        },
+        value: {
+            is_active: {
+                active: '有効',
+                inactive: '無効',
+            },
+        },
+    },
 }

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore, useAlertStore } from '@/stores'
 
 import {
     Home,
@@ -21,7 +21,7 @@ import {
     PlanList,
     PlanDetail,
     PlanCreate,
-    PlanUpdate
+    PlanUpdate,
 } from '@/views'
 
 const ifAuthenticated = (to: any, from: any, next: any) => {
@@ -248,7 +248,7 @@ const routes = [
                     {
                         path: 'create',
                         name: 'plans-create',
-                        component: PlanCreate
+                        component: PlanCreate,
                     },
                     {
                         path: ':id',
@@ -258,7 +258,7 @@ const routes = [
                     {
                         path: ':id/update',
                         name: 'plans-update',
-                        component: PlanUpdate
+                        component: PlanUpdate,
                     },
                 ],
             },
@@ -273,6 +273,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
+    const alertStore = useAlertStore()
+    alertStore.removeAlert()
     if (to.meta.requiresAuth && !authStore.isAuthenticated)
         next({ name: 'Login' })
     else next()

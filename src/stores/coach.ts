@@ -1,17 +1,23 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { ParamsUserList } from '@/libs/interface/userInterface'
-import type { ResponseList } from '@/libs/interface/commonInterface'
+import type { ParamsList } from '@/libs/interface/commonInterface'
 import * as coachAPI from '@/api/coachApi'
-import type { CoachDetail, CoachUpdate } from '@/libs/interface/coachInterface'
+import type {
+    CoachDetail,
+    CoachRuleForm,
+    ResponseCoachInvitedList,
+    ResponseCoachList,
+    ResponseCoachSessionList,
+} from '@/libs/interface/coachInterface'
+import { useAlertStore } from './alert'
 
 export const useCoachStore = defineStore('coach', () => {
-    const coaches = ref([] as ResponseList)
+    const coaches = ref([] as ResponseCoachList)
     const coach = ref({} as CoachDetail)
-    const invited_coaches = ref([] as ResponseList)
-    const session_coaches = ref([] as ResponseList)
+    const invited_coaches = ref([] as ResponseCoachInvitedList)
+    const session_coaches = ref([] as ResponseCoachSessionList)
 
-    const listCoach = async (payload: ParamsUserList) => {
+    const listCoach = async (payload: ParamsList) => {
         try {
             const data = await coachAPI.coaches(payload)
             coaches.value = data
@@ -22,7 +28,7 @@ export const useCoachStore = defineStore('coach', () => {
     }
 
     const listCoachInvited = async (
-        payload: ParamsUserList,
+        payload: ParamsList,
         id: string | string[] | number
     ) => {
         try {
@@ -35,7 +41,7 @@ export const useCoachStore = defineStore('coach', () => {
     }
 
     const listCoachSession = async (
-        payload: ParamsUserList,
+        payload: ParamsList,
         id: string | string[] | number
     ) => {
         try {
@@ -48,12 +54,18 @@ export const useCoachStore = defineStore('coach', () => {
     }
 
     const updateCoach = async (
-        payload: CoachUpdate,
+        payload: CoachRuleForm,
         id: string | string[] | number
     ) => {
+        const alertStore = useAlertStore()
+        payload.is_active = payload.is_active ? 1 : 0
         try {
             await coachAPI.update(payload, id)
-            await detailCoach(id)
+            await coachAPI.coach(id)
+            alertStore.createAlert({
+                title: `Update ${coach.value.first_name}${coach.value.last_name} successfully!`,
+                type: 'success',
+            })
         } catch (error) {
             console.log(error)
             return error

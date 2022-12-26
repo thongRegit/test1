@@ -20,6 +20,11 @@ import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useCoachStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
+import type { ParamsList } from '@/libs/interface/commonInterface'
+import type {
+    CoachInvited,
+    PaginateCoachInvitedParams,
+} from '@/libs/interface/coachInterface'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -35,7 +40,7 @@ const data = ref({
     perPage: 10,
     records: [],
     total: 0,
-} as any)
+} as PaginateCoachInvitedParams)
 
 const loading = ref(true)
 const columns = ref([
@@ -58,7 +63,7 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 const handleCheckbox = () => {}
 
 const getListData = async () => {
-    let query: any = {
+    let query: ParamsList = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -75,13 +80,15 @@ const getListData = async () => {
     data.value.total = coachStore.invited_coaches.total
     data.value.currentPage = coachStore.invited_coaches.current_page
     data.value.perPage = coachStore.invited_coaches.per_page
-    data.value.records = coachStore.invited_coaches.data.map((e: any) => {
-        return {
-            id: e.id,
-            created_at: e.created_at,
-            full_name: e.full_name,
+    data.value.records = coachStore.invited_coaches.data?.map(
+        (e: CoachInvited) => {
+            return {
+                id: e.id,
+                full_name: e.full_name,
+                created_at: e.created_at,
+            }
         }
-    })
+    )
     loading.value = false
 }
 

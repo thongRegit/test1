@@ -50,7 +50,7 @@ export const ACTIVE_STATUS = [
     },
 ]
 
-export function makeNotification(type: string, title: string, message: string) {
+export function makeNotification(type: any, title: string, message: string) {
     ElNotification({
         title: title,
         message: message,

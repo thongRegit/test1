@@ -19,7 +19,6 @@ export const useAuthStore = defineStore('auth', () => {
             token.value = data.access_token
             localStorage.setItem(tokenKey, JSON.stringify(data.access_token))
         } catch (error) {
-            console.log(error)
             return error
         }
     }
@@ -29,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
             const data: any = await API.getProfile('/auth/me')
             return data
         } catch (error) {
-            return null
+            return error
         }
     }
 

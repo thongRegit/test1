@@ -34,7 +34,8 @@
                     :label="item.id"
                     :key="item.id"
                     v-for="item in types"
-                >{{ item.title }}</el-radio>
+                    >{{ item.title }}</el-radio
+                >
             </el-radio-group>
         </el-form-item>
         <el-form-item class="justify-center">
@@ -92,7 +93,7 @@ const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     name: '',
     status: 'all',
-    type: 1
+    type: 1,
 })
 
 const rules = reactive<FormRules>({
@@ -114,7 +115,6 @@ const rules = reactive<FormRules>({
         },
     ],
 })
-
 
 const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
