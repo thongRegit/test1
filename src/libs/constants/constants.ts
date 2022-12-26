@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import type { IndividuaSetting } from '@/libs/interface/shopInterface'
 
 export const START_YEAR = 1920
 export const CURRENT_YEAR = new Date().getFullYear()
@@ -45,5 +46,51 @@ export const ACTIVE_STATUS = [
         label: '有効',
         display:
             '<span class="status-label" style="background-color:#007BFF">有効</span>',
+    },
+]
+
+// individual setting for ShopDetail screen
+export const individualData: Array<IndividuaSetting> = [
+    {
+        id: 1,
+        dayName: '日曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
+    },
+    {
+        id: 2,
+        dayName: '月曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
+    },
+    {
+        id: 3,
+        dayName: '火曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
+    },
+    {
+        id: 4,
+        dayName: '水曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
+    },
+    {
+        id: 5,
+        dayName: '木曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
+    },
+    {
+        id: 6,
+        dayName: '金曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
+    },
+    {
+        id: 7,
+        dayName: '土曜日',
+        isShowDetail: false,
+        currentSessionsList: [],
     },
 ]

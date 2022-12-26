@@ -8,8 +8,8 @@ import type {
     Period,
 } from '@/libs/interface/patternInterface'
 
-export const usePatternStore = defineStore('question_type', () => {
-    const patterns: any = ref({} as PatternData)
+export const usePatternStore = defineStore('patterns', () => {
+    const patterns = ref({} as PatternData)
     const pattern = ref({})
     const periods = ref([] as Array<Period>)
 
