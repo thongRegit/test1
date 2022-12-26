@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
 import type {
     PatternData,
@@ -7,6 +7,10 @@ import type {
     createPatternPayload,
     Period,
 } from '@/libs/interface/patternInterface'
+import { useAlertStore } from './alert'
+import { LoadingVue } from '@/components/common/loading'
+import { makeNotification } from '@/libs/constants/constants'
+import * as patternAPI from '@/api/patternAPI'
 
 export const usePatternStore = defineStore('patterns', () => {
     const patterns = ref({} as PatternData)
@@ -15,12 +19,10 @@ export const usePatternStore = defineStore('patterns', () => {
 
     const listPattern = async (payload: patternPayload) => {
         try {
-            const data = await axios.get('/patterns', {
-                params: payload,
-            })
+            const data = await patternAPI.getListPattern(payload)
             patterns.value = data
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -29,15 +31,22 @@ export const usePatternStore = defineStore('patterns', () => {
         payload: createPatternPayload,
         cb?: Function
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
         try {
-            // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
-            const data = await axios.post('/patterns/create', payload)
+            const data = await patternAPI.createPattern(payload)
             pattern.value = data
             if (cb) {
                 cb()
             }
+            alertStore.createAlert({
+                title: `Create pattern successfully!`,
+                type: 'success',
+            })
+            loading.close()
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
+            loading.close()
             return error
         }
     }
@@ -47,14 +56,22 @@ export const usePatternStore = defineStore('patterns', () => {
         id: number,
         cb?: Function
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
         try {
-            const data = await axios.put(`patterns/${id}/update`, payload)
+            const data = await patternAPI.updatePattern(payload, id)
             pattern.value = data.data
             if (cb) {
                 cb()
             }
+            alertStore.createAlert({
+                title: `Update pattern successfully!`,
+                type: 'success',
+            })
+            loading.close()
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
+            loading.close()
             return error
         }
     }
@@ -64,7 +81,7 @@ export const usePatternStore = defineStore('patterns', () => {
             const data: Array<Period> = await axios.get(`period/`)
             periods.value = data
         } catch (error) {
-            console.log(error)
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }

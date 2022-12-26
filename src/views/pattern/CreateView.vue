@@ -8,15 +8,21 @@
     >
         <template v-slot:body>
             <div style="width: 79%; margin: 0 auto">
-                <el-form ref="ruleFormRef" status-icon>
+                <el-form
+                    ref="ruleFormRef"
+                    :model="ruleForm"
+                    :rules="rules"
+                    status-icon
+                >
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col span="24">
                                 <p class="label">パターン名</p>
                                 <el-form-item prop="name">
                                     <el-input
-                                        v-model="patternName"
+                                        v-model="ruleForm.name"
                                         class="pattern-input"
+                                        size="large"
                                     />
                                 </el-form-item>
                             </el-col>
@@ -37,17 +43,27 @@
                         </el-row>
                         <el-row
                             class="full-width sesion-row"
-                            v-for="(item, i) in sessionData"
-                            :key="i"
+                            v-for="(item, i) in ruleForm.pattern_details"
+                            :key="`plan-create-${i}`"
                         >
                             <el-col :span="11">
                                 <el-row>
                                     <el-col :span="10">
-                                        <el-form-item prop="name">
-                                            <el-input
+                                        <el-form-item
+                                            :prop="`pattern_details.${i}.start_time`"
+                                            :rules="rules.start_time"
+                                        >
+                                            <el-time-select
                                                 v-model="item.start_time"
+                                                start="00:00"
+                                                step="00:15"
+                                                end="23:30"
+                                                :placeholder="
+                                                    t('pattern.start_time')
+                                                "
+                                                format="HH:mm"
                                                 class="pattern-input"
-                                                :key="`date_${i}`"
+                                                size="large"
                                             />
                                         </el-form-item>
                                     </el-col>
@@ -59,50 +75,65 @@
                                         </div>
                                     </el-col>
                                     <el-col :span="10">
-                                        <el-form-item prop="name">
-                                            <el-input
+                                        <el-form-item
+                                            :prop="`pattern_details.${i}.end_time`"
+                                            :rules="rules.end_time"
+                                        >
+                                            <el-time-select
                                                 v-model="item.end_time"
-                                                class="pattern-input ml-auto"
+                                                start="00:00"
+                                                step="00:15"
+                                                end="23:30"
+                                                :placeholder="
+                                                    t('pattern.end_time')
+                                                "
+                                                format="HH:mm"
+                                                class="pattern-input"
+                                                size="large"
                                             />
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
                             </el-col>
                             <el-col :span="13" style="padding-left: 60px">
-                                <el-select
-                                    v-model="item.period_id"
-                                    placeholder="Session"
-                                    class="pattern-input pattern-select"
+                                <el-form-item
+                                    :prop="`pattern_details.${i}.period_id`"
+                                    :rules="rules.period_id"
                                 >
-                                    <el-option
-                                        v-for="item in periods"
-                                        :key="item.id"
-                                        :label="`${item.value}分`"
-                                        :value="item.id"
-                                    />
-                                </el-select>
+                                    <el-select
+                                        v-model="item.period_id"
+                                        placeholder="Session"
+                                        class="pattern-input pattern-select"
+                                        size="large"
+                                    >
+                                        <el-option
+                                            v-for="item in periods"
+                                            :key="item.id"
+                                            :label="`${item.value}分`"
+                                            :value="item.id"
+                                        />
+                                    </el-select>
+                                </el-form-item>
                             </el-col>
                         </el-row>
                     </el-form-item>
-                    <el-form-item>
-                        <el-row class="full-width">
-                            <el-col span="24">
-                                <span
-                                    class="add-pattern-btn"
-                                    @click="addSessionBlock"
-                                >
-                                    {{ t('pattern.add_business_hours') }}
-                                </span>
-                            </el-col>
-                        </el-row>
-                    </el-form-item>
+                    <el-row class="full-width">
+                        <el-col span="24">
+                            <span
+                                class="add-pattern-btn"
+                                @click="addSessionBlock"
+                            >
+                                {{ t('pattern.add_business_hours') }}
+                            </span>
+                        </el-col>
+                    </el-row>
                 </el-form>
             </div>
         </template>
     </modal-box>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { usePatternStore } from '@/stores'
 import type {
@@ -113,6 +144,7 @@ import type {
 } from '@/libs/interface/patternInterface'
 import { useI18n } from 'vue3-i18n'
 
+const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
 const patternStore = usePatternStore()
 const isShowModal = ref(false)
@@ -128,19 +160,19 @@ const getPeriodData = async () => {
     })
 }
 const oncloseModal = () => {
+    patternId = 0
     isShowModal.value = false
-    sessionData.value = [
-        {
-            start_time: '',
-            end_time: '',
-            period_id: periods.value[0]?.id,
-            period_value: periods.value[0]?.value,
-        },
-    ]
-    patternName.value = ''
 }
 let patternId: number = 0
 const showCreateModal = (item: Pattern) => {
+    ruleForm.name = ''
+    ruleForm.pattern_details = [
+        {
+            start_time: null,
+            end_time: null,
+            period_id: null,
+        },
+    ] as Array<Session>
     if (item) {
         patternName.value = item.name
         const tempArr: Array<Session> = []
@@ -149,64 +181,95 @@ const showCreateModal = (item: Pattern) => {
                 start_time: el.start_time,
                 end_time: el.end_time,
                 period_id: el.period.id,
-                period_value: el.period.value,
             })
         })
-        sessionData.value = tempArr
+        ruleForm.name = item.name
+        if (tempArr.length) {
+            ruleForm.pattern_details = tempArr
+        }
         patternId = item.id
-    } else {
-        patternId = 0
-        sessionData.value = [
-            {
-                start_time: '',
-                end_time: '',
-                period_id: periods.value[0]?.id,
-                period_value: periods.value[0]?.value,
-            },
-        ]
     }
     isShowModal.value = true
 }
-const ruleFormRef = ref<FormInstance>()
+
 const patternName = ref('')
 
 const addSessionBlock = () => {
-    sessionData.value.push({
-        start_time: '',
-        end_time: '',
-        period_id: periods.value[0]?.id,
-        period_value: periods.value[0]?.value,
+    ruleForm.pattern_details.push({
+        start_time: null,
+        end_time: null,
+        period_id: null,
     })
 }
 
-const data: Array<Session> = [
-    {
-        start_time: '',
-        end_time: '',
-        period_id: periods.value[0]?.id,
-        period_value: periods.value[0]?.value,
-    },
-]
-
-const sessionData = ref(data)
-
 const submitData = async (formEl: FormInstance | undefined) => {
-    const patternData = {
-        name: patternName.value,
-        pattern_details: sessionData.value,
-    }
-    if (patternId) {
-        await patternStore.updatePattern(patternData, patternId, () => {
-            emit('onCreate')
-            oncloseModal()
-        })
-    } else {
-        await patternStore.createPattern(patternData, () => {
-            emit('onCreate')
-            oncloseModal()
-        })
-    }
+    if (!formEl) return
+    formEl.validate(async (valid) => {
+        if (valid) {
+            if (patternId) {
+                await patternStore.updatePattern(ruleForm, patternId, () => {
+                    emit('onCreate')
+                    oncloseModal()
+                })
+            } else {
+                await patternStore.createPattern(ruleForm, () => {
+                    emit('onCreate')
+                    oncloseModal()
+                })
+            }
+        } else {
+            return false
+        }
+    })
 }
+
+const rules = reactive<FormRules>({
+    name: [
+        {
+            required: true,
+            message: 'Input pattern name',
+            trigger: 'blur',
+        },
+        {
+            min: 3,
+            max: 255,
+            message: 'Length should be 3 to 255',
+            trigger: 'blur',
+        },
+    ],
+    start_time: [
+        {
+            required: true,
+            message: 'Please select start time',
+            trigger: 'change',
+        },
+    ],
+    end_time: [
+        {
+            required: true,
+            message: 'Please select end time',
+            trigger: 'change',
+        },
+    ],
+    period_id: [
+        {
+            required: true,
+            message: 'Please select period',
+            trigger: 'change',
+        },
+    ],
+})
+const ruleForm = reactive({
+    name: '',
+    pattern_details: [
+        {
+            start_time: null,
+            end_time: null,
+            period_id: null,
+        },
+    ] as Array<Session>,
+})
+
 defineExpose({
     showCreateModal,
 })
@@ -218,11 +281,14 @@ onMounted(async () => {
 })
 </script>
 <style scoped lang="scss">
+.label {
+    color: #212529;
+}
+
 .pattern-input {
     &.ml-auto {
         margin-left: auto;
     }
-    width: 147px;
 }
 
 .pattern-select {
@@ -238,7 +304,7 @@ onMounted(async () => {
 }
 
 .sesion-row {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     &:last-child {
         margin-bottom: 0;
     }

@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { ElNotification } from 'element-plus'
 import type { IndividuaSetting } from '@/libs/interface/shopInterface'
 
 export const START_YEAR = 1920
@@ -49,6 +50,13 @@ export const ACTIVE_STATUS = [
     },
 ]
 
+export function makeNotification(type: string, title: string, message: string) {
+    ElNotification({
+        title: title,
+        message: message,
+        type: type,
+    })
+}
 // individual setting for ShopDetail screen
 export const individualData: Array<IndividuaSetting> = [
     {
