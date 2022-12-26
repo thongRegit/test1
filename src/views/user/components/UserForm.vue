@@ -11,21 +11,19 @@
             <div>
                 <p class="label">{{ t('user.detail.label.name') }}</p>
                 <el-row style="width: 100%" :gutter="16">
-                    <el-col :span="10">
+                    <el-col :span="12">
                         <el-form-item prop="first_name">
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.first_name"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
-                    <el-col :span="10">
+                    <el-col :span="12">
                         <el-form-item prop="last_name">
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.last_name"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
@@ -34,21 +32,19 @@
             <div>
                 <p class="label">{{ t('user.detail.label.name_furigana') }}</p>
                 <el-row style="width: 100%" :gutter="16">
-                    <el-col :span="11">
+                    <el-col :span="12">
                         <el-form-item prop="first_name_furigana">
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.first_name_furigana"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
-                    <el-col :span="11">
+                    <el-col :span="12">
                         <el-form-item prop="last_name_furigana">
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.last_name_furigana"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
@@ -62,7 +58,6 @@
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.birthdays.day"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
@@ -71,7 +66,6 @@
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.birthdays.month"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
@@ -80,7 +74,6 @@
                             <el-input
                                 class="base-input"
                                 v-model="ruleForm.birthdays.year"
-                                :placeholder="'名前'"
                             />
                         </el-form-item>
                     </el-col>
@@ -93,18 +86,17 @@
                         <el-input
                             class="base-input"
                             v-model="ruleForm.tel"
-                            :placeholder="'名前'"
                         />
                     </el-form-item>
                 </el-col>
             </div>
             <el-form-item prop="line_name">
                 <p class="label">{{ t('user.detail.label.line_name') }}</p>
-                <el-col :span="14">
+                <el-col :span="18">
                     <el-input
                         class="base-input"
                         v-model="ruleForm.line_name"
-                        :placeholder="'名前'"
+                        disabled
                     />
                 </el-col>
             </el-form-item>
@@ -118,17 +110,16 @@
             <el-form-item prop="status">
                 <p class="label">{{ t('user.detail.label.status') }}</p>
                 <el-radio-group v-model="ruleForm.status">
-                    <el-radio label="1">{{ t('status.active') }}</el-radio>
-                    <el-radio label="0">{{ t('status.inactive') }}</el-radio>
+                    <el-radio label="1">{{ t('user.detail.value.status.1') }}</el-radio>
+                    <el-radio label="2">{{ t('user.detail.value.status.2') }}</el-radio>
+                    <el-radio label="3">{{ t('user.detail.value.status.3') }}</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item prop="is_active">
-                <el-switch v-model="ruleForm.is_active" /> <span>{{ t('user.detail.label.is_active') }}</span>
+                <p class="label">{{ t('coach.detail.label.is_active') }}</p>
+                <el-switch v-model="ruleForm.is_active" /> <span style="padding-left: 8px;">{{ ruleForm.is_active ? t('user.detail.value.is_active.active') : t('user.detail.value.is_active.inactive') }}</span>
             </el-form-item>
             <el-form-item>
-                <el-button @click="resetForm(ruleFormRef)">{{
-                    t('btn_clear')
-                }}</el-button>
                 <el-button type="primary" @click="submitForm(ruleFormRef)">{{
                     t('btn_search')
                 }}</el-button>
@@ -144,7 +135,8 @@ import { useI18n } from 'vue3-i18n'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { UserDetail } from '@/libs/interface/userInterface'
-import dayjs, { Dayjs } from 'dayjs'
+import { LoadingVue } from '@/components/common/loading'
+import dayjs from 'dayjs'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -204,6 +196,7 @@ const rules = reactive<FormRules>({
 })
 
 const submitForm = (formEl: FormInstance | undefined) => {
+    const loading = LoadingVue()
     if (!formEl) return
     formEl.validate(async (valid) => {
         if (valid) {
@@ -212,8 +205,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
             const userStore = useUserStore()
             await userStore.updateUser(ruleForm, id)
             await getData()
+            loading.close()
         } else {
-            console.log('error submit!')
+            loading.close()
             return false
         }
     })

@@ -3,7 +3,8 @@ import session from './session'
 import pattern from './pattern'
 import user from './user'
 import coach from './coach'
-import plan from "./plan";
+import plan from './plan'
+import error from './error'
 
 export const jp = {
     login: 'ログイン',
@@ -90,5 +91,6 @@ export const jp = {
     pattern,
     user,
     coach,
-    plan
+    plan,
+    error,
 }

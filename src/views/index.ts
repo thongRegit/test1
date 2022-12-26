@@ -41,5 +41,5 @@ export {
     PlanList,
     PlanCreate,
     PlanDetail,
-    PlanUpdate
+    PlanUpdate,
 }

@@ -1,14 +1,9 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import * as userAPI from '@/api/userApi'
-import type {
-    UserDetail,
-    UserUpdate,
-    ParamsUserList,
-} from '@/libs/interface/userInterface'
-import type { ResponseList } from '@/libs/interface/commonInterface'
+import type { UserDetail, UserUpdate } from '@/libs/interface/userInterface'
+import type { ParamsList, ResponseList } from '@/libs/interface/commonInterface'
 import { useAlertStore } from './alert'
-import { LoadingVue } from '@/components/common/loading'
 
 export const useUserStore = defineStore('users', () => {
     const users = ref({} as ResponseList)
@@ -16,7 +11,7 @@ export const useUserStore = defineStore('users', () => {
     const cancel_fee_users = ref({} as ResponseList)
     const user = ref({} as UserDetail)
 
-    const listUser = async (payload: ParamsUserList) => {
+    const listUser = async (payload: ParamsList) => {
         try {
             const data = await userAPI.users(payload)
             users.value = data
@@ -27,20 +22,20 @@ export const useUserStore = defineStore('users', () => {
     }
 
     const listUserSession = async (
-        payload: ParamsUserList,
+        payload: ParamsList,
         id: string | string[] | number
     ) => {
         try {
             const data = await userAPI.sessionUsers(payload, id)
             session_users.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            console.log(error, error.data)
             return error
         }
     }
 
     const listUserCancelFee = async (
-        payload: ParamsUserList,
+        payload: ParamsList,
         id: string | string[] | number
     ) => {
         try {
@@ -57,19 +52,16 @@ export const useUserStore = defineStore('users', () => {
         id: string | string[] | number
     ) => {
         const alertStore = useAlertStore()
-        const loading = LoadingVue()
         payload.gender = Number(payload.gender)
         payload.status = Number(payload.status)
         payload.is_active = payload.is_active ? 1 : 0
-        console.log('payload >> ', payload)
         try {
             await userAPI.update(payload, id)
             await detailUser(id)
             alertStore.createAlert({
-                title: `Update ${user.value.first_name} ${user.value.last_name} successfully!`,
+                title: `Update ${user.value.first_name}${user.value.last_name} successfully!`,
                 type: 'success',
             })
-            loading.close()
         } catch (error) {
             console.log(error)
             return error

@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :title="t('homepage.user')" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.users')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
                 <UserFilled />
@@ -41,7 +41,12 @@ import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
-import type { UserSearchParam } from '@/libs/interface/userInterface'
+import type {
+    PaginateUserParams,
+    User,
+    UserSearchParam,
+} from '@/libs/interface/userInterface'
+import type { ParamsList } from '@/libs/interface/commonInterface'
 import UserSearch from './UserSearch.vue'
 
 const { t } = useI18n()
@@ -58,7 +63,7 @@ const data = ref({
     perPage: 10,
     records: [],
     total: 0,
-} as any)
+} as PaginateUserParams)
 
 const loading = ref(true)
 const columns = ref([
@@ -113,7 +118,7 @@ const handleClickButtonTable = (classList: any, row: any) => {
 const handleCheckbox = () => {}
 
 const getListData = async () => {
-    let query: any = {
+    let query: ParamsList = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -128,7 +133,7 @@ const getListData = async () => {
     data.value.total = userStore.users.total
     data.value.currentPage = userStore.users.current_page
     data.value.perPage = userStore.users.per_page
-    data.value.records = userStore.users.data.map((e: any) => {
+    data.value.records = userStore.users.data.map((e: User) => {
         return {
             id: e.id,
             full_name: e.full_name,

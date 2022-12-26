@@ -1,10 +1,14 @@
 import request from '@/config/axios'
-import type { CoachDetail } from '@/libs/interface/coachInterface'
-import type { ResponseList } from '@/libs/interface/commonInterface'
+import type {
+    CoachDetail,
+    ResponseCoachList,
+    ResponseCoachInvitedList,
+    ResponseCoachSessionList,
+} from '@/libs/interface/coachInterface'
 
 export const coaches = (payload: object | {}) => {
     const url = '/coaches'
-    return request<ResponseList, ResponseList>({
+    return request<ResponseCoachList, ResponseCoachList>({
         url,
         method: 'GET',
         params: payload,
@@ -16,7 +20,7 @@ export const sessionCoaches = (
     id: string | string[] | number
 ) => {
     const url = `/coaches/${id}/sessions`
-    return request<ResponseList, ResponseList>({
+    return request<ResponseCoachSessionList, ResponseCoachSessionList>({
         url,
         method: 'GET',
         params: payload,
@@ -28,7 +32,7 @@ export const invitedCoaches = (
     id: string | string[] | number
 ) => {
     const url = `/coaches/${id}/invited`
-    return request<ResponseList, ResponseList>({
+    return request<ResponseCoachInvitedList, ResponseCoachInvitedList>({
         url,
         method: 'GET',
         params: payload,

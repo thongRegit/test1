@@ -21,13 +21,13 @@ export default {
         time: '時間',
         basic_charge: '基本料金',
         first_experience: '初回体験',
-        status: '有効/無効'
+        status: '有効/無効',
     },
     type_plan: {
         first_experience: {
             can_be: 'あり',
-            none: 'なし'
-        }
+            none: 'なし',
+        },
     },
     active: '有効',
     in_active: '無効',
@@ -44,11 +44,11 @@ export default {
         from: 'から',
         fee: '料金(税抜)',
         link: '割引設定を追加する',
-        active: '有効'
+        active: '有効',
     },
     types: {
         first_experience: '初回体験',
         general: '一般',
-        subscription: 'サブスクリプション'
-    }
+        subscription: 'サブスクリプション',
+    },
 }

@@ -12,3 +12,11 @@ export const findIndex = (arr: any, index: number): number => {
 export const findStatus = (isActive: number) => {
     return ACTIVE_STATUS.find((item) => item.is_active == isActive)
 }
+
+export const getFormikErr = (data: any) => {
+    const errorData: any = {}
+    Object?.values(data).forEach((v: any, k: any) => {
+        errorData[k] = v + ''
+    })
+    return errorData
+}

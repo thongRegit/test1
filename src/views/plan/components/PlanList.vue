@@ -9,7 +9,13 @@
             <PlanSearchVue @submit="search" />
         </template>
     </BoxVue>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20" :btnCreate="true" @on-create="handleCreate">
+    <BoxVue
+        :title="'プラン一覧'"
+        :type="'table'"
+        :padding="20"
+        :btnCreate="true"
+        @on-create="handleCreate"
+    >
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />
@@ -38,12 +44,11 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch, nextTick } from 'vue'
-import {usePlanStore} from '@/stores'
+import { usePlanStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
 import PlanSearchVue from './PlanSearch.vue'
-
 
 const { t } = useI18n()
 const router = useRouter()
@@ -51,7 +56,7 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'is_active', data: 'all' }]
+    filters: [{ key: 'is_active', data: 'all' }],
 })
 const data = ref({
     currentPage: 1,
@@ -75,7 +80,12 @@ const columns = ref([
         sortable: false,
         class: '',
     },
-    { prop: 'basic_charge', label: t('plan.columns.basic_charge'), sortable: false, class: '' },
+    {
+        prop: 'basic_charge',
+        label: t('plan.columns.basic_charge'),
+        sortable: false,
+        class: '',
+    },
     {
         prop: 'first_experience',
         label: t('plan.columns.first_experience'),
@@ -87,7 +97,7 @@ const columns = ref([
         label: t('plan.columns.status'),
         sortable: false,
         class: '',
-    }
+    },
 ])
 const buttons = ref([
     { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
@@ -103,7 +113,7 @@ const getListData = async () => {
     let query = {
         page: listQuery.value.page,
         search: listQuery.value.search,
-        filters: ''
+        filters: '',
     }
     query.filters = JSON.stringify(listQuery.value.filters)
 
@@ -118,8 +128,11 @@ const getListData = async () => {
             name: `<a class="text-link cursor-pointer">${e.name}</a>`,
             time: e.period.value + '分',
             basic_charge: formatNumber(e.amount),
-            first_experience: e.type == 1 ? t('plan.type_plan.first_experience.can_be') : t('plan.type_plan.first_experience.none'),
-            status: e.is_active ? t('plan.active') : t('plan.in_active')
+            first_experience:
+                e.type == 1
+                    ? t('plan.type_plan.first_experience.can_be')
+                    : t('plan.type_plan.first_experience.none'),
+            status: e.is_active ? t('plan.active') : t('plan.in_active'),
         }
     })
     loading.value = false
@@ -136,7 +149,7 @@ const cellClick = (row: any, column: any, cell: any) => {
         router.push({
             name: 'plans-detail',
             params: { id: row.id },
-            replace: true
+            replace: true,
         })
     }
 }
@@ -145,7 +158,7 @@ const handleClickButtonTable = (type: any, row: any) => {
     router.push({
         name: 'plans-update',
         params: { id: row.id },
-        replace: true
+        replace: true,
     })
 }
 
@@ -173,10 +186,9 @@ const resetForm = () => {
 const handleCreate = () => {
     router.push({
         name: 'plans-create',
-        replace: true
+        replace: true,
     })
 }
-
 
 onMounted(async () => {
     await nextTick()

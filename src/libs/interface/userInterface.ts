@@ -1,3 +1,4 @@
+import type { PaginateParams, ResponseList } from './commonInterface'
 export interface Profile {
     id: number
     name: string
@@ -48,26 +49,23 @@ export interface UserUpdate {
     is_active: boolean | number
 }
 
-export interface ParamsOrders {
-    key: string
-    dir: 'descending' | 'ascending'
-}
-
-export interface ParamsFilters {
-    key: string
-    dir: string
-}
-
-export interface ParamsUserList {
-    search?: string
-    per_page?: number | string | undefined
-    page?: number | string | undefined
-    orders?: ParamsOrders[]
-    filters?: ParamsFilters[]
-    [key: string]: any
-}
-
 export interface UserSearchParam {
     search: string
     is_active: string
+}
+
+export interface ResponseUserList extends ResponseList {
+    data?: User
+}
+
+export interface PaginateUserParams extends PaginateParams {
+    records?: {
+        id: number
+        full_name: string
+        tel: string
+        created_at: string
+        first_experience_date: string
+        last_session_date: string
+        is_active: string
+    }[]
 }

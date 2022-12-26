@@ -2,6 +2,7 @@
     <section class="full-page section-image">
         <div class="content box">
             <h4 class="title">{{ t('login') }}</h4>
+            <p v-if="err" class="err_msg">{{ err }}</p>
             <el-form
                 ref="ruleFormRef"
                 :model="ruleForm"
@@ -56,20 +57,25 @@ const { t } = useI18n()
 const ruleFormRef = ref<FormInstance>()
 
 const validateMailAddress = (rule: any, value: any, callback: any) => {
-    if (value === '') {
-        callback(new Error('User name not required'))
+    var regex = /\S+@\S+\.\S+/
+    if (!regex.test(value)) {
+        callback(new Error(t('error.mail')))
     } else {
         callback()
     }
 }
 const validatePassword = (rule: any, value: any, callback: any) => {
-    if (value === '') {
-        callback(new Error('Password not required'))
+    const regex = new RegExp(
+        /^(?=.*[0-9])(?=.*[A-Z|a-z])(?=.*[!@#$%^&*(){}[\]:;<>,.?/~_+\-=\\])[a-zA-Z0-9!@#$%^&*(){}[\]:;<>,.?/~_+\-=\\]{8,255}$/
+    )
+    if (!regex.test(value)) {
+        callback(new Error(t('error.password.format')))
     } else {
         callback()
     }
 }
 
+const err = ref('')
 const ruleForm = reactive({
     mail_address: '',
     password: '',
@@ -77,17 +83,33 @@ const ruleForm = reactive({
 
 const rules = reactive({
     mail_address: [
+        {
+            required: true,
+            message: t('error.required', ['mail_address']),
+            trigger: 'blur',
+        },
         { validator: validateMailAddress, max: 225, trigger: 'blur' },
     ],
-    password: [{ validator: validatePassword, max: 255, trigger: 'blur' }],
+    password: [
+        {
+            required: true,
+            message: t('error.required', ['password']),
+            trigger: 'blur',
+        },
+        { validator: validatePassword, max: 255, trigger: 'blur' },
+    ],
 })
 
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate(async (valid) => {
         if (valid) {
-            await authStore.login(ruleForm)
-            router.push('/')
+            const data: any = await authStore.login(ruleForm)
+            if (data.status_code !== 200) {
+                err.value = data.message
+            } else {
+                router.push('/')
+            }
         } else {
             return false
         }
