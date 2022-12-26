@@ -85,18 +85,28 @@ const rules = reactive({
     mail_address: [
         {
             required: true,
-            message: t('error.required', ['mail_address']),
+            message: t('error.required', [t('mail_address')]),
             trigger: 'blur',
         },
-        { validator: validateMailAddress, max: 225, trigger: 'blur' },
+        {
+            max: 255,
+            message: t('error.max', [t('mail_address'), 255]),
+            trigger: 'blur',
+        },
+        { validator: validateMailAddress, trigger: 'blur' },
     ],
     password: [
         {
             required: true,
-            message: t('error.required', ['password']),
+            message: t('error.required', [t('password')]),
             trigger: 'blur',
         },
-        { validator: validatePassword, max: 255, trigger: 'blur' },
+        {
+            max: 255,
+            message: t('error.max', [t('password'), 255]),
+            trigger: 'blur',
+        },
+        { validator: validatePassword, trigger: 'blur' },
     ],
 })
 
@@ -105,7 +115,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate(async (valid) => {
         if (valid) {
             const data: any = await authStore.login(ruleForm)
-            if (data.status_code !== 200) {
+            if (data?.status_code && data?.status_code !== 200) {
                 err.value = data.message
             } else {
                 router.push('/')

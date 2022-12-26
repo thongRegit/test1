@@ -133,13 +133,13 @@ import { reactive, ref, onMounted, nextTick } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
 import { useUserStore } from '@/stores'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import type { UserDetail } from '@/libs/interface/userInterface'
 import { LoadingVue } from '@/components/common/loading'
 import dayjs from 'dayjs'
 
 const { t } = useI18n()
-const router = useRouter()
+const route = useRoute()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -165,34 +165,34 @@ const rules = reactive<FormRules>({
     first_name: [
         {
             required: true,
-            message: 'Please input first_name',
+            message: t('error.required', ['first_name']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('first_name'), 255]), trigger: 'blur' },
     ],
     last_name: [
         {
             required: true,
-            message: 'Please input last_name',
+            message: t('error.required', ['last_name']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('last_name'), 255]), trigger: 'blur' },
     ],
     first_name_furigana: [
         {
-            message: 'Please input first_name_furigana',
+            message: t('error.required', ['first_name_furigana']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('first_name_furigana'), 255]), trigger: 'blur' },
     ],
     last_name_furigana: [
         {
-            message: 'Please input last_name_furigana',
+            message: t('error.required', ['last_name_furigana']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('last_name_furigana'), 255]), trigger: 'blur' },
     ],
-    tel: [{ max: 20, message: 'Length max 20', trigger: 'blur' }],
+    tel: [{ max: 20, message: t('error.max', [t('tel'), 20]), trigger: 'blur' }],
 })
 
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -200,8 +200,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate(async (valid) => {
         if (valid) {
-            const id = router.currentRoute.value.params.id
-            ruleForm.birthday = (<any>Object).values(ruleForm.birthdays).join("/")
+            const id = route.params.id
+            if (!(<any>Object).values(ruleForm.birthdays).includes('')) {
+                ruleForm.birthday = (<any>Object).values(ruleForm.birthdays).join("/")
+            }
             const userStore = useUserStore()
             await userStore.updateUser(ruleForm, id)
             await getData()
@@ -219,7 +221,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
 }
 
 const getData = async () => {
-    const id = router.currentRoute.value.params.id
+    const id = route.params.id
     const useStore = useUserStore()
     await useStore.detailUser(id)
     ruleForm.first_name = useStore.user.first_name
@@ -228,16 +230,16 @@ const getData = async () => {
     ruleForm.last_name_furigana = useStore.user.last_name_furigana
     ruleForm.tel = useStore.user.tel
     ruleForm.line_name = useStore.user.line_name
-    ruleForm.birthday = useStore.user.birthday
-    ruleForm.birthdays.day = dayjs(new Date(useStore.user.birthday)).format(
+    ruleForm.birthday = useStore.user.birthday ? useStore.user.birthday : null
+    ruleForm.birthdays.day = useStore.user.birthday ? dayjs(new Date(useStore.user.birthday)).format(
         'DD'
-    )
-    ruleForm.birthdays.month = dayjs(new Date(useStore.user.birthday)).format(
+    ) : ''
+    ruleForm.birthdays.month = useStore.user.birthday ? dayjs(new Date(useStore.user.birthday)).format(
         'MM'
-    )
-    ruleForm.birthdays.year = dayjs(new Date(useStore.user.birthday)).format(
+    ) : ''
+    ruleForm.birthdays.year = useStore.user.birthday ? dayjs(new Date(useStore.user.birthday)).format(
         'YYYY'
-    )
+    ): ''
     ruleForm.gender = `${useStore.user.gender}`
     ruleForm.status = `${useStore.user.status}`
     ruleForm.is_active = !!useStore.user.is_active

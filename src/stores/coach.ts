@@ -10,7 +10,6 @@ import type {
     ResponseCoachSessionList,
 } from '@/libs/interface/coachInterface'
 import { useAlertStore } from './alert'
-import { LoadingVue } from '@/components/common/loading'
 
 export const useCoachStore = defineStore('coach', () => {
     const coaches = ref([] as ResponseCoachList)
@@ -59,7 +58,6 @@ export const useCoachStore = defineStore('coach', () => {
         id: string | string[] | number
     ) => {
         const alertStore = useAlertStore()
-        const loading = LoadingVue()
         payload.is_active = payload.is_active ? 1 : 0
         try {
             await coachAPI.update(payload, id)
@@ -68,7 +66,6 @@ export const useCoachStore = defineStore('coach', () => {
                 title: `Update ${coach.value.first_name}${coach.value.last_name} successfully!`,
                 type: 'success',
             })
-            loading.close()
         } catch (error) {
             console.log(error)
             return error

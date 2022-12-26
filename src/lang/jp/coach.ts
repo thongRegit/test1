@@ -49,6 +49,8 @@ export default {
             tel: '電話番号',
             invite: 'LINE名',
             is_active: '有効/無効',
+            invitation_code: '紹介用URL',
+            people_invited: '今月の紹介実績',
         },
         value: {
             is_active: {

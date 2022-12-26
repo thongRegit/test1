@@ -72,10 +72,12 @@ const ruleForm = reactive({
 
 const rules = reactive<FormRules>({
     search: [
-        { message: 'Please input shop name', trigger: 'blur' },
         {
             max: 255,
-            message: 'Length max 255',
+            message: t('error.max', [
+                t('coach.ruleForm.search.placeholder'),
+                255,
+            ]),
             trigger: 'blur',
         },
     ],
@@ -83,7 +85,7 @@ const rules = reactive<FormRules>({
         {
             type: 'string',
             required: true,
-            message: 'Please select at least one activity type',
+            message: t('error.check_one'),
             trigger: 'change',
         },
     ],

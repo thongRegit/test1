@@ -55,6 +55,9 @@ export const useUserStore = defineStore('users', () => {
         payload.gender = Number(payload.gender)
         payload.status = Number(payload.status)
         payload.is_active = payload.is_active ? 1 : 0
+        if (!payload.birthday) {
+            delete payload.birthday
+        }
         try {
             await userAPI.update(payload, id)
             await detailUser(id)

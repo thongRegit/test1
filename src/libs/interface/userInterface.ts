@@ -28,7 +28,7 @@ export interface UserDetail {
     last_name: string
     first_name_furigana: string
     last_name_furigana: string
-    birthday: string
+    birthday?: string | null
     birthdays: Date
     tel: string
     line_name: string
@@ -43,7 +43,7 @@ export interface UserUpdate {
     first_name_furigana: string
     last_name_furigana: string
     tel: string
-    birthday: string
+    birthday?: string | null
     gender: string | number
     status: string | number
     is_active: boolean | number

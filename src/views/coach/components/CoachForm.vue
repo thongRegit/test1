@@ -91,9 +91,9 @@
                 </el-col>
             </div>
             <div>
-                <p class="label">{{ t('coach.detail.label.invite') }}</p>
                 <el-row style="width: 100%" :gutter="16">
                     <el-col :span="12">
+                        <p class="label">{{ t('coach.detail.label.invitation_code') }}</p>
                         <el-form-item prop="invitation_code">
                             <el-input
                                 class="base-input"
@@ -103,6 +103,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
+                        <p class="label">{{ t('coach.detail.label.people_invited') }}</p>
                         <el-form-item prop="people_invited">
                             <el-input
                                 class="base-input"
@@ -162,36 +163,36 @@ const rules = reactive<FormRules>({
     first_name: [
         {
             required: true,
-            message: 'Please input first_name',
+            message: t('error.required', ['first_name']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('first_name'), 255]), trigger: 'blur' },
     ],
     last_name: [
         {
             required: true,
-            message: 'Please input last_name',
+            message: t('error.required', ['last_name']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('last_name'), 255]), trigger: 'blur' },
     ],
     first_name_furigana: [
         {
             required: true,
-            message: 'Please input first_name_furigana',
+            message: t('error.required', ['first_name_furigana']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('first_name_furigana'), 255]), trigger: 'blur' },
     ],
     last_name_furigana: [
         {
             required: true,
-            message: 'Please input last_name_furigana',
+            message: t('error.required', ['last_name_furigana']),
             trigger: 'blur',
         },
-        { max: 255, message: 'Length max 255', trigger: 'blur' },
+        { max: 255, message: t('error.max', [t('last_name_furigana'), 255]), trigger: 'blur' },
     ],
-    tel: [{ max: 20, message: 'Length max 20', trigger: 'blur' }],
+    tel: [{ max: 20, message: t('error.max', [t('tel'), 20]), trigger: 'blur' }],
 })
 
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -204,16 +205,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
             const coachStore = useCoachStore()
             await coachStore.updateCoach(ruleForm, id)
             await getData()
+            loading.close()
         } else {
+            loading.close()
             return false
         }
-        loading.close()
     })
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
 }
 
 const getData = async () => {
