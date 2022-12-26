@@ -78,7 +78,7 @@ export const usePatternStore = defineStore('patterns', () => {
 
     const getPeriod = async () => {
         try {
-            const data: Array<Period> = await axios.get(`period/`)
+            const data: Array<Period> = await axios.get(`/period`)
             periods.value = data
         } catch (error: any) {
             makeNotification('error', 'Error', error?.message)

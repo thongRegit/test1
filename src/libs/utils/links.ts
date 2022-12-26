@@ -9,7 +9,7 @@ export const SIDE_MENU_ADMIN = {
     sessions: {
         index: '2',
         label: 'homepage.sessions',
-        route: '/sessions',
+        route: '/session',
         class: '',
         menu_childs: [],
     },
