@@ -119,12 +119,12 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive, ref, watch } from 'vue'
+import { nextTick, onMounted, reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import BoxVue from '@/components/common/BoxVue.vue'
 import { useI18n } from 'vue3-i18n'
 import { usePatternStore, usePlanStore } from '@/stores'
-import { Period } from '@/libs/interface/planInterface'
+import type { Period } from '@/libs/interface/planInterface'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 

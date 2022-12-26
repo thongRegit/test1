@@ -48,6 +48,7 @@ import type {
 } from '@/libs/interface/userInterface'
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import UserSearch from './UserSearch.vue'
+import { findStatus } from '@/libs/utils/common'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -105,7 +106,7 @@ const columns = ref([
     },
 ])
 const buttons = ref([
-    { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
+    { id: '1', label: '編集', class: 'btn-action btn-update' },
 ])
 const sortProp = reactive({ key: 'id', dir: 'descending' })
 
@@ -134,6 +135,7 @@ const getListData = async () => {
     data.value.currentPage = userStore.users.current_page
     data.value.perPage = userStore.users.per_page
     data.value.records = userStore.users.data.map((e: User) => {
+        const status: any = findStatus(e.is_active)
         return {
             id: e.id,
             full_name: e.full_name,
@@ -141,7 +143,7 @@ const getListData = async () => {
             created_at: e.created_at,
             first_experience_date: e.first_experience_date,
             last_session_date: e.last_session_date,
-            is_active: `<span class="btn-status">${e.is_active}</span>`,
+            is_active: status.display,
         }
     })
     loading.value = false

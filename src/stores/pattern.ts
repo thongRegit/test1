@@ -19,9 +19,9 @@ export const usePatternStore = defineStore('patterns', () => {
 
     const listPattern = async (payload: patternPayload) => {
         try {
-            const data = await patternAPI.getListPattern(payload)
+            const data: any = await patternAPI.getListPattern(payload)
             patterns.value = data
-        } catch (error) {
+        } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
             return error
         }
@@ -44,7 +44,7 @@ export const usePatternStore = defineStore('patterns', () => {
                 type: 'success',
             })
             loading.close()
-        } catch (error) {
+        } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
             loading.close()
             return error
@@ -69,7 +69,7 @@ export const usePatternStore = defineStore('patterns', () => {
                 type: 'success',
             })
             loading.close()
-        } catch (error) {
+        } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
             loading.close()
             return error
@@ -80,7 +80,7 @@ export const usePatternStore = defineStore('patterns', () => {
         try {
             const data: Array<Period> = await axios.get(`period/`)
             periods.value = data
-        } catch (error) {
+        } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
             return error
         }

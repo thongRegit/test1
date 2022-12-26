@@ -125,7 +125,7 @@ import BoxVue from '@/components/common/BoxVue.vue'
 import { useI18n } from 'vue3-i18n'
 import { usePatternStore, usePlanStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
-import {
+import type {
     Period,
     Payload,
     PlanDetailPayload,

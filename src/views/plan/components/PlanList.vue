@@ -35,7 +35,6 @@
                     :buttons="buttons"
                     :hasCreate="false"
                     @click-button="handleClickButtonTable"
-                    @click-checkbox="handleCheckbox"
                 ></table-data>
             </section>
         </template>
@@ -144,7 +143,7 @@ const handleChangePage = (page: any) => {
     getListData()
 }
 
-const cellClick = (row: any, column: any, cell: any) => {
+const cellClick = (row: any, column: any) => {
     if (column.property === 'name') {
         router.push({
             name: 'plans-detail',
@@ -166,7 +165,6 @@ const search = (search: any) => {
     loading.value = true
     listQuery.value.page = 1
     listQuery.value.search = search.name
-    // listQuery.value.filters.type = search.type
     listQuery.value.filters = [{ key: 'is_active', data: search.status }]
     getListData()
 }
@@ -175,12 +173,6 @@ const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
     getListData()
-}
-
-const resetForm = () => {
-    listQuery.value.search = ''
-    // listQuery.value.filters.type = 1
-    listQuery.value.filters = [{ key: 'is_active', data: 'all' }]
 }
 
 const handleCreate = () => {

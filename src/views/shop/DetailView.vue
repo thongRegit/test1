@@ -193,14 +193,14 @@ import type {
     BusinessHour,
     UpdateShopPayload,
     BusinessHourForAPI,
-    ShopDetailPayload
+    ShopDetailPayload,
 } from '@/libs/interface/shopInterface'
 import type { Pattern } from '@/libs/interface/patternInterface'
 import { individualData } from '@/libs/constants/constants'
 const shopStore = useShopStore()
 const patternStore = usePatternStore()
 const route = useRoute()
-const id: number = route.params.id
+const id: string | string[] = route.params.id
 
 const { t } = useI18n()
 
@@ -211,7 +211,7 @@ const currentPatternIndex = ref()
 
 const individuaSettings = ref(individualData)
 const getShopDetail = async () => {
-    const payload: ShopDetailPayload = {id}
+    const payload: ShopDetailPayload = { id }
     await shopStore.getDetailShop(payload)
     shopDetail.value = shopStore.shopDetail
     shopStore.shopDetail.business_hours.forEach((el: BusinessHour) => {

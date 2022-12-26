@@ -1,6 +1,11 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-import type { Shop, UpdateShopPayload, ShopListPayload, ShopDetailPayload } from '@/libs/interface/shopInterface'
+import type {
+    Shop,
+    UpdateShopPayload,
+    ShopListPayload,
+    ShopDetailPayload,
+} from '@/libs/interface/shopInterface'
 import { LoadingVue } from '@/components/common/loading'
 import { useAlertStore } from './alert'
 import * as shopApi from '@/api/shopApi'
@@ -41,9 +46,9 @@ export const useShopStore = defineStore('shops', () => {
 
     const getDetailShop = async (payLoad: ShopDetailPayload) => {
         try {
-            const data = await shopApi.getShopDetail(payLoad.id)
+            const data: any = await shopApi.getShopDetail(payLoad.id)
             shopDetail.value = data
-        } catch (error) {
+        } catch (error: any) {
             ElNotification({
                 title: 'Error',
                 message: error.message,

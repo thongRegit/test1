@@ -111,7 +111,7 @@ import { useI18n } from 'vue3-i18n'
 import { usePatternStore, usePlanStore } from '@/stores'
 import { useRoute } from 'vue-router'
 import type { Payload } from '@/libs/interface/planInterface'
-import { Period, PlanDetailPayload } from '@/libs/interface/planInterface'
+import type { Period, PlanDetailPayload } from '@/libs/interface/planInterface'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -186,22 +186,6 @@ const getPlanDetail = async (payload: any) => {
         plan_discounts: planStore.plan.plan_discounts,
         is_active: Boolean(planStore.plan.is_active),
     }
-}
-
-const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    await formEl.validate((valid, fields) => {
-        if (valid) {
-            console.log('submit!')
-        } else {
-            console.log('error submit!', fields)
-        }
-    })
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
 }
 
 const periods = ref([] as Array<Period>)
