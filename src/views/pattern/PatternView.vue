@@ -2,7 +2,7 @@
     <div class="pattern-list-wrapper">
         <div class="header">
             <h4>{{ t('pattern.pattern_management') }}</h4>
-            <el-button type="primary" @click="onClickCreateBtn">
+            <el-button color="#007BFF" @click="onClickCreateBtn">
                 {{ t('pattern.create_new') }}
             </el-button>
         </div>
@@ -23,12 +23,12 @@
                         <Edit />
                     </el-icon>
                 </div>
-                <div class="detail-wrapper">
+                <div class="detail-session-wrapper mt-7">
                     <el-row class="title">
-                        <el-col :span="11">
+                        <el-col :span="10">
                             <p>{{ t('pattern.business_hours') }}</p>
                         </el-col>
-                        <el-col :span="13" style="padding-left: 60px">
+                        <el-col :span="5" style="padding-left: 60px">
                             <p>{{ t('pattern.session_time') }}</p>
                         </el-col>
                     </el-row>
@@ -38,7 +38,7 @@
                             v-for="(ssItem, index) in ptItem.details"
                             :key="index"
                         >
-                            <el-col :span="11">
+                            <el-col :span="10">
                                 <el-row>
                                     <el-col :span="10">
                                         <span class="text-info">
@@ -53,13 +53,13 @@
                                         </div>
                                     </el-col>
                                     <el-col :span="10">
-                                        <span class="text-info">{{
+                                        <span class="text-info last">{{
                                             ssItem.end_time
                                         }}</span>
                                     </el-col>
                                 </el-row>
                             </el-col>
-                            <el-col :span="13" style="padding-left: 60px">
+                            <el-col :span="5" style="padding-left: 60px">
                                 <span class="text-info">
                                     {{
                                         `${ssItem.period.value}${t(
@@ -150,7 +150,7 @@ onMounted(async () => {
         margin-bottom: 45px;
 
         h4 {
-            color: #171725;
+            color: #212529;
             font-size: 24px;
             font-weight: bold;
         }
@@ -163,7 +163,7 @@ onMounted(async () => {
             border: 1px solid #707070;
             background: white;
             font-size: 16px;
-            padding: 22px 68px;
+            padding: 22px 68px 22px 20px;
             margin-bottom: 15px;
             &:last-child {
                 margin-bottom: 0;
@@ -171,42 +171,12 @@ onMounted(async () => {
             .title-wrapper {
                 display: flex;
                 align-items: center;
-
+                max-width: 950px;
                 h5 {
                     font-size: 16px;
-                    color: #171725;
+                    color: #212529;
                     font-weight: bold;
                     margin-right: 20px;
-                }
-            }
-
-            .detail-wrapper {
-                margin-top: 26px;
-
-                .title {
-                    margin-bottom: 10px;
-                    p {
-                        font-weight: bold;
-                    }
-                }
-
-                .sessions {
-                    .text-info {
-                        display: flex;
-                        align-items: center;
-                        width: 147px;
-                        height: 36px;
-                        background: #7f7f7f;
-                        padding: 0 18px;
-                        border-radius: 5px;
-                        color: white;
-                    }
-                    .item {
-                        margin-bottom: 20px;
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
-                    }
                 }
             }
         }

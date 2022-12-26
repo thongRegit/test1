@@ -24,10 +24,9 @@ export interface Period {
 }
 
 export interface Session {
-    start_time: string
-    end_time: string
-    period_id: number
-    period_value: number
+    start_time: string | null
+    end_time: string | null
+    period_id: number | null
 }
 
 export interface SessionEl {
@@ -43,5 +42,5 @@ export interface patternPayload {
 
 export interface createPatternPayload {
     name: string
-    pattern_details: Array<Session>
+    pattern_details?: Array<Session> | []
 }
