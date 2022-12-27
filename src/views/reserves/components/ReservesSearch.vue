@@ -16,7 +16,7 @@
             </el-checkbox-group>
         </el-form-item>
         <el-form-item prop="name">
-            <el-row style="width: 100%">
+            <el-row class="full-width">
                 <el-col :span="12">
                     <p class="label">{{ t('shops.status') }}</p>
                     <el-checkbox-group v-model="ruleForm.type">
@@ -40,7 +40,7 @@
             </el-row>
         </el-form-item>
         <el-form-item prop="name">
-            <el-row style="width: 100%">
+            <el-row class="full-width">
                 <el-col :span="12">
                     <p class="label">{{ t('shops.keyword_search') }}</p>
                     <el-col :span="20">

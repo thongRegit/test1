@@ -65,7 +65,7 @@
                                 </el-col>
                                 <el-col :span="4">
                                     <div
-                                        class="text-gray-500 text-align-center"
+                                        class="text-gray-500 text-center"
                                     >
                                         ~
                                     </div>
@@ -152,7 +152,7 @@
                                 </el-col>
                                 <el-col :span="4">
                                     <div
-                                        class="text-gray-500 text-align-center"
+                                        class="text-gray-500 text-center"
                                     >
                                         ~
                                     </div>
