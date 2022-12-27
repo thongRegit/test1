@@ -51,4 +51,10 @@ export default {
         general: '一般',
         subscription: 'サブスクリプション',
     },
+    validate: {
+        message: {
+            required: 'Please input activity form',
+            is_number: 'Please input number'
+        }
+    }
 }
