@@ -105,12 +105,12 @@
                 </el-form-item>
                 <el-form-item class="justify-center">
                     <el-button @click="resetForm(ruleFormRef)">{{
-                        t('btn_clear')
+                        t('btn_cancel')
                     }}</el-button>
                     <el-button
                         type="primary"
                         @click="submitForm(ruleFormRef)"
-                        >{{ t('btn_search') }}</el-button
+                        >{{ t('btn_create') }}</el-button
                     >
                 </el-form-item>
             </el-form>
@@ -168,6 +168,13 @@ const rules = reactive<FormRules>({
         },
     ],
     desc: [
+        {
+            required: true,
+            message: 'Please input activity form',
+            trigger: 'blur',
+        },
+    ],
+    amount: [
         {
             required: true,
             message: 'Please input activity form',

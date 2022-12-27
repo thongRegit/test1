@@ -14,7 +14,7 @@
             </div>
             <div class="head-btn-create" v-if="btnCreate">
                 <el-button type="primary" @click="emit('onCreate')"
-                    >Create</el-button
+                    >新規作成</el-button
                 >
             </div>
         </div>

@@ -43,6 +43,7 @@ export const jp = {
     btn_search: '検索',
     btn_clear: 'クリア',
     btn_create: '新規登録',
+    btn_cancel: 'キャンセル',
     table: {
         no_data: '該当のデータがありません。',
     },
