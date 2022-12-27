@@ -20,131 +20,6 @@
     <Step2 />
     <Step3 />
     <Step4 />
-
-    <!-- <ModalVue :open="true" :title="'パターン登録'">
-        <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" class="demo-ruleForm"
-            :size="formSize" status-icon>
-            <el-form-item prop="name">
-                <p class="label">営業時間</p>
-                <el-col :span="6">
-                    <el-input v-model="ruleForm.name" class="base-input" />
-                </el-col>
-            </el-form-item>
-            <el-form-item required>
-                <el-col :span="14" class="group-time">
-                    <el-row>
-                        <el-col :span="18">
-                            <p class="label">営業時間</p>
-                        </el-col>
-                        <el-col :span="6">
-                            <p class="label">SESSION時間</p>
-                        </el-col>
-                    </el-row>
-                    <el-row class="group-time-item">
-                        <el-col :span="18">
-                            <el-row >
-                                <el-col :span="8">
-                                    <el-input v-model="ruleForm.name" class="base-input" />
-                                </el-col>
-                                <el-col :span="4">
-                                    <span class="text-gray-500 time-center">~</span>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-input v-model="ruleForm.name" class="base-input" />
-                                </el-col>
-                            </el-row>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                    </el-row>
-                </el-col>
-            </el-form-item>
-            <el-form-item>
-                <el-link href="https://element.eleme.io" target="_blank" type="primary">+営業時間を追加する</el-link>
-            </el-form-item>
-        </el-form>
-    </ModalVue> -->
-
-    <!-- <ModalVue :open="true" :title="'セッション個別設定'">
-        <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" class="demo-ruleForm"
-            :size="formSize" status-icon>
-            <el-form-item required>
-                <el-col :span="20" class="group-time">
-                    <el-row class="group-time-item" :gutter="20">
-                        <el-col :span="6">
-                            <el-date-picker
-                                v-model="ruleForm.date"
-                                type="date"
-                                placeholder="Pick a date"
-                                style="width: 100%"
-                                class="base-input"
-                                format="YYYY/MM/DD"
-                                value-format="YYYY-MM-DD"
-                            />
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                        <el-col :span="1">
-                            <span class="text-gray-500 time-center">~</span>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                        <el-col :span="1">
-                            <span class="text-gray-500 time-center">を</span>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                        <el-col :span="2">
-                            <span class="text-gray-500 time-center">に設定</span>
-                        </el-col>
-                    </el-row>
-                </el-col>
-            </el-form-item>
-            <el-form-item required>
-                <el-col :span="20" class="group-time">
-                    <el-row class="group-time-item" :gutter="20">
-                        <el-col :span="6">
-                            <el-date-picker
-                                v-model="ruleForm.date"
-                                type="date"
-                                placeholder="Pick a date"
-                                style="width: 100%"
-                                class="base-input"
-                                format="YYYY/MM/DD"
-                                value-format="YYYY-MM-DD"
-                            />
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                        <el-col :span="1">
-                            <span class="text-gray-500 time-center">~</span>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                        <el-col :span="1">
-                            <span class="text-gray-500 time-center">を</span>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input v-model="ruleForm.name" class="base-input" />
-                        </el-col>
-                        <el-col :span="2">
-                            <span class="text-gray-500 time-center">に設定</span>
-                        </el-col>
-                    </el-row>
-                </el-col>
-            </el-form-item>
-            <el-form-item>
-                <el-link href="https://element.eleme.io" target="_blank" type="primary">+営業時間を追加する</el-link>
-            </el-form-item>
-        </el-form>
-    </ModalVue> -->
-
     <ModalVue :open="true" :title="'セッション個別設定'">
         <el-form
             ref="ruleFormRef"
@@ -162,8 +37,7 @@
                                 v-model="ruleForm.date"
                                 type="date"
                                 placeholder="Pick a date"
-                                style="width: 100%"
-                                class="base-input"
+                                class="base-input full-width"
                                 format="YYYY/MM/DD"
                                 value-format="YYYY-MM-DD"
                             />
@@ -212,8 +86,7 @@
                                 v-model="ruleForm.date"
                                 type="date"
                                 placeholder="Pick a date"
-                                style="width: 100%"
-                                class="base-input"
+                                class="base-input full-width"
                                 format="YYYY/MM/DD"
                                 value-format="YYYY-MM-DD"
                             />

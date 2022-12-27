@@ -10,7 +10,7 @@
         <el-col :span="12">
             <div>
                 <p class="label">{{ t('coach.detail.label.name') }}</p>
-                <el-row style="width: 100%" :gutter="16">
+                <el-row class="full-width" :gutter="16">
                     <el-col :span="12">
                         <el-form-item prop="first_name">
                             <el-input
@@ -31,7 +31,7 @@
             </div>
             <div>
                 <p class="label">{{ t('coach.detail.label.name_furigana') }}</p>
-                <el-row style="width: 100%" :gutter="16">
+                <el-row class="full-width" :gutter="16">
                     <el-col :span="12">
                         <el-form-item prop="first_name_furigana">
                             <el-input
@@ -52,7 +52,7 @@
             </div>
             <div>
                 <p class="label">{{ t('coach.detail.label.birthday') }}</p>
-                <el-row style="width: 100%" :gutter="16">
+                <el-row class="full-width" :gutter="16">
                     <el-col :span="8">
                         <el-form-item prop="day">
                             <el-input
@@ -91,7 +91,7 @@
                 </el-col>
             </div>
             <div>
-                <el-row style="width: 100%" :gutter="16">
+                <el-row class="full-width" :gutter="16">
                     <el-col :span="12">
                         <p class="label">{{ t('coach.detail.label.invitation_code') }}</p>
                         <el-form-item prop="invitation_code">

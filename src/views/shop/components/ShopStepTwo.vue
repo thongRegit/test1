@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :type="'table'" :padding="20" :width="'800px'">
+    <BoxVue :type="'table'" :padding="20">
         <template v-slot:header> プラン詳細 2 </template>
         <template v-slot:body>
             <el-form
