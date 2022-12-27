@@ -112,7 +112,6 @@ import type {
     Session,
     Period,
 } from '@/libs/interface/sessionInterface'
-import { watch } from 'fs'
 
 const { t } = useI18n()
 

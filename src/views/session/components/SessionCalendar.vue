@@ -3,8 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
-import { toRefs } from 'vue'
+import { ref, watch, toRefs } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
