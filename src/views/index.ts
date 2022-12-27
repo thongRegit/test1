@@ -11,6 +11,7 @@ const UserList = () => import('@/views/user/UserVue.vue')
 const ReserveList = () => import('@/views/reserves/ReservesVue.vue')
 const ReserveDetail = () => import('@/views/reserves/DetailVue.vue')
 const AccountList = () => import('@/views/account/AccountVue.vue')
+const SessionList = () => import('@/views/session/SessionVue.vue')
 const PatternList = () => import('@/views/pattern/PatternView.vue')
 const PatternCreate = () => import('@/views/pattern/CreateView.vue')
 const CoachList = () => import('@/views/coach/CoachVue.vue')
@@ -34,6 +35,7 @@ export {
     ReserveList,
     ReserveDetail,
     AccountList,
+    SessionList,
     PatternList,
     PatternCreate,
     CoachList,

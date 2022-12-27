@@ -11,6 +11,7 @@ import {
     ReserveList,
     ReserveDetail,
     AccountList,
+    SessionList,
     CoachList,
     CoachDetail,
     ShopUpdate,
@@ -216,6 +217,12 @@ const routes = [
                 path: 'account',
                 name: 'account',
                 component: AccountList,
+                beforeEnter: ifAuthenticated,
+            },
+            {
+                path: 'session',
+                name: 'session',
+                component: SessionList,
                 beforeEnter: ifAuthenticated,
             },
             {
