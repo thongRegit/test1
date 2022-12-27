@@ -61,7 +61,7 @@ const ruleFormRef = ref<FormInstance>()
 const validateMailAddress = (rule: any, value: any, callback: any) => {
     var regex = /\S+@\S+\.\S+/
     if (!regex.test(value)) {
-        callback(new Error(t('error.mail')))
+        callback(new Error(t('validation.email')))
     } else {
         callback()
     }
@@ -71,7 +71,7 @@ const validatePassword = (rule: any, value: any, callback: any) => {
         /^(?=.*[0-9])(?=.*[A-Z|a-z])(?=.*[!@#$%^&*(){}[\]:;<>,.?/~_+\-=\\])[a-zA-Z0-9!@#$%^&*(){}[\]:;<>,.?/~_+\-=\\]{8,255}$/
     )
     if (!regex.test(value)) {
-        callback(new Error(t('error.password.format')))
+        callback(new Error(t('validation.password.format')))
     } else {
         callback()
     }
@@ -87,12 +87,12 @@ const rules = reactive({
     mail_address: [
         {
             required: true,
-            message: t('error.required', [t('mail_address')]),
+            message: t('validation.required', [t('mail_address')]),
             trigger: 'blur',
         },
         {
             max: 255,
-            message: t('error.max', [t('mail_address'), 255]),
+            message: t('validation.max.string', [t('mail_address'), 255]),
             trigger: 'blur',
         },
         { validator: validateMailAddress, trigger: 'blur' },
@@ -100,12 +100,12 @@ const rules = reactive({
     password: [
         {
             required: true,
-            message: t('error.required', [t('password')]),
+            message: t('validation.required', [t('password')]),
             trigger: 'blur',
         },
         {
             max: 255,
-            message: t('error.max', [t('password'), 255]),
+            message: t('validation.max.string', [t('password'), 255]),
             trigger: 'blur',
         },
         { validator: validatePassword, trigger: 'blur' },

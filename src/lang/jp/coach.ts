@@ -51,6 +51,11 @@ export default {
             is_active: '有効/無効',
             invitation_code: '紹介用URL',
             people_invited: '今月の紹介実績',
+            first_name: '性',
+            last_name: '名',
+            first_name_furigana: '性（ふりがな）',
+            last_name_furigana: '名（ふりがな）',
+            nickname: 'ニックネーム',
         },
         value: {
             is_active: {

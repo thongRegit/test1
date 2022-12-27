@@ -4,7 +4,6 @@ import pattern from './pattern'
 import user from './user'
 import coach from './coach'
 import plan from './plan'
-import error from './error'
 import message from './message'
 import validation from './validation'
 
@@ -101,7 +100,6 @@ export const jp = {
     user,
     coach,
     plan,
-    error,
     message,
     validation,
 }

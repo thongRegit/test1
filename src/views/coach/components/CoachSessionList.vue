@@ -25,6 +25,7 @@ import type {
     PaginateCoachSessionParams,
 } from '@/libs/interface/coachInterface'
 import type { ParamsList } from '@/libs/interface/commonInterface'
+import { FORMAT_DAY } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -90,12 +91,12 @@ const getListData = async () => {
     let query: ParamsList = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
+        'filters[0][key]': listQuery.value.filters[0].key,
+        'filters[0][data]': listQuery.value.filters[0].data,
         page: listQuery.value.page,
         search: listQuery.value.search,
         per_page: 20,
-        filters: '',
     }
-    query.filters = JSON.stringify(listQuery.value.filters)
 
     const id = router.currentRoute.value.params.id
 
@@ -108,10 +109,15 @@ const getListData = async () => {
         (e: CoachSession) => {
             return {
                 id: e.id,
-                date: e.start_time + ' - ' + e.end_time,
+                date:
+                    FORMAT_DAY(e.date, 'YYYY/MM/DD') +
+                    ':' +
+                    e.start_time +
+                    ' - ' +
+                    e.end_time,
                 shop_name: e.shop_name,
                 plan_name: e.plan_type,
-                full_name: 'full_name',
+                full_name: e.shop_name,
                 order_status: e.order_status,
             }
         }

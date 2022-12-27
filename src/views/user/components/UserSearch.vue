@@ -52,12 +52,12 @@ const statusArr = [
         title: t('user.ruleForm.status.value.all'),
     },
     {
-        id: '0',
-        title: t('user.ruleForm.status.value.0'),
-    },
-    {
         id: '1',
         title: t('user.ruleForm.status.value.1'),
+    },
+    {
+        id: '0',
+        title: t('user.ruleForm.status.value.0'),
     },
 ]
 const emit = defineEmits(['submit', 'reset'])
@@ -71,7 +71,10 @@ const rules = reactive<FormRules>({
     search: [
         {
             max: 255,
-            message: t('error.max', [t('user.ruleForm.name.placeholder'), 255]),
+            message: t('validation.max.string', [
+                t('user.ruleForm.name.placeholder'),
+                255,
+            ]),
             trigger: 'blur',
         },
     ],
@@ -79,7 +82,7 @@ const rules = reactive<FormRules>({
         {
             type: 'string',
             required: true,
-            message: t('error.check_one'),
+            message: t('validation.check_one'),
             trigger: 'change',
         },
     ],
