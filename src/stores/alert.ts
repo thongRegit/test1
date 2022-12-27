@@ -10,14 +10,14 @@ export const useAlertStore = defineStore('alerts', () => {
         alerts.value.push(payload)
     }
 
-    const deleteAlert = async (payload: any) => {
-        alerts.value.push(payload)
+    const removeAlert = async () => {
+        alerts.value = []
     }
 
     return {
         alerts,
         createAlert,
-        deleteAlert,
+        removeAlert,
     }
 })
 

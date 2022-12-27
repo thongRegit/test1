@@ -11,7 +11,6 @@
             :buttons="buttons"
             :hasCreate="false"
             @click-button="handleClickButtonTable"
-            @click-checkbox="handleCheckbox"
         ></table-data>
     </section>
 </template>
@@ -21,6 +20,11 @@ import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useCoachStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
+import type {
+    CoachSession,
+    PaginateCoachSessionParams,
+} from '@/libs/interface/coachInterface'
+import type { ParamsList } from '@/libs/interface/commonInterface'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -36,7 +40,7 @@ const data = ref({
     perPage: 10,
     records: [],
     total: 0,
-} as any)
+} as PaginateCoachSessionParams)
 
 const loading = ref(true)
 const columns = ref([
@@ -82,10 +86,8 @@ const handleClickButtonTable = (classList: any, row: any) => {
     }
 }
 
-const handleCheckbox = () => {}
-
 const getListData = async () => {
-    let query: any = {
+    let query: ParamsList = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -102,16 +104,18 @@ const getListData = async () => {
     data.value.total = userStore.session_coaches.total
     data.value.currentPage = userStore.session_coaches.current_page
     data.value.perPage = userStore.session_coaches.per_page
-    data.value.records = userStore.session_coaches.data.map((e: any) => {
-        return {
-            id: e.id,
-            date: e.start_time + ' - ' + e.end_time,
-            shop_name: e.shop_name,
-            plan_name: e.plan_type,
-            full_name: 'full_name',
-            order_status: e.order_status,
+    data.value.records = userStore.session_coaches.data?.map(
+        (e: CoachSession) => {
+            return {
+                id: e.id,
+                date: e.start_time + ' - ' + e.end_time,
+                shop_name: e.shop_name,
+                plan_name: e.plan_type,
+                full_name: 'full_name',
+                order_status: e.order_status,
+            }
         }
-    })
+    )
     loading.value = false
 }
 

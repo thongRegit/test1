@@ -47,13 +47,24 @@ export default {
     detail: {
         label: {
             name: 'お名前',
-            name_furigana: 'お名前（ふりがな',
+            name_furigana: 'お名前（ふりがな）',
             birthday: '生年月日',
             tel: '電話番号',
             line_name: 'LINE名',
             gender: '性別',
             status: 'ステータス',
-            is_active: '',
+            is_active: '有効/無効',
+        },
+        value: {
+            status: {
+                1: '一般',
+                2: '初回体験',
+                3: 'サブスクリプション',
+            },
+            is_active: {
+                active: '有効',
+                inactive: '無効',
+            },
         },
     },
 }

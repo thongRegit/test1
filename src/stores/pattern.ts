@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import axios from '@/config/axios'
 import type {
     PatternData,
@@ -7,20 +7,22 @@ import type {
     createPatternPayload,
     Period,
 } from '@/libs/interface/patternInterface'
+import { useAlertStore } from './alert'
+import { LoadingVue } from '@/components/common/loading'
+import { makeNotification } from '@/libs/constants/constants'
+import * as patternAPI from '@/api/patternAPI'
 
-export const usePatternStore = defineStore('question_type', () => {
-    const patterns: any = ref({} as PatternData)
+export const usePatternStore = defineStore('patterns', () => {
+    const patterns = ref({} as PatternData)
     const pattern = ref({})
     const periods = ref([] as Array<Period>)
 
     const listPattern = async (payload: patternPayload) => {
         try {
-            const data = await axios.get('/patterns', {
-                params: payload,
-            })
+            const data: any = await patternAPI.getListPattern(payload)
             patterns.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -29,15 +31,22 @@ export const usePatternStore = defineStore('question_type', () => {
         payload: createPatternPayload,
         cb?: Function
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
         try {
-            // const data = await axios.post('/shop', { name: 'Axios POST Request Example' })
-            const data = await axios.post('/patterns/create', payload)
+            const data = await patternAPI.createPattern(payload)
             pattern.value = data
             if (cb) {
                 cb()
             }
-        } catch (error) {
-            console.log(error)
+            alertStore.createAlert({
+                title: `Create pattern successfully!`,
+                type: 'success',
+            })
+            loading.close()
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
+            loading.close()
             return error
         }
     }
@@ -47,14 +56,22 @@ export const usePatternStore = defineStore('question_type', () => {
         id: number,
         cb?: Function
     ) => {
+        const alertStore = useAlertStore()
+        const loading = LoadingVue()
         try {
-            const data = await axios.put(`patterns/${id}/update`, payload)
+            const data = await patternAPI.updatePattern(payload, id)
             pattern.value = data.data
             if (cb) {
                 cb()
             }
-        } catch (error) {
-            console.log(error)
+            alertStore.createAlert({
+                title: `Update pattern successfully!`,
+                type: 'success',
+            })
+            loading.close()
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
+            loading.close()
             return error
         }
     }
@@ -63,8 +80,8 @@ export const usePatternStore = defineStore('question_type', () => {
         try {
             const data: Array<Period> = await axios.get(`period/`)
             periods.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }

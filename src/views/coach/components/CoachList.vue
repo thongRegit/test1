@@ -35,13 +35,18 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useCoachStore } from '@/stores'
-import BoxVue from '@/components/common/BoxVue.vue'
-import CoachSearchVue from './CoachSearchVue.vue'
-import type { CoachSearch } from '@/libs/interface/coachInterface'
 import { useI18n } from 'vue3-i18n'
 import { findStatus } from '@/libs/utils/common'
 import { useRouter } from 'vue-router'
+import { useCoachStore } from '@/stores'
+import type {
+    CoachSearch,
+    Coach,
+    PaginateCoachParams,
+} from '@/libs/interface/coachInterface'
+import type { ParamsList } from '@/libs/interface/commonInterface'
+import BoxVue from '@/components/common/BoxVue.vue'
+import CoachSearchVue from './CoachSearchVue.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -105,7 +110,7 @@ const data = ref({
     perPage: 20,
     records: [],
     total: 0,
-} as any)
+} as PaginateCoachParams)
 
 const search = (search: CoachSearch) => {
     loading.value = true
@@ -116,7 +121,7 @@ const search = (search: CoachSearch) => {
 }
 
 const getListData = async () => {
-    let query: any = {
+    let query: ParamsList = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -131,7 +136,7 @@ const getListData = async () => {
     data.value.total = coachStore.coaches.total
     data.value.currentPage = coachStore.coaches.current_page
     data.value.perPage = coachStore.coaches.per_page
-    data.value.records = coachStore.coaches.data.map((e: any) => {
+    data.value.records = coachStore.coaches.data?.map((e: Coach) => {
         const status: any = findStatus(e.is_active)
         return {
             id: e.id,
@@ -140,7 +145,6 @@ const getListData = async () => {
             tel: e.tel,
             created_at: e.created_at,
             status: status.display,
-            edit: `編集`,
         }
     })
 

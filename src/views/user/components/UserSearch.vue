@@ -6,7 +6,7 @@
         class="demo-ruleForm"
         status-icon
     >
-        <el-form-item prop="type">
+        <el-form-item prop="is_active">
             <p class="label">{{ t('user.status') }}</p>
             <el-radio-group v-model="ruleForm.is_active">
                 <el-radio
@@ -69,16 +69,16 @@ const ruleForm = reactive({
 const rules = reactive<FormRules>({
     search: [
         {
-            message: 'Please input search',
+            max: 255,
+            message: t('error.max', [t('user.ruleForm.name.placeholder'), 255]),
             trigger: 'blur',
         },
-        { max: 2555, message: 'Length max 255', trigger: 'blur' },
     ],
     is_active: [
         {
-            type: 'array',
+            type: 'string',
             required: true,
-            message: 'Please select at least one activity type',
+            message: t('error.check_one'),
             trigger: 'change',
         },
     ],

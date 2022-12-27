@@ -23,7 +23,6 @@
                     :columns="columns"
                     :showIndex="false"
                     :showCheckbox="true"
-                    @cell-click="cellClick"
                     @change-page="handleChangePage"
                     @sort="sort"
                     :buttons="buttons"
@@ -43,7 +42,10 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
 import ShopSearchVue from './ShopSearch.vue'
-import type { ShopSearch } from '@/libs/interface/shopInterface'
+import type {
+    ShopSearch,
+    ShopListPayload,
+} from '@/libs/interface/shopInterface'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -65,39 +67,39 @@ const loading = ref(true)
 const columns = ref([
     {
         prop: 'name',
-        label: t('shops.columns.name'),
+        label: t('shop.columns.name'),
         sortable: false,
         class: '',
     },
     {
         prop: 'station_amount',
-        label: t('shops.columns.station_amount'),
+        label: t('shop.columns.station_amount'),
         sortable: false,
         class: '',
     },
-    { prop: 'day', label: t('shops.columns.day'), sortable: false, class: '' },
+    { prop: 'day', label: t('shop.columns.day'), sortable: false, class: '' },
     {
         prop: 'status',
-        label: t('shops.columns.status'),
+        label: t('shop.columns.status'),
         sortable: false,
         class: '',
     },
 ])
 const buttons = ref([
-    { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
+    { id: '1', label: '編集', class: 'btn-action btn-update' },
 ])
 const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'shops-update', params: { id: row.id } })
+        router.push({ name: 'shops-detail', params: { id: row.id } })
     }
 }
 
 const handleCheckbox = () => {}
 
 const getListData = async () => {
-    let query = {
+    let query: ShopListPayload = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
@@ -130,16 +132,6 @@ const handleChangePage = (page: any) => {
     getListData()
 }
 
-const cellClick = (row: any, column: any) => {
-    if (column.property === 'name') {
-        router.push({
-            name: 'shops-detail',
-            params: { id: row.id },
-            replace: true,
-        })
-    }
-}
-
 const search = (search: ShopSearch) => {
     loading.value = true
     listQuery.value.search = search.name
@@ -151,7 +143,7 @@ const search = (search: ShopSearch) => {
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
-    // listQuery.value.page = 1
+    listQuery.value.page = 1
     getListData()
 }
 

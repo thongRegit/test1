@@ -50,7 +50,9 @@ export const usePlanStore = defineStore('plan_store', () => {
 
     const detailPlan = async (payload: any) => {
         try {
-            const data = await axios.get(`/plans/${payload.id}`).then((res) => res)
+            const data = await axios
+                .get(`/plans/${payload.id}`)
+                .then((res) => res)
             plan.value = data
         } catch (error) {
             console.log(error)
