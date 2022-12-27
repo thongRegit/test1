@@ -68,9 +68,7 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col class="text-center" :span="4">
-                                        <div
-                                            class="text-gray-500 text-center"
-                                        >
+                                        <div class="text-gray-500 text-center">
                                             ~
                                         </div>
                                     </el-col>

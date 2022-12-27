@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import * as userAPI from '@/api/userApi'
 import type { UserDetail, UserUpdate } from '@/libs/interface/userInterface'
 import type { ParamsList, ResponseList } from '@/libs/interface/commonInterface'
-import { useAlertStore } from './alert'
+import { makeNotification } from '@/libs/constants/constants'
 
 export const useUserStore = defineStore('users', () => {
     const users = ref({} as ResponseList)
@@ -15,8 +15,8 @@ export const useUserStore = defineStore('users', () => {
         try {
             const data = await userAPI.users(payload)
             users.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -29,7 +29,7 @@ export const useUserStore = defineStore('users', () => {
             const data = await userAPI.sessionUsers(payload, id)
             session_users.value = data
         } catch (error: any) {
-            console.log(error, error.data)
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -41,8 +41,8 @@ export const useUserStore = defineStore('users', () => {
         try {
             const data = await userAPI.cancelFeeUsers(payload, id)
             cancel_fee_users.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -51,7 +51,6 @@ export const useUserStore = defineStore('users', () => {
         payload: UserUpdate,
         id: string | string[] | number
     ) => {
-        const alertStore = useAlertStore()
         payload.gender = Number(payload.gender)
         payload.status = Number(payload.status)
         payload.is_active = payload.is_active ? 1 : 0
@@ -61,12 +60,8 @@ export const useUserStore = defineStore('users', () => {
         try {
             await userAPI.update(payload, id)
             await detailUser(id)
-            alertStore.createAlert({
-                title: `Update ${user.value.first_name}${user.value.last_name} successfully!`,
-                type: 'success',
-            })
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -75,8 +70,8 @@ export const useUserStore = defineStore('users', () => {
         try {
             const data = await userAPI.user(id)
             user.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }

@@ -12,7 +12,7 @@ export const GENDERS = [
 export const MONTHS = Array.from({ length: 12 }, (item, i) => {
     return dayjs(new Date(0, i)).format('MM')
 })
-export const YEARS = Array(CURRENT_YEAR - START_YEAR + 1)
+export const YEARS: number[] | string[] = Array(CURRENT_YEAR - START_YEAR + 1)
     .fill((item: any) => item)
     .map((_, idx) => CURRENT_YEAR - idx)
 export const YEARS_START_FROM_2022 = Array(CURRENT_YEAR - 2022 + 1)
@@ -102,3 +102,13 @@ export const individualData: Array<IndividuaSetting> = [
         currentSessionsList: [],
     },
 ]
+
+export const dayList: any = {
+    1: '日曜日',
+    2: '月曜日',
+    3: '火曜日',
+    4: '水曜日',
+    5: '木曜日',
+    6: '金曜日',
+    7: '土曜日',
+}

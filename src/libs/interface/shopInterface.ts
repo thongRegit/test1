@@ -64,7 +64,7 @@ export interface ShopListPayload {
     ['orders[0][dir]']: string
     page: number
     search: string
-    per_page: 10
+    per_page: number
     filters: string
 }
 

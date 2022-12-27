@@ -25,6 +25,7 @@
                     class="base-input"
                     v-model="ruleForm.search"
                     :placeholder="t('coach.ruleForm.search.placeholder')"
+                    @blur="trim('search')"
                 />
             </el-col>
         </el-form-item>
@@ -90,6 +91,12 @@ const rules = reactive<FormRules>({
         },
     ],
 })
+
+const trim = (field: 'search') => {
+    if (ruleForm[field]) {
+        ruleForm[field] = ruleForm[field].trim()
+    }
+}
 
 const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return

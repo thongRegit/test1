@@ -92,7 +92,7 @@ const getListData = async () => {
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
         search: listQuery.value.search,
-        per_page: 10,
+        per_page: 20,
         filters: '',
     }
     query.filters = JSON.stringify(listQuery.value.filters)
