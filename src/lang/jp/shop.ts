@@ -15,6 +15,12 @@ export default {
             title: 'キーワード検索',
             placeholder: '名前',
         },
+        validated: {
+            empty_shop_name: 'ショップ名を入力',
+            station_amount: 'ステーション量は 0 より大きくなければなりません',
+            empty_station: '入力量ステーション',
+            length: '長さは 3 ～ 255 にする必要があります',
+        },
     },
     columns: {
         name: '名前',
@@ -30,6 +36,7 @@ export default {
         renew: '更新',
         basic_settings: '基本設定',
         number_stations: 'ステーション数',
+        status_label: '有効',
         business_hours: '営業時間',
         business_hours_setting: '営業時間設定',
         choice: '選択',

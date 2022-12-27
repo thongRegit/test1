@@ -11,6 +11,7 @@ import { useAlertStore } from './alert'
 import { LoadingVue } from '@/components/common/loading'
 import { makeNotification } from '@/libs/constants/constants'
 import * as patternAPI from '@/api/patternAPI'
+import i18n from '@/lang/index'
 
 export const usePatternStore = defineStore('patterns', () => {
     const patterns = ref({} as PatternData)
@@ -22,7 +23,7 @@ export const usePatternStore = defineStore('patterns', () => {
             const data: any = await patternAPI.getListPattern(payload)
             patterns.value = data
         } catch (error: any) {
-            makeNotification('error', 'Error', error?.message)
+            console.log(error)
             return error
         }
     }
@@ -40,7 +41,7 @@ export const usePatternStore = defineStore('patterns', () => {
                 cb()
             }
             alertStore.createAlert({
-                title: `Create pattern successfully!`,
+                title: i18n.t('message.update_success'),
                 type: 'success',
             })
             loading.close()
@@ -65,7 +66,7 @@ export const usePatternStore = defineStore('patterns', () => {
                 cb()
             }
             alertStore.createAlert({
-                title: `Update pattern successfully!`,
+                title: i18n.t('message.update_success'),
                 type: 'success',
             })
             loading.close()
@@ -81,7 +82,7 @@ export const usePatternStore = defineStore('patterns', () => {
             const data: Array<Period> = await axios.get(`/period`)
             periods.value = data
         } catch (error: any) {
-            makeNotification('error', 'Error', error?.message)
+            console.log(error)
             return error
         }
     }

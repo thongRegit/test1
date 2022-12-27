@@ -8,4 +8,11 @@ export default {
     pattern_registration: 'パターン登録',
     start_time: '始まる時間',
     end_time: '終了時間',
+    rule_patterns: {
+        empty_name: '入力パターン名',
+        length: '長さは 3 ～ 255 にする必要があります',
+        start_time: '時間を選択してください',
+        end_time: '終了時間を選択してください',
+        period: '期間を選択してください',
+    },
 }

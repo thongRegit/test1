@@ -1,8 +1,8 @@
 import type { Period } from '@/libs/interface/patternInterface'
 export interface Shop {
     id: number
-    name: string
-    station_amount: number
+    name: string | null
+    station_amount: number | null
     status: number
     created_at: string
     business_hours: Array<BusinessHour>
@@ -46,8 +46,8 @@ export interface IndividuaSetting {
 
 export interface UpdateShopPayload {
     id: number
-    name: string
-    station_amount: number
+    name: string | null
+    station_amount: number | null
     status: number
     business_hours: Array<BusinessHourForAPI>
 }

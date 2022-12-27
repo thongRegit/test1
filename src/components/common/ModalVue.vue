@@ -78,7 +78,7 @@ const handleClose = () => {
 .dialog-footer {
     width: 79%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0 auto;
     padding: 70px 0;
 }

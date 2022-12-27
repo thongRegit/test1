@@ -29,9 +29,10 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
     background-color: yellow;
 }
 .flex { display: flex !important; }
-.items-end { align-items: flex-end; }
-.justify-between { justify-content: space-between; }
-.justify-center { justify-content: center; }
+.items-end { align-items: flex-end !important;}
+.justify-between { justify-content: space-between !important;}
+.justify-center { justify-content: center !important;}
+.justify-right { justify-content: flex-end !important;}
 .align-items-center { align-items: center;  }
 .text-right { text-align: right !important; }
 .btn-status {
@@ -314,8 +315,18 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
     }
 }
 .el-form-item__error {
-    padding-top: 3px;
+    padding-top: 3px !important;
 }
+
+.custom {
+    .el-form-item__error {
+        padding-top: 7px !important;
+        position: relative !important;
+        white-space: nowrap;
+        top: 0 !important;
+    }
+}
+
 
 .base-input-time {
     .el-input__wrapper {

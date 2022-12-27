@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { ElNotification } from 'element-plus'
-import type { IndividuaSetting } from '@/libs/interface/shopInterface'
 
 export const START_YEAR = 1920
 export const CURRENT_YEAR = new Date().getFullYear()
@@ -50,7 +49,11 @@ export const ACTIVE_STATUS = [
     },
 ]
 
-export function makeNotification(type: any, title: string, message: string) {
+export function makeNotification(
+    type: '' | 'success' | 'warning' | 'info' | 'error',
+    title: string,
+    message: string
+) {
     ElNotification({
         title: title,
         message: message,
@@ -58,47 +61,5 @@ export function makeNotification(type: any, title: string, message: string) {
     })
 }
 // individual setting for ShopDetail screen
-export const individualData: Array<IndividuaSetting> = [
-    {
-        id: 1,
-        dayName: '日曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-    {
-        id: 2,
-        dayName: '月曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-    {
-        id: 3,
-        dayName: '火曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-    {
-        id: 4,
-        dayName: '水曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-    {
-        id: 5,
-        dayName: '木曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-    {
-        id: 6,
-        dayName: '金曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-    {
-        id: 7,
-        dayName: '土曜日',
-        isShowDetail: false,
-        currentSessionsList: [],
-    },
-]
+
+export const perPage = 20
