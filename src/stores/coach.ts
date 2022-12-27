@@ -9,7 +9,7 @@ import type {
     ResponseCoachList,
     ResponseCoachSessionList,
 } from '@/libs/interface/coachInterface'
-import { useAlertStore } from './alert'
+import { makeNotification } from '@/libs/constants/constants'
 
 export const useCoachStore = defineStore('coach', () => {
     const coaches = ref([] as ResponseCoachList)
@@ -21,8 +21,8 @@ export const useCoachStore = defineStore('coach', () => {
         try {
             const data = await coachAPI.coaches(payload)
             coaches.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -34,8 +34,8 @@ export const useCoachStore = defineStore('coach', () => {
         try {
             const data = await coachAPI.invitedCoaches(payload, id)
             invited_coaches.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -47,8 +47,8 @@ export const useCoachStore = defineStore('coach', () => {
         try {
             const data = await coachAPI.sessionCoaches(payload, id)
             session_coaches.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -57,17 +57,12 @@ export const useCoachStore = defineStore('coach', () => {
         payload: CoachRuleForm,
         id: string | string[] | number
     ) => {
-        const alertStore = useAlertStore()
         payload.is_active = payload.is_active ? 1 : 0
         try {
             await coachAPI.update(payload, id)
             await coachAPI.coach(id)
-            alertStore.createAlert({
-                title: `Update ${coach.value.first_name}${coach.value.last_name} successfully!`,
-                type: 'success',
-            })
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -76,8 +71,8 @@ export const useCoachStore = defineStore('coach', () => {
         try {
             const data = await coachAPI.coach(id)
             coach.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }

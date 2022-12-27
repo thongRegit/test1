@@ -7,8 +7,8 @@ export default {
             title: 'ステータス',
             value: {
                 all: '全て',
-                0: '有効',
-                1: '無効',
+                1: '有効',
+                0: '無効',
             },
         },
         name: {

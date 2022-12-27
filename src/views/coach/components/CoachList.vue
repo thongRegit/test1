@@ -107,7 +107,7 @@ const handleClickButtonTable = (classList: any, row: any) => {
 const data = ref({
     currentPage: 1,
     lastPage: 0,
-    perPage: 20,
+    perPage: 10,
     records: [],
     total: 0,
 } as PaginateCoachParams)

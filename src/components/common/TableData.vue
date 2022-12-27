@@ -111,8 +111,6 @@ const props = defineProps({
 const { columns, data, buttons, loading, links, showIndex, showCheckbox } =
     toRefs(props)
 
-console.log('data :>> ', data.value)
-
 const handleSelectionChange = (val: any[]) => {
     emit('clickCheckbox', val)
 }

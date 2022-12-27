@@ -106,7 +106,11 @@
                         </el-row>
                     </el-col>
                     <el-col :span="1">
-                        <el-icon class="cursor-pointer mt-10" @click="removeDiscountPlan(index)"><Close /></el-icon>
+                        <el-icon
+                            class="cursor-pointer mt-10"
+                            @click="removeDiscountPlan(index)"
+                            ><Close
+                        /></el-icon>
                     </el-col>
                 </div>
                 <el-form-item>
@@ -115,9 +119,14 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="resetForm(ruleFormRef)">{{t('btn_cancel')
-                        }}</el-button>
-                    <el-button type="primary" @click="submitForm(ruleFormRef)">{{ t('btn_create') }}</el-button>
+                    <el-button type="info" @click="resetForm(ruleFormRef)">{{
+                        t('btn_cancel')
+                    }}</el-button>
+                    <el-button
+                        type="primary"
+                        @click="submitForm(ruleFormRef)"
+                        >{{ t('btn_create') }}</el-button
+                    >
                 </el-form-item>
             </el-form>
         </template>
@@ -214,8 +223,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
-            const payload = {...ruleForm}
-            payload.plan_discounts = payload.plan_discounts.filter(item => {
+            const payload = { ...ruleForm }
+            payload.plan_discounts = payload.plan_discounts.filter((item) => {
                 return item.frequency && item.discount_amount
             })
             const planStore = usePlanStore()

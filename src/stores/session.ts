@@ -1,9 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import axios from '@/config/axios'
-import type {
-    Period,
-} from '@/libs/interface/sessionInterface'
+import type { Period } from '@/libs/interface/sessionInterface'
 import { makeNotification } from '@/libs/constants/constants'
 import { useAlertStore } from './alert'
 

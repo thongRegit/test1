@@ -78,6 +78,11 @@ export const jp = {
             new_password: 'パスワード（半角英数字記号8文字以上）',
         },
     },
+    input_placeholder: {
+        year: '西暦',
+        month: '月',
+        day: '日',
+    },
     homepage: {
         shops: '店舗管理',
         sessions: 'セッション管理',

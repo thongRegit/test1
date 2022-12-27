@@ -12,11 +12,7 @@
         </template>
         <template v-slot:body>
             <div class="">
-                <el-form
-                    ref="ruleFormRef"
-                    :model="ruleForm"
-                    :rules="rules"
-                >
+                <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
                     <el-row class="full-width">
                         <el-col :span="14">
                             <el-row class="items-end">
@@ -75,9 +71,15 @@
                                     />
                                 </el-col>
                                 <el-col :span="10" class="text-right">
-                                    <el-button type="primary" @click="openUpdateModal(ruleFormRef)">{{
-                                        t('session.buttons.individual_setting')
-                                    }}</el-button>
+                                    <el-button
+                                        type="primary"
+                                        @click="openUpdateModal(ruleFormRef)"
+                                        >{{
+                                            t(
+                                                'session.buttons.individual_setting'
+                                            )
+                                        }}</el-button
+                                    >
                                 </el-col>
                             </el-row>
                         </el-col>
@@ -85,7 +87,13 @@
                 </el-form>
             </div>
             <SessionCalendar :sessions="sessions" :firstDay="calendarDay" />
-            <UpdateSessionModal :dialogVisible="isOpen" :shopId="ruleForm.shop" :stationNumber="ruleForm.station" @close="closeUpdateModal" @updated="sessionUpdated" />
+            <UpdateSessionModal
+                :dialogVisible="isOpen"
+                :shopId="ruleForm.shop"
+                :stationNumber="ruleForm.station"
+                @close="closeUpdateModal"
+                @updated="sessionUpdated"
+            />
         </template>
     </BoxVue>
 </template>
@@ -125,9 +133,9 @@ const rules = reactive<FormRules>({
     ],
 })
 
-const sessions = ref([]);
-const shopArr = ref([]);
-const stations = ref(0);
+const sessions = ref([])
+const shopArr = ref([])
+const stations = ref(0)
 const calendarDay = ref(dayjs().format('YYYY-MM-DD'))
 
 const isOpen = ref(false)
@@ -155,7 +163,7 @@ const getListShopData = async () => {
 }
 
 const shopChange = (value) => {
-    let shop = shopArr.value.find(item => item.id == value)
+    let shop = shopArr.value.find((item) => item.id == value)
     stations.value = shop.station_amount
     ruleForm.station = 1
     getListData()
