@@ -44,6 +44,7 @@ export const jp = {
     btn_clear: 'クリア',
     btn_create: '新規登録',
     btn_cancel: 'キャンセル',
+    btn_update: '更新',
     table: {
         no_data: '該当のデータがありません。',
     },
@@ -76,6 +77,11 @@ export const jp = {
             current_password: '現在のパスワード（半角英数字記号8文字以上）',
             new_password: 'パスワード（半角英数字記号8文字以上）',
         },
+    },
+    input_placeholder: {
+        year: '西暦',
+        month: '月',
+        day: '日',
     },
     homepage: {
         shops: '店舗管理',

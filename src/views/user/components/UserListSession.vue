@@ -5,14 +5,13 @@
             :loading="loading"
             :columns="columns"
             :showIndex="false"
-            :showCheckbox="true"
+            :showCheckbox="false"
             @cell-click="cellClick"
             @change-page="handleChangePage"
             @sort="sort"
             :buttons="buttons"
             :hasCreate="false"
             @click-button="handleClickButtonTable"
-            @click-checkbox="handleCheckbox"
         ></table-data>
     </section>
 </template>
@@ -83,15 +82,13 @@ const handleClickButtonTable = (classList: any, row: any) => {
     }
 }
 
-const handleCheckbox = () => {}
-
 const getListData = async () => {
     let query: any = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
         search: listQuery.value.search,
-        per_page: 10,
+        per_page: 20,
         filters: '',
     }
     query.filters = JSON.stringify(listQuery.value.filters)

@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
+    <BoxVue :title="'店舗管理'" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />
@@ -9,7 +9,7 @@
             <ShopSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
+    <BoxVue :title="'店舗管理'" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />
@@ -22,13 +22,12 @@
                     :loading="loading"
                     :columns="columns"
                     :showIndex="false"
-                    :showCheckbox="true"
+                    :showCheckbox="false"
                     @change-page="handleChangePage"
                     @sort="sort"
                     :buttons="buttons"
                     :hasCreate="false"
                     @click-button="handleClickButtonTable"
-                    @click-checkbox="handleCheckbox"
                 ></table-data>
             </section>
         </template>
@@ -46,6 +45,8 @@ import type {
     ShopSearch,
     ShopListPayload,
 } from '@/libs/interface/shopInterface'
+import { findStatus } from '@/libs/utils/common'
+import { dayList } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -96,15 +97,13 @@ const handleClickButtonTable = (classList: any, row: any) => {
     }
 }
 
-const handleCheckbox = () => {}
-
 const getListData = async () => {
     let query: ShopListPayload = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
         page: listQuery.value.page,
         search: listQuery.value.search,
-        per_page: 10,
+        per_page: 20,
         filters: '',
     }
     query.filters = JSON.stringify(listQuery.value.filters)
@@ -115,12 +114,17 @@ const getListData = async () => {
     data.value.currentPage = shopStore.shops.current_page
     data.value.perPage = shopStore.shops.per_page
     data.value.records = shopStore.shops.data.map((e: any) => {
+        const status: any = findStatus(e.status)
+        const day_arr = [] as any
+        e.shop_holidays.map((item: any) => {
+            day_arr.push(dayList[item.day])
+        })
         return {
             id: e.id,
-            name: `<a class="text-link">${e.name}</a>`,
+            name: e.name,
             station_amount: e.station_amount,
-            day: e.day,
-            status: e.status,
+            day: day_arr.join(','),
+            status: status.display,
         }
     })
     loading.value = false

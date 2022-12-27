@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :title="t('homepage.user')" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.users')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
                 <UserFilled />
