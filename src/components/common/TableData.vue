@@ -42,8 +42,9 @@
         </el-table-column>
         <el-table-column
             v-if="buttons && buttons.length"
-            align="right"
+            align="center"
             :width="widthButton"
+            :label="t('user.columns.edit')"
         >
             <template #default="scope">
                 <el-button

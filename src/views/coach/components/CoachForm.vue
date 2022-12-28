@@ -145,6 +145,7 @@ const ruleForm = reactive({
         day: '',
     },
     tel: '',
+    nickname: '',
     invitation_code: '',
     people_invited: '',
     is_active: false,
@@ -160,7 +161,7 @@ const validateDate = (rule: any, value: any, callback: any) => {
 
 const checkRegexTel = (rule: any, value: any, callback: any) => {
     const regex = new RegExp(/^([0-9\s\-]*)$/);
-    if (!regex.test(value)) {
+    if (!regex.test(value) && value !== null) {
         callback(new Error(t('validation.tel_format')));
     } else {
         callback();
@@ -237,6 +238,7 @@ const getData = async () => {
     ruleForm.last_name = coachStore.coach.last_name
     ruleForm.first_name_furigana = coachStore.coach.first_name_furigana
     ruleForm.last_name_furigana = coachStore.coach.last_name_furigana
+    ruleForm.nickname = coachStore.coach.nickname
     ruleForm.tel = coachStore.coach.tel
     ruleForm.birthday = coachStore.coach.birthday ? coachStore.coach.birthday : null
     ruleForm.birthdays.day = coachStore.coach.birthday ? dayjs(new Date(coachStore.coach.birthday)).format(

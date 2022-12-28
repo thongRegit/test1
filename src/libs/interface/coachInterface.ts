@@ -33,6 +33,7 @@ export interface CoachRuleForm {
     full_name: string
     first_name: string
     last_name: string
+    nickname?: string
     first_name_furigana: string
     last_name_furigana: string
     birthday: string | null
@@ -99,7 +100,7 @@ export interface PaginateCoachParams extends PaginateParams {
         nickname: string
         tel: string
         created_at?: string
-        status: string
+        is_active: string
     }[]
 }
 

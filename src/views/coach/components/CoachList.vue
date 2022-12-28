@@ -79,8 +79,8 @@ const columns = ref([
         class: '',
     },
     {
-        prop: 'status',
-        label: t('coach.columns.status'),
+        prop: 'is_active',
+        label: t('coach.columns.is_active'),
         sortable: true,
         class: '',
     },
@@ -115,7 +115,12 @@ const data = ref({
 const search = (search: CoachSearch) => {
     loading.value = true
     listQuery.value.search = search.search
-    listQuery.value.filters = [{ key: 'status', data: search.status }]
+    listQuery.value.filters = [
+        {
+            key: 'is_active',
+            data: search.status === 'all' ? '' : search.status,
+        },
+    ]
     listQuery.value.page = 1
     getListData()
 }
@@ -144,7 +149,7 @@ const getListData = async () => {
             nickname: e.nickname,
             tel: e.tel,
             created_at: e.created_at,
-            status: status.display,
+            is_active: status.display,
         }
     })
 
@@ -158,7 +163,8 @@ const handleChangePage = (page: any) => {
 }
 
 const sort = (sortProps: any) => {
-    sortProp.key = sortProps.prop
+    sortProp.key =
+        sortProps.prop === 'full_name' ? 'first_name' : sortProps.prop
     sortProp.dir = sortProps.order
     listQuery.value.page = 1
     getListData()
@@ -167,7 +173,7 @@ const sort = (sortProps: any) => {
 const resetForm = () => {
     listQuery.value.page = 1
     listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'status', data: 'all' }]
+    listQuery.value.filters = [{ key: 'is_active', data: '' }]
     getListData()
 }
 

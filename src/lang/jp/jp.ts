@@ -82,6 +82,11 @@ export const jp = {
         month: '月',
         day: '日',
     },
+    page_not_found: {
+        title: '道に迷ったように見える',
+        desc: 'お探しのページはありません！',
+        go_home: '家に帰る',
+    },
     homepage: {
         shops: '店舗管理',
         sessions: 'セッション管理',

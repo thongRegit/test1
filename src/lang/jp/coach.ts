@@ -22,7 +22,7 @@ export default {
         nickname: 'ニックネーム',
         tel: '電話番号',
         created_at: '登録日',
-        status: '有効/無効',
+        is_active: '有効/無効',
         edit: '編集',
         invited: {
             created_at: '日時',

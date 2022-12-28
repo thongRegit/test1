@@ -27,6 +27,7 @@
                     @sort="sort"
                     :buttons="buttons"
                     :hasCreate="false"
+                    :label="t('user.columns.tel')"
                     @click-button="handleClickButtonTable"
                 ></table-data>
             </section>
@@ -70,37 +71,37 @@ const columns = ref([
     {
         prop: 'full_name',
         label: t('user.columns.full_name'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     {
         prop: 'tel',
         label: t('user.columns.tel'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     {
         prop: 'created_at',
         label: t('user.columns.created_at'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     {
         prop: 'first_experience_date',
         label: t('user.columns.first_experience_date'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     {
         prop: 'last_session_date',
         label: t('user.columns.last_session_date'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     {
         prop: 'is_active',
         label: t('user.columns.is_active'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
 ])
@@ -161,7 +162,8 @@ const search = (search: UserSearchParam) => {
 }
 
 const sort = (sortProps: any) => {
-    sortProp.key = sortProps.prop
+    sortProp.key =
+        sortProps.prop === 'full_name' ? 'first_name' : sortProps.prop
     sortProp.dir = sortProps.order
     listQuery.value.page = 1
     getListData()

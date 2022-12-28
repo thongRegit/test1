@@ -130,7 +130,8 @@ const cellClick = (row: any, column: any) => {
 }
 
 const sort = (sortProps: any) => {
-    sortProp.key = sortProps.prop
+    sortProp.key =
+        sortProps.prop === 'full_name' ? 'first_name' : sortProps.prop
     sortProp.dir = sortProps.order
     listQuery.value.page = 1
     getListData()
