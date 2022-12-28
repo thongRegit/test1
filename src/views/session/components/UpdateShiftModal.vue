@@ -40,7 +40,6 @@
                     <el-form-item :prop="`shifts.${i}.start_time`" :rules="rules.start_time">
                         <el-time-picker
                             v-model="item.start_time"
-                            :arrow-control="true"
                             placeholder="開始時間"
                             format="HH:mm"
                         />
@@ -57,7 +56,6 @@
                     <el-form-item :prop="`shifts.${i}.end_time`" :rules="rules.end_time">
                         <el-time-picker
                             v-model="item.end_time"
-                            :arrow-control="true"
                             placeholder="終了時間"
                             format="HH:mm"
                         />

@@ -49,7 +49,6 @@
                     >
                         <el-time-picker
                             v-model="item.start_time"
-                            :arrow-control="true"
                             placeholder="開始時間"
                             format="HH:mm"
                         />
@@ -65,7 +64,6 @@
                     >
                         <el-time-picker
                             v-model="item.end_time"
-                            :arrow-control="true"
                             placeholder="終了時間"
                             format="HH:mm"
                         />
