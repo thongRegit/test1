@@ -172,6 +172,10 @@ const getListShopData = async () => {
     const shopStore = useShopStore()
     await shopStore.listShop(query)
     shopArr.value = shopStore.shops.data
+    if (shopStore.shops.data.length > 0) {
+        ruleForm.shop = shopStore.shops.data[0].id
+        ruleForm.station = 1
+    }
 }
 
 const shopChange = (value) => {
