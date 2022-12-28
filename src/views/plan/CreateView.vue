@@ -83,7 +83,7 @@
                         </el-row>
                         <el-row>
                             <el-col :span="10">
-                                <el-form-item prop="frequency">
+                                <el-form-item :prop="`plan_discounts.${index}.frequency`" :rules="rules.frequency">
                                     <el-input
                                         v-model="item.frequency"
                                         class="base-input"
@@ -96,7 +96,7 @@
                                 }}</span>
                             </el-col>
                             <el-col :span="10">
-                                <el-form-item prop="discount_amount">
+                                <el-form-item :prop="`plan_discounts.${index}.discount_amount`" :rules="rules.discount_amount">
                                     <el-input
                                         v-model="item.discount_amount"
                                         class="base-input"
@@ -165,38 +165,30 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: 'Please input Activity name',
+            message: t('validation.required', ['name']),
             trigger: 'blur',
         },
         {
-            min: 3,
             max: 255,
-            message: 'Length should be 3 to 255',
-            trigger: 'blur',
-        },
-    ],
-    type: [
-        {
-            type: 'number',
-            required: true,
-            message: 'Please select at least one activity type',
-            trigger: 'change',
-        },
-    ],
-    desc: [
-        {
-            required: true,
-            message: 'Please input activity form',
+            message: t('validation.max', ['name', 255]),
             trigger: 'blur',
         },
     ],
     amount: [
         {
             required: true,
-            message: 'Please input activity form',
+            message: t('validation.required', ['amount']),
             trigger: 'blur',
         },
+        {pattern: '\^[0-9]+$', message: t('validation.numeric', ['amount']), trigger: 'blur'}
     ],
+    frequency: [
+        {required: true, message: t('validation.required', ['frequency']), trigger: 'blur'},
+        {pattern: '\^[0-9]+$', message: t('validation.numeric',['frequency']), trigger: 'blur'}
+    ],
+    discount_amount: [
+        {required: true, message: t('validation.required', ['discount_amount']), trigger: 'blur'},
+        {pattern: '\^[0-9]+$', message:t('validation.numeric', ['discount_amount']), trigger: 'blur'}],
 })
 
 const types = [
