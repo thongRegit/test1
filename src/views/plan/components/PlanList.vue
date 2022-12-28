@@ -165,7 +165,7 @@ const cellClick = (row: any, column: any) => {
 
 const handleClickButtonTable = (type: any, row: any) => {
     router.push({
-        name: 'plans-update',
+        name: 'plans-detail',
         params: { id: row.id },
         replace: true,
     })
