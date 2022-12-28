@@ -118,7 +118,12 @@ import type { Session, Period } from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 
-const props = defineProps(['dialogVisible', 'shopId', 'stationNumber', 'defaultDate'])
+const props = defineProps([
+    'dialogVisible',
+    'shopId',
+    'stationNumber',
+    'defaultDate',
+])
 const { dialogVisible, shopId, stationNumber, defaultDate } = toRefs(props)
 
 const ruleFormRef = ref<FormInstance>()

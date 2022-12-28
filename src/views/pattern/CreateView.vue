@@ -17,7 +17,9 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col span="24">
-                                <p class="label required">{{ t('pattern.pattern_name') }}</p>
+                                <p class="label required">
+                                    {{ t('pattern.pattern_name') }}
+                                </p>
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
@@ -238,14 +240,17 @@ const checkVailidTime = () => {
     ruleForm.pattern_details.forEach((el, index) => {
         const startTime = dayjs(el.start_time, 'HH:mm')
         const endTime = dayjs(el.end_time, 'HH:mm')
-        let period_value: number = 0;
-        periods.value.forEach(period => {
-            if(el.period_id == period.id) {
-                period_value = Number(period.value) 
+        let period_value: number = 0
+        periods.value.forEach((period) => {
+            if (el.period_id == period.id) {
+                period_value = Number(period.value)
             }
         })
         const currentEndTime = startTime.add(period_value, 'minute')
-        if (startTime >= endTime || endTime.diff(currentEndTime, 'minute') != 0) {
+        if (
+            startTime >= endTime ||
+            endTime.diff(currentEndTime, 'minute') != 0
+        ) {
             el.error_msg = t('message.invalid')
             isVailid = false
         }
@@ -257,34 +262,42 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('validation.required', {'0': t('pattern.pattern_name')}),
+            message: t('validation.required', {
+                '0': t('pattern.pattern_name'),
+            }),
             trigger: 'blur',
         },
         {
             min: 3,
             max: 255,
-            message: t('validation.between.string', {'0': t('pattern.pattern_name'), '1': '3', '2': '255'}),
+            message: t('validation.between.string', {
+                '0': t('pattern.pattern_name'),
+                '1': '3',
+                '2': '255',
+            }),
             trigger: 'blur',
         },
     ],
     start_time: [
         {
             required: true,
-            message: t('validation.required', {'0': t('pattern.start_time')}),
+            message: t('validation.required', { '0': t('pattern.start_time') }),
             trigger: 'change',
         },
     ],
     end_time: [
         {
             required: true,
-            message: t('validation.required', {'0': t('pattern.end_time')}),
+            message: t('validation.required', { '0': t('pattern.end_time') }),
             trigger: 'change',
         },
     ],
     period_id: [
         {
             required: true,
-            message: t('validation.required', {'0': t('pattern.session_time')}),
+            message: t('validation.required', {
+                '0': t('pattern.session_time'),
+            }),
             trigger: 'change',
         },
     ],

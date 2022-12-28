@@ -71,12 +71,24 @@
                                     />
                                 </el-col>
                                 <el-col :span="18" class="text-right">
-                                    <el-button type="primary" @click="openUpdateModal(ruleFormRef)">{{
-                                        t('session.buttons.individual_setting')
-                                    }}</el-button>
-                                    <el-button type="primary" @click="openShiftModal(ruleFormRef)">{{
-                                        t('session.buttons.shift_setting_btn')
-                                    }}</el-button>
+                                    <el-button
+                                        type="primary"
+                                        @click="openUpdateModal(ruleFormRef)"
+                                        >{{
+                                            t(
+                                                'session.buttons.individual_setting'
+                                            )
+                                        }}</el-button
+                                    >
+                                    <el-button
+                                        type="primary"
+                                        @click="openShiftModal(ruleFormRef)"
+                                        >{{
+                                            t(
+                                                'session.buttons.shift_setting_btn'
+                                            )
+                                        }}</el-button
+                                    >
                                 </el-col>
                             </el-row>
                         </el-col>
@@ -150,7 +162,7 @@ const calendarDay = ref(dayjs().format('YYYY-MM-DD'))
 const isOpen = ref(false)
 const isShiftOpen = ref(false)
 
-const refresh = ref(1);
+const refresh = ref(1)
 
 const closeUpdateModal = () => {
     isOpen.value = false

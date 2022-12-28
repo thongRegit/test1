@@ -7,9 +7,7 @@ import { useAlertStore } from './alert'
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import * as coachAPI from '@/api/coachApi'
 
-import type {
-    ResponseCoachList,
-} from '@/libs/interface/coachInterface'
+import type { ResponseCoachList } from '@/libs/interface/coachInterface'
 
 export const useSessionStore = defineStore('sessions', () => {
     const sessions = ref([] as any)

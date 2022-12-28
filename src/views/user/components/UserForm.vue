@@ -154,7 +154,7 @@ const ruleForm = reactive({
 
 const validateDate = (rule: any, value: any, callback: any) => {
     if (ruleForm.birthdays.day === '' || ruleForm.birthdays.month === '' || ruleForm.birthdays.year === '') {
-        callback(new Error(t('validation.date', [t('user.detail.label.birthday')])))
+        callback(new Error(t('validation.required', [t('user.detail.label.birthday')])))
     } else {
         callback()
     }
@@ -195,11 +195,6 @@ const rules = reactive<FormRules>({
     tel: [{ max: 20, message: t('validation.max.string', [t('user.detail.label.tel'), 20]), trigger: 'blur' },
     { validator: checkRegexTel, trigger: 'blur' },],
     date: [
-        {
-            required: true,
-            message: t('validation.required', [t('user.detail.label.birthday')]),
-            trigger: 'blur',
-        },
         { validator: validateDate, trigger: 'blur' },
     ],
 })

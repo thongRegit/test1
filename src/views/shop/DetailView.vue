@@ -32,7 +32,9 @@
                         status-icon
                     >
                         <el-form-item class="large-input" prop="name">
-                            <p class="required">{{ t('shop.details.shop_name') }}</p>
+                            <p class="required">
+                                {{ t('shop.details.shop_name') }}
+                            </p>
                             <el-input
                                 v-model="shopDetail.name"
                                 type="text"
@@ -40,7 +42,9 @@
                             />
                         </el-form-item>
                         <el-form-item class="small-input" prop="station_amount">
-                            <p class="required">{{ t('shop.details.number_stations') }}</p>
+                            <p class="required">
+                                {{ t('shop.details.number_stations') }}
+                            </p>
                             <el-input
                                 v-model="shopDetail.station_amount"
                                 type="number"
@@ -322,7 +326,7 @@ const getShopDetail = async () => {
     shopDetail.station_amount = shopStore.shopDetail.station_amount
     shopDetail.id = shopStore.shopDetail.id
     shopStatus.value = shopStore.shopDetail.status == 1
-    if(shopStore.shopDetail.business_hours.length) {
+    if (shopStore.shopDetail.business_hours.length) {
         shopStore.shopDetail.business_hours.forEach((el: BusinessHour) => {
             individuaSettings.value.forEach((setting: IndividuaSetting) => {
                 if (setting.id === el.day) {
@@ -427,10 +431,23 @@ const updateShopDetail = async (formEl: FormInstance | undefined) => {
 
 const checkStationAmount = (rule: any, value: any, callback: any) => {
     if (!value) {
-        return callback(new Error(t('validation.required', {'0': t('shop.columns.station_amount')})))
+        return callback(
+            new Error(
+                t('validation.required', {
+                    '0': t('shop.columns.station_amount'),
+                })
+            )
+        )
     }
     if (value < 1) {
-        callback(new Error(t('validation.min.numeric', {'0': t('shop.columns.station_amount'), '1' : '1'})))
+        callback(
+            new Error(
+                t('validation.min.numeric', {
+                    '0': t('shop.columns.station_amount'),
+                    '1': '1',
+                })
+            )
+        )
     } else {
         callback()
     }
@@ -440,13 +457,17 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('validation.required', {'0': t('shop.columns.name')}),
+            message: t('validation.required', { '0': t('shop.columns.name') }),
             trigger: 'blur',
         },
         {
             min: 3,
             max: 255,
-            message: t('validation.between.string', {'0': t('shop.columns.name'), '1': '3', '2': '255'}),
+            message: t('validation.between.string', {
+                '0': t('shop.columns.name'),
+                '1': '3',
+                '2': '255',
+            }),
             trigger: 'blur',
         },
     ],
