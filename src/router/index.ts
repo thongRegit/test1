@@ -20,7 +20,6 @@ import {
     PageNotFound,
     PatternList,
     PlanList,
-    PlanDetail,
     PlanCreate,
     PlanUpdate,
 } from '@/views'
@@ -184,13 +183,18 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: PatternList,
+                        component: PlanList,
                         name: 'plans',
                         beforeEnter: ifAuthenticated,
                     },
                     {
+                        path: ':id(\\d+)',
+                        name: 'plans-detail',
+                        component: PlanUpdate,
+                    },
+                    {
                         path: 'create',
-                        component: PatternList,
+                        component: PlanCreate,
                         name: 'plans-create',
                         beforeEnter: ifAuthenticated,
                     },
@@ -243,33 +247,7 @@ const routes = [
                 name: 'page-not-found',
                 beforeEnter: ifAuthenticated,
             },
-            {
-                path: 'plans',
-                beforeEnter: ifAuthenticated,
-                children: [
-                    {
-                        path: '',
-                        component: PlanList,
-                        name: 'plans',
-                    },
-                    {
-                        path: 'create',
-                        name: 'plans-create',
-                        component: PlanCreate,
-                    },
-                    {
-                        path: ':id(\\d+)',
-                        name: 'plans-detail',
-                        component: PlanDetail,
-                    },
-                    {
-                        path: ':id(\\d+)/update',
-                        name: 'plans-update',
-                        component: PlanUpdate,
-                    },
-                ],
-            },
-        ],
+        ]
     },
 ]
 

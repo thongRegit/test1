@@ -55,7 +55,7 @@
                 </el-row>
             </div>
             <div>
-                <p class="label">{{ t('coach.detail.label.birthday') }}</p>
+                <p class="label required">{{ t('coach.detail.label.birthday') }}</p>
                 <el-form-item prop="date">
                     <DateFormVue
                         @change-date="changeDate"
