@@ -136,7 +136,6 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
         {
-            min: 3,
             max: 255,
             message: 'Length should be 3 to 255',
             trigger: 'blur',

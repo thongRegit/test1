@@ -121,8 +121,8 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="resetForm(ruleFormRef)">{{
-                        t('btn_clear')
+                    <el-button type="info" @click="backToList(ruleFormRef)">{{
+                        t('btn_cancel')
                     }}</el-button>
                     <el-button
                         type="primary"
@@ -159,13 +159,12 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: 'Please input Activity name',
+            message: t('validation.required', ['name']),
             trigger: 'blur',
         },
         {
-            min: 3,
             max: 255,
-            message: 'Length should be 3 to 255',
+            message: t('validation.max.string', [t('name'), 255]),
             trigger: 'blur',
         },
     ],
@@ -266,9 +265,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
+const backToList = (formEl: FormInstance | undefined) => {
+    router.push({
+        name: 'plans',
+        replace: true,
+    })
 }
 
 const addBlock = () => {

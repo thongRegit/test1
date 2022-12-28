@@ -461,13 +461,8 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
         {
-            min: 3,
+            message: t('validation.max.string', [t('shop.columns.name'), 255]),
             max: 255,
-            message: t('validation.between.string', {
-                '0': t('shop.columns.name'),
-                '1': '3',
-                '2': '255',
-            }),
             trigger: 'blur',
         },
     ],
