@@ -192,6 +192,20 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
     ],
+    discount_amount: [
+        {
+            required: true,
+            message: t('validation.required',[t('plan.form.discount_settings')]),
+            trigger: 'blur'
+        },
+    ],
+    frequency: [
+        {
+            required: true,
+            message: t('validation.required',[t('plan.form.frequency')]),
+            trigger: 'blur'
+        },
+    ],
 })
 
 const types = [

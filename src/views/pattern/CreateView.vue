@@ -7,7 +7,7 @@
         @submit="submitData(ruleFormRef)"
     >
         <template v-slot:body>
-            <div style="width: 79%; margin: 0 auto">
+            <div style="width: 70%; margin: 0 auto; padding-left: 6em;">
                 <el-form
                     ref="ruleFormRef"
                     :model="ruleForm"
@@ -16,10 +16,8 @@
                 >
                     <el-form-item>
                         <el-row class="full-width">
-                            <el-col span="24">
-                                <p class="label required">
-                                    {{ t('pattern.pattern_name') }}
-                                </p>
+                            <el-col :span="24">
+                                <p class="label required">{{ t('pattern.pattern_name') }}</p>
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
@@ -32,12 +30,12 @@
                     </el-form-item>
                     <el-form-item>
                         <el-row class="full-width">
-                            <el-col :span="11">
+                            <el-col :span="12">
                                 <p class="label required">
                                     {{ t('pattern.business_hours') }}
                                 </p>
                             </el-col>
-                            <el-col :span="13" style="padding-left: 60px">
+                            <el-col :span="12" style="padding-left: 60px">
                                 <p class="label required">
                                     {{ t('pattern.session_time') }}
                                 </p>
@@ -95,7 +93,7 @@
                                     </el-col>
                                 </el-row>
                             </el-col>
-                            <el-col :span="13" style="padding-left: 60px">
+                            <el-col :span="13" style="padding-left: 90px">
                                 <el-form-item
                                     :prop="`pattern_details.${i}.period_id`"
                                     :rules="rules.period_id"
