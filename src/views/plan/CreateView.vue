@@ -165,32 +165,30 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('plan.validate.message.required'),
+            message: t('validation.required', ['name']),
             trigger: 'blur',
         },
         {
-            min: 3,
             max: 255,
-            message: 'Length should be 3 to 255',
+            message: t('validation.max', ['name', 255]),
             trigger: 'blur',
         },
     ],
     amount: [
         {
             required: true,
-            message: t('plan.validate.message.required'),
+            message: t('validation.required', ['amount']),
             trigger: 'blur',
         },
-        {pattern: '\^[0-9]+$', message: t('plan.validate.message.is_number'), trigger: 'blur'}
+        {pattern: '\^[0-9]+$', message: t('validation.numeric', ['amount']), trigger: 'blur'}
     ],
     frequency: [
-        {required: true, message: t('plan.validate.message.required'), trigger: 'blur',
-        },
-        {pattern: '\^[0-9]+$', message: t('plan.validate.message.is_number'), trigger: 'blur'}
+        {required: true, message: t('validation.required', ['frequency']), trigger: 'blur'},
+        {pattern: '\^[0-9]+$', message: t('validation.numeric',['frequency']), trigger: 'blur'}
     ],
-    discount_amount: [{
-        required: true, message: t('plan.validate.message.required'), trigger: 'blur',
-    },{pattern: '\^[0-9]+$', message:t('plan.validate.message.is_number'), trigger: 'blur'}],
+    discount_amount: [
+        {required: true, message: t('validation.required', ['discount_amount']), trigger: 'blur'},
+        {pattern: '\^[0-9]+$', message:t('validation.numeric', ['discount_amount']), trigger: 'blur'}],
 })
 
 const types = [

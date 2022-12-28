@@ -50,11 +50,5 @@ export default {
         first_experience: '初回体験',
         general: '一般',
         subscription: 'サブスクリプション',
-    },
-    validate: {
-        message: {
-            required: 'Please input activity form',
-            is_number: 'Please input number'
-        }
     }
 }
