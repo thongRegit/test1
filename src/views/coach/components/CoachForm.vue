@@ -9,7 +9,7 @@
     >
         <el-col :span="12">
             <div>
-                <p class="label">{{ t('coach.detail.label.name') }}</p>
+                <p class="label required">{{ t('coach.detail.label.name') }}</p>
                 <el-row class="full-width" :gutter="16">
                     <el-col :span="12">
                         <el-form-item prop="first_name">

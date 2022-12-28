@@ -29,6 +29,7 @@ export default {
         store_details: '店舗詳細',
         renew: '更新',
         basic_settings: '基本設定',
+        shop_name: '店舗名',
         number_stations: 'ステーション数',
         business_hours: '営業時間',
         business_hours_setting: '営業時間設定',

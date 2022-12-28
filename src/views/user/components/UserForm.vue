@@ -9,7 +9,7 @@
     >
         <el-col :span="12">
             <div>
-                <p class="label">{{ t('user.detail.label.name') }}</p>
+                <p class="label required">{{ t('user.detail.label.name') }}</p>
                 <el-row class="full-width" :gutter="16">
                     <el-col :span="12">
                         <el-form-item prop="first_name">
@@ -55,7 +55,7 @@
                 </el-row>
             </div>
             <div>
-                <p class="label">{{ t('user.detail.label.birthday') }}</p>
+                <p class="label required">{{ t('user.detail.label.birthday') }}</p>
                 <el-form-item prop="date">
                     <DateForm
                         @change-date="e => ruleForm.birthdays = e"
@@ -78,7 +78,7 @@
                 </el-col>
             </div>
             <el-form-item prop="line_name">
-                <p class="label">{{ t('user.detail.label.line_name') }}</p>
+                <p class="label required">{{ t('user.detail.label.line_name') }}</p>
                 <el-col :span="18">
                     <el-input
                         class="base-input"

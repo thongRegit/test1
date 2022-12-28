@@ -14,7 +14,7 @@
                     <h4>{{ t('plan.form.basic_setting') }}</h4>
                 </div>
                 <el-form-item prop="name">
-                    <p class="label">{{ t('plan.form.name') }}</p>
+                    <p class="label required">{{ t('plan.form.name') }}</p>
                     <el-col :span="10">
                         <el-input v-model="ruleForm.name" class="base-input" />
                     </el-col>
@@ -36,7 +36,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="amount">
-                    <p class="label">{{ t('plan.form.basic_charge') }}</p>
+                    <p class="label required">{{ t('plan.form.basic_charge') }}</p>
                     <el-col :span="10">
                         <el-input
                             v-model="ruleForm.amount"

@@ -9,6 +9,7 @@
         </div>
         <div class="detail-body px-7">
             <el-form-item class="large-input">
+                <p class="required">{{ t('shop.details.shop_name') }}</p>
                 <el-input
                     v-model="shopDetail.name"
                     type="text"
@@ -17,7 +18,7 @@
             </el-form-item>
 
             <el-form-item class="small-input">
-                <p>{{ t('shop.details.number_stations') }}</p>
+                <p class="required">{{ t('shop.details.number_stations') }}</p>
                 <el-input
                     v-model="shopDetail.station_amount"
                     type="text"

@@ -17,7 +17,7 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col span="24">
-                                <p class="label">パターン名</p>
+                                <p class="label required">パターン名</p>
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
@@ -31,12 +31,12 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col :span="11">
-                                <p class="label">
+                                <p class="label required">
                                     {{ t('pattern.business_hours') }}
                                 </p>
                             </el-col>
                             <el-col :span="13" style="padding-left: 60px">
-                                <p class="label">
+                                <p class="label required">
                                     {{ t('pattern.session_time') }}
                                 </p>
                             </el-col>
