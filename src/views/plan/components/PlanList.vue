@@ -6,7 +6,7 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <PlanSearchVue @submit="search" />
+            <PlanSearchVue @submit="search" @reset="resetForm"/>
         </template>
     </BoxVue>
     <BoxVue
@@ -179,6 +179,13 @@ const search = (search: any) => {
         { key: 'is_active', data: search.status },
         { key: 'type', data: search.type },
     ]
+    getListData()
+}
+
+const resetForm = () => {
+    listQuery.value.page = 1
+    listQuery.value.search = ''
+    listQuery.value.filters = [{ key: 'is_active', data: 'all' }, { key: 'type', data: 'all' }]
     getListData()
 }
 

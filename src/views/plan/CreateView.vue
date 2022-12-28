@@ -45,6 +45,7 @@
                             class="base-input"
                         />
                     </el-col>
+                    <el-col class="currency" :span="1"> 円 </el-col>
                 </el-form-item>
                 <el-form-item prop="type">
                     <el-radio-group v-model="ruleForm.type">
@@ -127,7 +128,7 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="resetForm(ruleFormRef)">{{
+                    <el-button type="info" @click="backToList(ruleFormRef)">{{
                         t('btn_cancel')
                     }}</el-button>
                     <el-button
@@ -260,9 +261,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
+const backToList = (formEl: FormInstance | undefined) => {
+    router.push({
+        name: 'plans',
+        replace: true,
+    })
 }
 
 const addBlock = () => {
@@ -290,5 +293,8 @@ const removeDiscountPlan = (index: number) => {
 <style lang="scss">
 .mt-10 {
     margin-top: 10px;
+}
+.currency {
+    text-align: center;
 }
 </style>
