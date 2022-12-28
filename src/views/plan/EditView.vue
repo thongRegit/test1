@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :type="'table'" :padding="20" :width="'800px'">
+    <BoxVue :type="'table'" :padding="20">
         <template v-slot:header> {{ t('plan.form.plans') }}</template>
         <template v-slot:body>
             <el-form
@@ -61,18 +61,29 @@
                 <div class="el-group-title-child">
                     <h4>{{ t('plan.form.discount_settings') }}</h4>
                 </div>
-                <el-form-item
+                <div
+                    class="flex align-items-center"
                     required
                     v-for="(item, index) in ruleForm.plan_discounts"
                     :key="'plan-edit-' + index"
                 >
-                    <el-col :span="22">
+                    <el-col :span="21">
+                        <el-row>
+                            <el-col :span="10">
+                                <p class="label">
+                                    {{ t('plan.form.frequency') }}
+                                </p>
+                            </el-col>
+                            <el-col class="text-center" :span="2"></el-col>
+                            <el-col :span="10">
+                                <p class="label">
+                                    {{ t('plan.form.fee') }}
+                                </p>
+                            </el-col>
+                        </el-row>
                         <el-row>
                             <el-col :span="10">
                                 <el-form-item prop="frequency">
-                                    <p class="label">
-                                        {{ t('plan.form.frequency') }}
-                                    </p>
                                     <el-input
                                         v-model="item.frequency"
                                         class="base-input"
@@ -84,11 +95,8 @@
                                     t('plan.form.from')
                                 }}</span>
                             </el-col>
-                            <el-col :span="11">
+                            <el-col :span="10">
                                 <el-form-item prop="discount_amount">
-                                    <p class="label">
-                                        {{ t('plan.form.fee') }}
-                                    </p>
                                     <el-input
                                         v-model="item.discount_amount"
                                         class="base-input"
@@ -97,20 +105,27 @@
                             </el-col>
                         </el-row>
                     </el-col>
-                </el-form-item>
+                    <el-col :span="1">
+                        <el-icon
+                            class="cursor-pointer mt-10"
+                            @click="removeDiscountPlan(index)"
+                            ><Close
+                        /></el-icon>
+                    </el-col>
+                </div>
                 <el-form-item>
                     <el-link @click="addBlock" target="_blank" type="primary">{{
                         t('plan.form.link')
                     }}</el-link>
                 </el-form-item>
-                <el-form-item class="justify-center">
-                    <el-button @click="resetForm(ruleFormRef)">{{
+                <el-form-item>
+                    <el-button type="info" @click="resetForm(ruleFormRef)">{{
                         t('btn_clear')
                     }}</el-button>
                     <el-button
                         type="primary"
                         @click="submitForm(ruleFormRef)"
-                        >{{ t('btn_search') }}</el-button
+                        >{{ t('btn_update') }}</el-button
                     >
                 </el-form-item>
             </el-form>
@@ -123,7 +138,7 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import BoxVue from '@/components/common/BoxVue.vue'
 import { useI18n } from 'vue3-i18n'
-import { usePatternStore, usePlanStore } from '@/stores'
+import { usePatternStore, usePlanStore, useAlertStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
 import type {
     Period,
@@ -133,6 +148,7 @@ import type {
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const alertStore = useAlertStore()
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -211,8 +227,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             const planStore = usePlanStore()
-            planStore.updatePlan(ruleForm.value, ruleForm.value.id)
-            router.push({ name: 'plans', replace: true })
+            const payload = { ...ruleForm.value }
+            payload.plan_discounts = payload.plan_discounts.filter((item) => {
+                return item.frequency && item.discount_amount
+            })
+            planStore.updatePlan(payload, payload.id)
+            alertStore.createAlert({
+                title: t('message.update_success'),
+                type: 'success',
+            })
         } else {
             console.log('error submit!', fields)
         }
@@ -242,4 +265,14 @@ const getPeriodData = async () => {
         }
     })
 }
+
+const removeDiscountPlan = (index: number) => {
+    ruleForm.value.plan_discounts.splice(index, 1)
+}
 </script>
+
+<style lang="scss">
+.mt-10 {
+    margin-top: 10px;
+}
+</style>

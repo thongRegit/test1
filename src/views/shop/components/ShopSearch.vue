@@ -25,6 +25,7 @@
                     class="base-input"
                     v-model="ruleForm.name"
                     :placeholder="t('shop.ruleForm.name.placeholder')"
+                    @blur="trim('name')"
                 />
             </el-col>
         </el-form-item>
@@ -88,6 +89,12 @@ const rules = reactive<FormRules>({
         },
     ],
 })
+
+const trim = (field: 'name') => {
+    if (ruleForm[field]) {
+        ruleForm[field] = ruleForm[field].trim()
+    }
+}
 
 const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return

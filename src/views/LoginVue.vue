@@ -17,6 +17,7 @@
                         :placeholder="t('mail_address')"
                         type="mail_address"
                         autocomplete="off"
+                        @blur="trim('mail_address')"
                     />
                 </el-form-item>
                 <el-form-item prop="password">
@@ -26,6 +27,7 @@
                         :placeholder="t('password')"
                         type="password"
                         autocomplete="off"
+                        @blur="trim('password')"
                     />
                 </el-form-item>
                 <el-form-item class="box-btn">
@@ -109,6 +111,12 @@ const rules = reactive({
         { validator: validatePassword, trigger: 'blur' },
     ],
 })
+
+const trim = (field: 'mail_address' | 'password') => {
+    if (ruleForm[field]) {
+        ruleForm[field] = ruleForm[field].trim()
+    }
+}
 
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return

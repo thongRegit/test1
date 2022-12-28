@@ -7,19 +7,13 @@ export default {
             title: 'ステータス',
             value: {
                 all: '全て',
-                0: '有効',
-                1: '無効',
+                1: '有効',
+                0: '無効',
             },
         },
         name: {
             title: 'キーワード検索',
             placeholder: '名前',
-        },
-        validated: {
-            empty_shop_name: 'ショップ名を入力',
-            station_amount: 'ステーション量は 0 より大きくなければなりません',
-            empty_station: '入力量ステーション',
-            length: '長さは 3 ～ 255 にする必要があります',
         },
     },
     columns: {
@@ -41,12 +35,5 @@ export default {
         business_hours_setting: '営業時間設定',
         choice: '選択',
         individual_settings: '個別設定',
-        monday: '月曜日',
-        tuesday: '火曜日',
-        wednesday: '水曜日',
-        thursday: '木曜日',
-        friday: '金曜日',
-        saturday: '土曜日',
-        sunday: '日曜日',
     },
 }

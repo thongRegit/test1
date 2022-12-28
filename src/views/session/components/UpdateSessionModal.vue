@@ -5,7 +5,13 @@
         width="80%"
         :before-close="close"
     >
-        <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" class="update-form">
+        <el-form
+            ref="ruleFormRef"
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            class="update-form"
+        >
             <el-row class="full-width">
                 <el-col :span="24">
                     <p class="label">日付</p>
@@ -37,7 +43,10 @@
                 :key="i"
             >
                 <el-col :span="6">
-                    <el-form-item :prop="`sessionData.${i}.start_time`" :rules="rules.start_time">
+                    <el-form-item
+                        :prop="`sessionData.${i}.start_time`"
+                        :rules="rules.start_time"
+                    >
                         <el-time-picker
                             v-model="item.start_time"
                             :arrow-control="true"
@@ -47,14 +56,13 @@
                     </el-form-item>
                 </el-col>
                 <el-col class="text-center" :span="2">
-                    <div
-                        class="text-gray-500 text-align-center"
-                    >
-                        ~
-                    </div>
+                    <div class="text-gray-500 text-center">~</div>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item :prop="`sessionData.${i}.end_time`" :rules="rules.end_time">
+                    <el-form-item
+                        :prop="`sessionData.${i}.end_time`"
+                        :rules="rules.end_time"
+                    >
                         <el-time-picker
                             v-model="item.end_time"
                             :arrow-control="true"
@@ -64,7 +72,10 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="6" style="padding-left: 60px">
-                    <el-form-item :prop="`sessionData.${i}.period_id`" :rules="rules.period_id">
+                    <el-form-item
+                        :prop="`sessionData.${i}.period_id`"
+                        :rules="rules.period_id"
+                    >
                         <el-select
                             v-model="item.period_id"
                             placeholder=""
@@ -82,10 +93,7 @@
             </el-row>
             <el-row class="full-width">
                 <el-col :span="24">
-                    <span
-                        class="add-session-btn"
-                        @click="addSessionBlock"
-                    >
+                    <span class="add-session-btn" @click="addSessionBlock">
                         {{ t('session.add_business_hours') }}
                     </span>
                 </el-col>
@@ -95,7 +103,7 @@
             <span class="dialog-footer">
                 <el-button @click="close">キャンセル</el-button>
                 <el-button type="primary" @click="updateSession(ruleFormRef)">
-                更新
+                    更新
                 </el-button>
             </span>
         </template>
@@ -108,10 +116,7 @@ import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
-import type {
-    Session,
-    Period,
-} from '@/libs/interface/sessionInterface'
+import type { Session, Period } from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 
@@ -125,7 +130,7 @@ const ruleForm = reactive({
             end_time: '',
             period_id: null,
         },
-    ]
+    ],
 })
 
 const rules = reactive<FormRules>({
@@ -187,7 +192,7 @@ const updateSession = async (formEl: FormInstance | undefined) => {
                 shop_id: shopId.value,
                 station_number: stationNumber.value,
                 date: dayjs(ruleForm.day).format('YYYY-MM-DD'),
-                sessions: ruleForm.sessionData.map(item => {
+                sessions: ruleForm.sessionData.map((item) => {
                     return {
                         period_id: item.period_id,
                         start_time: dayjs(item.start_time).format('HH:mm'),
@@ -232,12 +237,10 @@ const getPeriodData = async () => {
 onMounted(async () => {
     await getPeriodData()
 })
-
-
 </script>
 <style scoped>
 .dialog-footer button:first-child {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .sesion-row {

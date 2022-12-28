@@ -23,7 +23,6 @@ export const usePatternStore = defineStore('patterns', () => {
             const data: any = await patternAPI.getListPattern(payload)
             patterns.value = data
         } catch (error: any) {
-            console.log(error)
             return error
         }
     }
@@ -82,7 +81,6 @@ export const usePatternStore = defineStore('patterns', () => {
             const data: Array<Period> = await axios.get(`/period`)
             periods.value = data
         } catch (error: any) {
-            console.log(error)
             return error
         }
     }

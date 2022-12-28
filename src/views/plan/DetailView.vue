@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :type="'table'" :padding="20" :width="'800px'">
+    <BoxVue :type="'table'" :padding="20">
         <template v-slot:header> {{ t('plan.form.plans') }}</template>
         <template v-slot:body>
             <el-form
@@ -69,10 +69,20 @@
                     <el-col :span="22">
                         <el-row>
                             <el-col :span="10">
+                                <p class="label">
+                                    {{ t('plan.form.frequency') }}
+                                </p>
+                            </el-col>
+                            <el-col class="text-center" :span="2"></el-col>
+                            <el-col :span="10">
+                                <p class="label">
+                                    {{ t('plan.form.fee') }}
+                                </p>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="10">
                                 <el-form-item prop="name">
-                                    <p class="label">
-                                        {{ t('plan.form.frequency') }}
-                                    </p>
                                     <el-input
                                         v-model="item.frequency"
                                         class="base-input"
@@ -84,11 +94,8 @@
                                     t('plan.form.from')
                                 }}</span>
                             </el-col>
-                            <el-col :span="11">
+                            <el-col :span="10">
                                 <el-form-item prop="name">
-                                    <p class="label">
-                                        {{ t('plan.form.fee') }}
-                                    </p>
                                     <el-input
                                         v-model="item.discount_amount"
                                         class="base-input"

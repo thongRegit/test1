@@ -17,7 +17,7 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col span="24">
-                                <p class="label">パターン名</p>
+                                <p class="label">{{ t('pattern.pattern_name') }}</p>
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
@@ -68,9 +68,7 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col class="text-center" :span="4">
-                                        <div
-                                            class="text-gray-500 text-align-center"
-                                        >
+                                        <div class="text-gray-500 text-center">
                                             ~
                                         </div>
                                     </el-col>
@@ -259,34 +257,34 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('pattern.rule_patterns.empty_name'),
+            message: t('validation.required', {'0': t('pattern.pattern_name')}),
             trigger: 'blur',
         },
         {
             min: 3,
             max: 255,
-            message: t('pattern.rule_patterns.length'),
+            message: t('validation.between.string', {'0': t('pattern.pattern_name'), '1': '3', '2': '255'}),
             trigger: 'blur',
         },
     ],
     start_time: [
         {
             required: true,
-            message: t('pattern.rule_patterns.start_time'),
+            message: t('validation.required', {'0': t('pattern.start_time')}),
             trigger: 'change',
         },
     ],
     end_time: [
         {
             required: true,
-            message: t('pattern.rule_patterns.end_time'),
+            message: t('validation.required', {'0': t('pattern.end_time')}),
             trigger: 'change',
         },
     ],
     period_id: [
         {
             required: true,
-            message: t('pattern.rule_patterns.period'),
+            message: t('validation.required', {'0': t('pattern.session_time')}),
             trigger: 'change',
         },
     ],

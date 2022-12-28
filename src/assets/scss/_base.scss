@@ -35,15 +35,15 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
 .justify-right { justify-content: flex-end !important;}
 .align-items-center { align-items: center;  }
 .text-right { text-align: right !important; }
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+
 .btn-status {
     color: var(--vt-c-white);
     background-color: var(--vt-c-blue);
     border-radius: 10px;
     padding: 2px 12px;
     letter-spacing: 0px;
-}
-.text-align-center {
-    text-align: center
 }
 
 #wrapper {
@@ -248,7 +248,6 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
             // background-color: unset !important;
             box-shadow: unset !important;
             // border-bottom: unset !important;
-            padding: 0 !important;
             .el-input__inner {
                 cursor: unset !important;
             }
@@ -288,10 +287,6 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
     .el-form-item__content {
         justify-content: center;
     }
-}
-
-.text-align-center {
-    text-align: center
 }
 
 .cursor-pointer {

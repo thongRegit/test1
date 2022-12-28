@@ -22,7 +22,6 @@ export const useShopStore = defineStore('shops', () => {
             const data = await shopApi.getListShop(payload)
             shops.value = data
         } catch (error) {
-            console.log(error)
             return error
         }
     }
@@ -54,7 +53,6 @@ export const useShopStore = defineStore('shops', () => {
             const data: any = await shopApi.getShopDetail(payLoad.id)
             shopDetail.value = data
         } catch (error: any) {
-            console.log(error)
             return error
         }
     }

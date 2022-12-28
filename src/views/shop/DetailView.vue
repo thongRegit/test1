@@ -97,7 +97,7 @@
                                             </el-col>
                                             <el-col :span="4">
                                                 <div
-                                                    class="text-gray-500 text-align-center"
+                                                    class="text-gray-500 text-center"
                                                 >
                                                     ~
                                                 </div>
@@ -198,7 +198,7 @@
                                         </el-col>
                                         <el-col :span="4">
                                             <div
-                                                class="text-gray-500 text-align-center"
+                                                class="text-gray-500 text-center"
                                             >
                                                 ~
                                             </div>
@@ -247,49 +247,50 @@ import type {
     IndividuaSetting,
 } from '@/libs/interface/shopInterface'
 import type { Pattern } from '@/libs/interface/patternInterface'
+import { dayList } from '@/libs/constants/constants'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
 const individualData: Array<IndividuaSetting> = [
     {
         id: 2,
-        dayName: t('shop.details.monday'),
+        dayName: dayList[2],
         isShowDetail: false,
         currentSessionsList: [],
     },
     {
         id: 3,
-        dayName: t('shop.details.tuesday'),
+        dayName: dayList[3],
         isShowDetail: false,
         currentSessionsList: [],
     },
     {
         id: 4,
-        dayName: t('shop.details.wednesday'),
+        dayName: dayList[4],
         isShowDetail: false,
         currentSessionsList: [],
     },
     {
         id: 5,
-        dayName: t('shop.details.thursday'),
+        dayName: dayList[5],
         isShowDetail: false,
         currentSessionsList: [],
     },
     {
         id: 6,
-        dayName: t('shop.details.friday'),
+        dayName: dayList[6],
         isShowDetail: false,
         currentSessionsList: [],
     },
     {
         id: 7,
-        dayName: t('shop.details.saturday'),
+        dayName: dayList[7],
         isShowDetail: false,
         currentSessionsList: [],
     },
     {
         id: 1,
-        dayName: t('shop.details.sunday'),
+        dayName: dayList[1],
         isShowDetail: false,
         currentSessionsList: [],
     },
@@ -320,18 +321,26 @@ const getShopDetail = async () => {
     shopDetail.station_amount = shopStore.shopDetail.station_amount
     shopDetail.id = shopStore.shopDetail.id
     shopStatus.value = shopStore.shopDetail.status == 1
-    shopStore.shopDetail.business_hours.forEach((el: BusinessHour) => {
-        individuaSettings.value.forEach((setting: IndividuaSetting) => {
-            if (setting.id === el.day) {
-                setting.currentSessionsList = [
-                    ...(el.business_hour_details?.length
-                        ? el.business_hour_details
-                        : []),
-                ]
-                setting.isShowDetail = true
-            }
+    if(shopStore.shopDetail.business_hours.length) {
+        shopStore.shopDetail.business_hours.forEach((el: BusinessHour) => {
+            individuaSettings.value.forEach((setting: IndividuaSetting) => {
+                if (setting.id === el.day) {
+                    setting.currentSessionsList = [
+                        ...(el.business_hour_details?.length
+                            ? el.business_hour_details
+                            : []),
+                    ]
+                    setting.isShowDetail = true
+                }
+            })
         })
-    })
+    } else {
+        individuaSettings.value.forEach((setting: IndividuaSetting) => {
+            setting.currentSessionsList = []
+            setting.isShowDetail = false
+            setting.patternIndex = undefined
+        })
+    }
 }
 
 const getListPattern = async () => {
@@ -417,10 +426,10 @@ const updateShopDetail = async (formEl: FormInstance | undefined) => {
 
 const checkStationAmount = (rule: any, value: any, callback: any) => {
     if (!value) {
-        return callback(new Error(t('shop.ruleForm.validated.empty_station')))
+        return callback(new Error(t('validation.required', {'0': t('shop.columns.station_amount')})))
     }
     if (value < 1) {
-        callback(new Error(t('shop.ruleForm.validated.station_amount')))
+        callback(new Error(t('validation.min.numeric', {'0': t('shop.columns.station_amount'), '1' : '1'})))
     } else {
         callback()
     }
@@ -430,13 +439,13 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('shop.ruleForm.validated.empty_shop_name'),
+            message: t('validation.required', {'0': t('shop.columns.name')}),
             trigger: 'blur',
         },
         {
             min: 3,
             max: 255,
-            message: t('shop.ruleForm.validated.length'),
+            message: t('validation.between.string', {'0': t('shop.columns.name'), '1': '3', '2': '255'}),
             trigger: 'blur',
         },
     ],
