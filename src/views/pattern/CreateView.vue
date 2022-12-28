@@ -7,7 +7,7 @@
         @submit="submitData(ruleFormRef)"
     >
         <template v-slot:body>
-            <div style="width: 70%; margin: 0 auto; padding-left: 6em;">
+            <div style="width: 70%; margin: 0 auto; padding-left: 6em">
                 <el-form
                     ref="ruleFormRef"
                     :model="ruleForm"
@@ -17,7 +17,9 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col :span="24">
-                                <p class="label required">{{ t('pattern.pattern_name') }}</p>
+                                <p class="label required">
+                                    {{ t('pattern.pattern_name') }}
+                                </p>
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
@@ -267,7 +269,10 @@ const rules = reactive<FormRules>({
         },
         {
             max: 255,
-            message: t('validation.max.string', [t('pattern.pattern_name'), 255]),
+            message: t('validation.max.string', [
+                t('pattern.pattern_name'),
+                255,
+            ]),
             trigger: 'blur',
         },
     ],

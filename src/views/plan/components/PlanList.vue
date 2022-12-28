@@ -6,7 +6,7 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <PlanSearchVue @submit="search" @reset="resetForm"/>
+            <PlanSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
     <BoxVue
@@ -28,8 +28,7 @@
                     :loading="loading"
                     :columns="columns"
                     :showIndex="false"
-                    :showCheckbox="true"
-                    @cell-click="cellClick"
+                    :showCheckbox="false"
                     @change-page="handleChangePage"
                     @sort="sort"
                     :buttons="buttons"
@@ -42,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, nextTick } from 'vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 import { usePlanStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
@@ -110,7 +109,7 @@ const sortProp = reactive({ key: 'created_at', dir: 'descending' })
 
 const formatNumber = (value: any, format = '') => {
     let formatter = new Intl.NumberFormat()
-    return formatter.format(parseInt(value))
+    return formatter.format(parseFloat(value))
 }
 
 const getListData = async () => {
@@ -153,16 +152,6 @@ const handleChangePage = (page: any) => {
     getListData()
 }
 
-const cellClick = (row: any, column: any) => {
-    if (column.property === 'name') {
-        router.push({
-            name: 'plans-detail',
-            params: { id: row.id },
-            replace: true,
-        })
-    }
-}
-
 const handleClickButtonTable = (type: any, row: any) => {
     router.push({
         name: 'plans-detail',
@@ -185,7 +174,10 @@ const search = (search: any) => {
 const resetForm = () => {
     listQuery.value.page = 1
     listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'is_active', data: 'all' }, { key: 'type', data: 'all' }]
+    listQuery.value.filters = [
+        { key: 'is_active', data: 'all' },
+        { key: 'type', data: 'all' },
+    ]
     getListData()
 }
 
@@ -204,10 +196,6 @@ const handleCreate = () => {
 
 onMounted(async () => {
     await nextTick()
-    await getListData()
-})
-
-watch(data, async () => {
     await getListData()
 })
 </script>

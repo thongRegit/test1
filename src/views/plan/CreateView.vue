@@ -155,6 +155,18 @@ const router = useRouter()
 const { t } = useI18n()
 const alertStore = useAlertStore()
 
+const checkRegexAmount = (rule: any, value: number, callback: any) => {
+    const regex = new RegExp(/^([0-9\s\-\.]*)$/)
+    if (value <= 0) {
+        callback(new Error(t('validation.tel_format')))
+    }
+    if (!regex.test(value.toString())) {
+        callback(new Error(t('validation.tel_format')))
+    } else {
+        callback()
+    }
+}
+
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 let ruleForm = reactive({
@@ -174,12 +186,12 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('validation.required', ['name']),
+            message: t('validation.required', [t('plan.form.name')]),
             trigger: 'blur',
         },
         {
             max: 255,
-            message: t('validation.max', ['name', 255]),
+            message: t('validation.max', [[t('plan.form.name')], 255]),
             trigger: 'blur',
         },
     ],
@@ -187,37 +199,32 @@ const rules = reactive<FormRules>({
         {
             required: true,
             message: t('validation.required', [t('plan.form.fee')]),
+            message: t('validation.required', [t('plan.form.fee')]),
             trigger: 'blur',
         },
-        {
-            pattern: '\^[0-9]+$',
-            message: t('validation.numeric', [t('plan.form.fee')]),
-            trigger: 'blur',
-        },
+        { validator: checkRegexAmount, trigger: 'blur' },
     ],
     frequency: [
         {
             required: true,
             message: t('validation.required', [t('plan.form.frequency')]),
+            message: t('validation.required', [t('plan.form.frequency')]),
             trigger: 'blur',
         },
-        {
-            pattern: '\^[0-9]+$',
-            message: t('validation.numeric', [t('plan.form.frequency')]),
-            trigger: 'blur',
-        },
+        { validator: checkRegexAmount, trigger: 'blur' },
     ],
     discount_amount: [
         {
             required: true,
-            message: t('validation.required',[t('plan.form.discount_settings')]),
+            message: t('validation.required', [
+                t('plan.form.discount_settings'),
+            ]),
+            message: t('validation.required', [
+                t('plan.form.discount_settings'),
+            ]),
             trigger: 'blur',
         },
-        {
-            pattern: '\^[0-9]+$',
-            message: t('validation.numeric', [t('plan.form.discount_settings')]),
-            trigger: 'blur',
-        },
+        { validator: checkRegexAmount, trigger: 'blur' },
     ],
 })
 

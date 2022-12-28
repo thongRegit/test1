@@ -45,6 +45,7 @@
                             class="base-input"
                         />
                     </el-col>
+                    <el-col class="currency" :span="1"> 円 </el-col>
                 </el-form-item>
                 <el-form-item prop="type">
                     <el-radio-group v-model="ruleForm.type">
@@ -156,9 +157,12 @@ const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 let ruleForm = ref({} as PlanDetailPayload)
 
-const checkRegexAmount = (rule: any, value: any, callback: any) => {
+const checkRegexAmount = (rule: any, value: number, callback: any) => {
     const regex = new RegExp(/^([0-9\s\-\.]*)$/);
-    if (!regex.test(value)) {
+    if (value <= 0) {
+        callback(new Error(t('validation.tel_format')));
+    }
+    if (!regex.test(value.toString())) {
         callback(new Error(t('validation.tel_format')));
     } else {
         callback();
@@ -169,12 +173,12 @@ const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('validation.required', ['name']),
+            message: t('validation.required', [t('plan.form.name')]),
             trigger: 'blur',
         },
         {
             max: 255,
-            message: t('validation.max.string', [t('name'), 255]),
+            message: t('validation.max.string', [[t('plan.form.name')], 255]),
             trigger: 'blur',
         },
     ],
@@ -185,20 +189,6 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
         { validator: checkRegexAmount, trigger: 'blur' }
-    ],
-    type: [
-        {
-            required: true,
-            message: 'Please select at least one activity type',
-            trigger: 'change',
-        },
-    ],
-    desc: [
-        {
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-        },
     ],
     discount_amount: [
         {

@@ -247,7 +247,7 @@ const routes = [
                 name: 'page-not-found',
                 beforeEnter: ifAuthenticated,
             },
-        ]
+        ],
     },
 ]
 
