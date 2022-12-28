@@ -13,7 +13,7 @@ export default {
         },
         name: {
             title: 'キーワード検索',
-            placeholder: '名前、メールアドレス、電話番号',
+            placeholder: '名前、電話番号',
         },
     },
     columns: {

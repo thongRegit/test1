@@ -162,7 +162,7 @@ const validateDate = (rule: any, value: any, callback: any) => {
 
 const checkRegexTel = (rule: any, value: any, callback: any) => {
     const regex = new RegExp(/^([0-9\s\-]*)$/);
-    if (!regex.test(value)) {
+    if (!regex.test(value) && value !== null) {
         callback(new Error(t('validation.tel_format')));
     } else {
         callback();
@@ -195,6 +195,11 @@ const rules = reactive<FormRules>({
     tel: [{ max: 20, message: t('validation.max.string', [t('user.detail.label.tel'), 20]), trigger: 'blur' },
     { validator: checkRegexTel, trigger: 'blur' },],
     date: [
+        {
+            required: true,
+            message: t('validation.required', [t('user.detail.label.birthday')]),
+            trigger: 'blur',
+        },
         { validator: validateDate, trigger: 'blur' },
     ],
 })

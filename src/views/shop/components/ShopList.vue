@@ -69,20 +69,20 @@ const columns = ref([
     {
         prop: 'name',
         label: t('shop.columns.name'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     {
         prop: 'station_amount',
         label: t('shop.columns.station_amount'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
     { prop: 'day', label: t('shop.columns.day'), sortable: false, class: '' },
     {
         prop: 'status',
         label: t('shop.columns.status'),
-        sortable: false,
+        sortable: true,
         class: '',
     },
 ])

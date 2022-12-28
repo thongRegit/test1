@@ -69,13 +69,13 @@ const routes = [
                         beforeEnter: ifAuthenticated,
                     },
                     {
-                        path: ':id',
+                        path: ':id(\\d+)',
                         name: 'shops-detail',
                         component: ShopDetail,
                         beforeEnter: ifAuthenticated,
                     },
                     {
-                        path: ':id/update',
+                        path: ':id(\\d+)/update',
                         name: 'shops-update',
                         component: ShopUpdate,
                         beforeEnter: ifAuthenticated,
@@ -92,7 +92,7 @@ const routes = [
                         beforeEnter: ifAuthenticated,
                     },
                     {
-                        path: ':id',
+                        path: ':id(\\d+)',
                         name: 'users-detail',
                         component: UserDetail,
                         beforeEnter: ifAuthenticated,
@@ -115,13 +115,13 @@ const routes = [
                         beforeEnter: ifAuthenticated,
                     },
                     {
-                        path: ':id',
+                        path: ':id(\\d+)',
                         name: 'reserves-detail',
                         component: ReserveDetail,
                         beforeEnter: ifAuthenticated,
                     },
                     {
-                        path: ':id/update',
+                        path: ':id(\\d+)/update',
                         name: 'reserves-update',
                         component: ReserveList,
                         beforeEnter: ifAuthenticated,
@@ -172,7 +172,7 @@ const routes = [
                         beforeEnter: ifAuthenticated,
                     },
                     {
-                        path: ':id',
+                        path: ':id(\\d+)',
                         component: CoachDetail,
                         name: 'coaches-detail',
                         beforeEnter: ifAuthenticated,
@@ -258,12 +258,12 @@ const routes = [
                         component: PlanCreate,
                     },
                     {
-                        path: ':id',
+                        path: ':id(\\d+)',
                         name: 'plans-detail',
                         component: PlanDetail,
                     },
                     {
-                        path: ':id/update',
+                        path: ':id(\\d+)/update',
                         name: 'plans-update',
                         component: PlanUpdate,
                     },

@@ -5,6 +5,7 @@
             :type="type"
             :effect="effect || 'dark'"
             :show-icon="showIcon === undefined ? true : showIcon"
+            :closable="false"
         />
     </div>
 </template>

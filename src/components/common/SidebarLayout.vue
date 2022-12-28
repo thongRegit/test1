@@ -142,12 +142,12 @@ onMounted(async () => {
     Object.keys(SIDE_MENU_ADMIN).forEach((key: string) => {
         const arr_child = SIDE_MENU_ADMIN[key].menu_childs
         if (arr_child.length === 0 && arr_child.route !== '') {
-            if (SIDE_MENU_ADMIN[key].route === route.path) {
+            if (route.path.includes(SIDE_MENU_ADMIN[key].route)) {
                 isActive.value = SIDE_MENU_ADMIN[key].index
             }
         } else {
             arr_child.forEach(function (key2: any, index2: any) {
-                if (arr_child[index2].route === route.path) {
+                if (route.path.includes(arr_child[index2].route)) {
                     isActive.value = SIDE_MENU_ADMIN[key].index
                 }
             })
