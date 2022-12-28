@@ -7,8 +7,8 @@ export default {
             title: 'ステータス',
             value: {
                 all: '全て',
-                0: '有効',
-                1: '無効',
+                0: '無効',
+                1: '有効',
             },
         },
         name: {
@@ -54,6 +54,10 @@ export default {
             gender: '性別',
             status: 'ステータス',
             is_active: '有効/無効',
+            first_name: '性',
+            last_name: '名',
+            first_name_furigana: '性（ふりがな）',
+            last_name_furigana: '名（ふりがな）',
         },
         value: {
             status: {

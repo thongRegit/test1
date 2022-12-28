@@ -14,3 +14,8 @@ export interface createSessionPayload {
     date: string
     sessions: Array<Session>
 }
+
+export interface Coach {
+    id: number
+    full_name: string
+}

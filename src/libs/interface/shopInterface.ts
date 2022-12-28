@@ -65,7 +65,8 @@ export interface ShopListPayload {
     page: number
     search: string
     per_page: number
-    filters: string
+    ['filters[0][key]']?: string
+    ['filters[0][data]']?: string
 }
 
 export interface ShopDetailPayload {

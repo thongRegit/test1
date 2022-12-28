@@ -53,12 +53,12 @@ const statusArr = [
         title: t('coach.ruleForm.status.value.all'),
     },
     {
-        id: '1',
-        title: t('coach.ruleForm.status.value.1'),
-    },
-    {
         id: '0',
         title: t('coach.ruleForm.status.value.0'),
+    },
+    {
+        id: '1',
+        title: t('coach.ruleForm.status.value.1'),
     },
 ]
 
@@ -75,7 +75,7 @@ const rules = reactive<FormRules>({
     search: [
         {
             max: 255,
-            message: t('error.max', [
+            message: t('validation.max.string', [
                 t('coach.ruleForm.search.placeholder'),
                 255,
             ]),
@@ -86,7 +86,7 @@ const rules = reactive<FormRules>({
         {
             type: 'string',
             required: true,
-            message: t('error.check_one'),
+            message: t('validation.check_one'),
             trigger: 'change',
         },
     ],

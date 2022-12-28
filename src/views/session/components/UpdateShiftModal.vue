@@ -1,20 +1,14 @@
 <template>
     <el-dialog
         v-model="dialogVisible"
-        title="セッション設定"
+        title="シフト設定"
         width="80%"
         :before-close="close"
     >
-        <el-form
-            ref="ruleFormRef"
-            :model="ruleForm"
-            status-icon
-            :rules="rules"
-            class="update-form"
-        >
+        <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" class="update-form">
             <el-row class="full-width">
                 <el-col :span="24">
-                    <p class="label">日付</p>
+                    <p class="label">{{ t('session.date') }}</p>
                     <el-form-item prop="day">
                         <el-date-picker
                             v-model="ruleForm.day"
@@ -33,20 +27,17 @@
                 </el-col>
                 <el-col :span="10" style="padding-left: 60px">
                     <p class="label">
-                        {{ t('session.session_time') }}
+                        {{ t('session.energist') }}
                     </p>
                 </el-col>
             </el-row>
             <el-row
                 class="full-width sesion-row"
-                v-for="(item, i) in ruleForm.sessionData"
+                v-for="(item, i) in ruleForm.shifts"
                 :key="i"
             >
                 <el-col :span="6">
-                    <el-form-item
-                        :prop="`sessionData.${i}.start_time`"
-                        :rules="rules.start_time"
-                    >
+                    <el-form-item :prop="`shifts.${i}.start_time`" :rules="rules.start_time">
                         <el-time-picker
                             v-model="item.start_time"
                             :arrow-control="true"
@@ -56,13 +47,14 @@
                     </el-form-item>
                 </el-col>
                 <el-col class="text-center" :span="2">
-                    <div class="text-gray-500 text-center">~</div>
+                    <div
+                        class="text-gray-500 text-align-center"
+                    >
+                        ~
+                    </div>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item
-                        :prop="`sessionData.${i}.end_time`"
-                        :rules="rules.end_time"
-                    >
+                    <el-form-item :prop="`shifts.${i}.end_time`" :rules="rules.end_time">
                         <el-time-picker
                             v-model="item.end_time"
                             :arrow-control="true"
@@ -72,19 +64,18 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="6" style="padding-left: 60px">
-                    <el-form-item
-                        :prop="`sessionData.${i}.period_id`"
-                        :rules="rules.period_id"
-                    >
+                    <el-form-item :prop="`shifts.${i}.coach_id`" :rules="rules.coach_id">
                         <el-select
-                            v-model="item.period_id"
+                            v-model="item.coach_id"
                             placeholder=""
                             class=""
+                            :fit-input-width="true"
+                            :filterable="true"
                         >
                             <el-option
-                                v-for="item in periods"
+                                v-for="item in coaches"
                                 :key="item.id"
-                                :label="`${item.value}分`"
+                                :label="item.full_name"
                                 :value="item.id"
                             />
                         </el-select>
@@ -93,7 +84,10 @@
             </el-row>
             <el-row class="full-width">
                 <el-col :span="24">
-                    <span class="add-session-btn" @click="addSessionBlock">
+                    <span
+                        class="add-session-btn"
+                        @click="addShiftBlock"
+                    >
                         {{ t('session.add_business_hours') }}
                     </span>
                 </el-col>
@@ -102,7 +96,7 @@
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="close">{{ t('btn_cancel') }}</el-button>
-                <el-button type="primary" @click="updateSession(ruleFormRef)">
+                <el-button type="primary" @click="updateShift(ruleFormRef)">
                     {{ t('btn_update') }}
                 </el-button>
             </span>
@@ -116,7 +110,10 @@ import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
-import type { Session, Period } from '@/libs/interface/sessionInterface'
+import type {
+    Session,
+    Coach,
+} from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 
@@ -126,14 +123,14 @@ const { dialogVisible, shopId, stationNumber, defaultDate } = toRefs(props)
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     day: dayjs(defaultDate.value).format('YYYY-MM-DD'),
-    sessionData: [
+    shifts: [
         {
             id: 1,
             start_time: '',
             end_time: '',
-            period_id: null,
+            coach_id: null,
         },
-    ],
+    ]
 })
 
 const rules = reactive<FormRules>({
@@ -158,10 +155,10 @@ const rules = reactive<FormRules>({
             trigger: 'blur',
         },
     ],
-    period_id: [
+    coach_id: [
         {
             required: true,
-            message: t('validation.required', [t('session.session_time')]),
+            message: t('validation.required', [t('session.energist')]),
             trigger: 'blur',
         },
     ],
@@ -169,44 +166,45 @@ const rules = reactive<FormRules>({
 
 const sessionStore = useSessionStore()
 
-const periods = ref([] as Array<Period>)
+const coaches = ref([] as Array<Coach>)
 
 const emit = defineEmits(['close', 'updated'])
 const close = () => {
-    ruleForm.sessionData = [
+    ruleForm.shifts = [
         {
             id: 1,
             start_time: '',
             end_time: '',
-            period_id: null,
+            coach_id: null,
         },
     ]
     emit('close')
 }
 
-const updateSession = async (formEl: FormInstance | undefined) => {
+const updateShift = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate(async (valid, fields) => {
+    await formEl.validate(async (valid) => {
         if (valid) {
             let query = {
                 shop_id: shopId.value,
                 station_number: stationNumber.value,
                 date: dayjs(ruleForm.day).format('YYYY-MM-DD'),
-                sessions: ruleForm.sessionData.map((item) => {
+                shifts: ruleForm.shifts.map(item => {
                     return {
-                        period_id: item.period_id,
+                        coach_id: item.coach_id,
                         start_time: dayjs(item.start_time).format('HH:mm'),
                         end_time: dayjs(item.end_time).format('HH:mm'),
                     }
                 }),
             }
-            sessionStore.createSession(query, () => {
-                ruleForm.sessionData = [
+
+            sessionStore.updateShift(query, () => {
+                ruleForm.shifts = [
                     {
                         id: 1,
                         start_time: '',
                         end_time: '',
-                        period_id: null,
+                        coach_id: null,
                     },
                 ]
                 emit('updated')
@@ -215,32 +213,38 @@ const updateSession = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const addSessionBlock = () => {
-    ruleForm.sessionData.push({
+const addShiftBlock = () => {
+    ruleForm.shifts.push({
         id: Math.random(),
         start_time: '',
         end_time: '',
-        period_id: null,
+        coach_id: null,
     })
 }
 
-const getPeriodData = async () => {
-    await sessionStore.getPeriod()
-    periods.value = sessionStore.periods?.map((e: Period) => {
+const getCoachesData = async () => {
+    const query = {
+        page: 1,
+        per_page: 999,
+    }
+    await sessionStore.getCoaches(query)
+    coaches.value = sessionStore.coaches.data?.map((e) => {
         return {
             id: e.id,
-            value: e.value,
+            full_name: e.full_name,
         }
     })
 }
 
 onMounted(async () => {
-    await getPeriodData()
+    await getCoachesData()
 })
+
+
 </script>
 <style scoped>
 .dialog-footer button:first-child {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .sesion-row {

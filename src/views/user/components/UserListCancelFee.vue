@@ -86,12 +86,12 @@ const getListData = async () => {
     let query: any = {
         'orders[0][key]': sortProp.key,
         'orders[0][dir]': sortProp.dir,
+        'filters[0][key]': listQuery.value.filters[0].key,
+        'filters[0][data]': listQuery.value.filters[0].data,
         page: listQuery.value.page,
         search: listQuery.value.search,
         per_page: 20,
-        filters: '',
     }
-    query.filters = JSON.stringify(listQuery.value.filters)
 
     const id = router.currentRoute.value.params.id
 

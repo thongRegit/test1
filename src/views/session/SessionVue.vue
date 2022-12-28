@@ -60,8 +60,8 @@
                             </el-row>
                         </el-col>
                         <el-col :span="10">
-                            <el-row class="items-end justify-between">
-                                <el-col :span="12">
+                            <el-row class="items-end">
+                                <el-col :span="6">
                                     <p class="label">{{ t('session.date') }}</p>
                                     <el-date-picker
                                         v-model="ruleForm.day"
@@ -70,16 +70,13 @@
                                         @change="dateChange"
                                     />
                                 </el-col>
-                                <el-col :span="10" class="text-right">
-                                    <el-button
-                                        type="primary"
-                                        @click="openUpdateModal(ruleFormRef)"
-                                        >{{
-                                            t(
-                                                'session.buttons.individual_setting'
-                                            )
-                                        }}</el-button
-                                    >
+                                <el-col :span="18" class="text-right">
+                                    <el-button type="primary" @click="openUpdateModal(ruleFormRef)">{{
+                                        t('session.buttons.individual_setting')
+                                    }}</el-button>
+                                    <el-button type="primary" @click="openShiftModal(ruleFormRef)">{{
+                                        t('session.buttons.shift_setting_btn')
+                                    }}</el-button>
                                 </el-col>
                             </el-row>
                         </el-col>
@@ -88,18 +85,29 @@
             </div>
             <SessionCalendar :sessions="sessions" :firstDay="calendarDay" />
             <UpdateSessionModal
+                :key="refresh"
                 :dialogVisible="isOpen"
                 :shopId="ruleForm.shop"
                 :stationNumber="ruleForm.station"
+                :defaultDate="ruleForm.day"
                 @close="closeUpdateModal"
                 @updated="sessionUpdated"
+            />
+            <UpdateShiftModal
+                :key="refresh"
+                :dialogVisible="isShiftOpen"
+                :shopId="ruleForm.shop"
+                :stationNumber="ruleForm.station"
+                :defaultDate="ruleForm.day"
+                @close="closeShiftModal"
+                @updated="shiftUpdated"
             />
         </template>
     </BoxVue>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onMounted, onBeforeMount, nextTick } from 'vue'
+import { reactive, ref, onMounted, nextTick, watch } from 'vue'
 import SessionCalendar from './components/SessionCalendar.vue'
 import BoxVue from '@/components/common/BoxVue.vue'
 import type { FormInstance, FormRules } from 'element-plus'
@@ -107,6 +115,7 @@ import { useI18n } from 'vue3-i18n'
 import { useSessionStore, useShopStore } from '@/stores'
 import dayjs from 'dayjs'
 import UpdateSessionModal from './components/UpdateSessionModal.vue'
+import UpdateShiftModal from './components/UpdateShiftModal.vue'
 
 const { t } = useI18n()
 const ruleFormRef = ref<FormInstance>()
@@ -139,6 +148,9 @@ const stations = ref(0)
 const calendarDay = ref(dayjs().format('YYYY-MM-DD'))
 
 const isOpen = ref(false)
+const isShiftOpen = ref(false)
+
+const refresh = ref(1);
 
 const closeUpdateModal = () => {
     isOpen.value = false
@@ -205,10 +217,30 @@ const sessionUpdated = () => {
     getListData()
 }
 
+const openShiftModal = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    await formEl.validate((valid, fields) => {
+        if (valid) isShiftOpen.value = true
+    })
+}
+
+const closeShiftModal = () => {
+    isShiftOpen.value = false
+}
+
+const shiftUpdated = () => {
+    isShiftOpen.value = false
+    getListData()
+}
+
 onMounted(async () => {
     await nextTick()
     await getListShopData()
     await getListData()
+})
+
+watch(ruleForm, () => {
+    refresh.value += refresh.value
 })
 </script>
 

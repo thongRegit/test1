@@ -14,13 +14,13 @@
                     <h4>基本設定</h4>
                 </div>
                 <el-form-item prop="name">
-                    <p class="label">プラン名</p>
+                    <p class="label required">プラン名</p>
                     <el-col :span="10">
                         <el-input v-model="ruleForm.name" class="base-input" />
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="name">
-                    <p class="label">SESSION時間</p>
+                    <p class="label required">SESSION時間</p>
                     <el-col :span="10">
                         <el-input v-model="ruleForm.name" class="base-input" />
                     </el-col>
