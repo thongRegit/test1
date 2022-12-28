@@ -199,7 +199,6 @@ const rules = reactive<FormRules>({
         {
             required: true,
             message: t('validation.required', [t('plan.form.fee')]),
-            message: t('validation.required', [t('plan.form.fee')]),
             trigger: 'blur',
         },
         { validator: checkRegexAmount, trigger: 'blur' },
@@ -208,7 +207,6 @@ const rules = reactive<FormRules>({
         {
             required: true,
             message: t('validation.required', [t('plan.form.frequency')]),
-            message: t('validation.required', [t('plan.form.frequency')]),
             trigger: 'blur',
         },
         { validator: checkRegexAmount, trigger: 'blur' },
@@ -216,9 +214,6 @@ const rules = reactive<FormRules>({
     discount_amount: [
         {
             required: true,
-            message: t('validation.required', [
-                t('plan.form.discount_settings'),
-            ]),
             message: t('validation.required', [
                 t('plan.form.discount_settings'),
             ]),
