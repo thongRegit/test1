@@ -12,7 +12,7 @@ import dayjs from 'dayjs'
 
 const props = defineProps(['sessions', 'firstDay'])
 const { sessions, firstDay } = toRefs(props)
-const refresh = ref(true)
+const refresh = ref(1)
 
 const calendarOptions = ref({
     plugins: [timeGridPlugin, interactionPlugin],
@@ -31,6 +31,6 @@ const calendarOptions = ref({
 watch(firstDay, (value) => {
     calendarOptions.value.initialDate = value
     calendarOptions.value.firstDay = new Date(value).getDay()
-    refresh.value = !refresh.value
+    refresh.value += refresh.value
 })
 </script>
