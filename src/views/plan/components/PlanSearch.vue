@@ -38,7 +38,7 @@
                 >
             </el-radio-group>
         </el-form-item>
-        <el-form-item class="justify-center">
+        <el-form-item class="justify-left">
             <el-button @click="resetForm(ruleFormRef)">{{
                 t('btn_clear')
             }}</el-button>
@@ -73,6 +73,10 @@ const statusArr = [
 
 const types = [
     {
+        id: 'all',
+        title: t('plan.types.all')
+    },
+    {
         id: 1,
         title: t('plan.types.first_experience'),
     },
@@ -93,19 +97,10 @@ const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     name: '',
     status: 'all',
-    type: 1,
+    type: 'all',
 })
 
 const rules = reactive<FormRules>({
-    name: [
-        { message: 'Please input Activity name', trigger: 'blur' },
-        {
-            min: 3,
-            max: 255,
-            message: 'Length should be 3 to 255',
-            trigger: 'blur',
-        },
-    ],
     status: [
         {
             type: 'string',

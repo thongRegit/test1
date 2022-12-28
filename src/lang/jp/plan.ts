@@ -47,6 +47,7 @@ export default {
         active: '有効',
     },
     types: {
+        all: '全て',
         first_experience: '初回体験',
         general: '一般',
         subscription: 'サブスクリプション',
