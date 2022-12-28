@@ -45,6 +45,7 @@
                             class="base-input"
                         />
                     </el-col>
+                    <el-col class="currency" :span="1"> 円 </el-col>
                 </el-form-item>
                 <el-form-item prop="type">
                     <el-radio-group v-model="ruleForm.type">
@@ -85,7 +86,7 @@
                         </el-row>
                         <el-row>
                             <el-col :span="10">
-                                <el-form-item prop="frequency">
+                                <el-form-item :prop="`plan_discounts.${index}.frequency`" :rules="rules.frequency">
                                     <el-input
                                         v-model="item.frequency"
                                         class="base-input"
@@ -98,7 +99,7 @@
                                 }}</span>
                             </el-col>
                             <el-col :span="10">
-                                <el-form-item prop="discount_amount">
+                                <el-form-item :prop="`plan_discounts.${index}.discount_amount`" :rules="rules.discount_amount">
                                     <el-input
                                         v-model="item.discount_amount"
                                         class="base-input"
@@ -155,41 +156,39 @@ const alertStore = useAlertStore()
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 let ruleForm = ref({} as PlanDetailPayload)
+
+const checkRegexAmount = (rule: any, value: number, callback: any) => {
+    const regex = new RegExp(/^([0-9\s\-\.]*)$/);
+    if (value <= 0) {
+        callback(new Error(t('validation.tel_format')));
+    }
+    if (!regex.test(value.toString())) {
+        callback(new Error(t('validation.tel_format')));
+    } else {
+        callback();
+    }
+}
+
 const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: t('validation.required', ['name']),
+            message: t('validation.required', [t('plan.form.name')]),
             trigger: 'blur',
         },
         {
             max: 255,
-            message: t('validation.max.string', [t('name'), 255]),
+            message: t('validation.max.string', [[t('plan.form.name')], 255]),
             trigger: 'blur',
         },
     ],
     amount: [
         {
-            type: 'number',
             required: true,
             message: t('validation.required', [t('plan.form.fee')]),
             trigger: 'blur',
         },
-    ],
-    type: [
-        {
-            type: 'number',
-            required: true,
-            message: 'Please select at least one activity type',
-            trigger: 'change',
-        },
-    ],
-    desc: [
-        {
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-        },
+        { validator: checkRegexAmount, trigger: 'blur' }
     ],
     discount_amount: [
         {
@@ -197,13 +196,15 @@ const rules = reactive<FormRules>({
             message: t('validation.required',[t('plan.form.discount_settings')]),
             trigger: 'blur'
         },
+        { validator: checkRegexAmount, trigger: 'blur' }
     ],
     frequency: [
         {
             required: true,
-            message: t('validation.required',[t('plan.form.frequency')]),
-            trigger: 'blur'
+            message: t('validation.required', [t('plan.form.frequency')]),
+            trigger: 'blur',
         },
+        { validator: checkRegexAmount, trigger: 'blur' }
     ],
 })
 

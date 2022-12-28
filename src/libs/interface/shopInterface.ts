@@ -40,7 +40,7 @@ export interface IndividuaSetting {
     dayName: string | number
     isShowDetail: boolean
     // patternList?: Array<Pattern> | []
-    currentSessionsList: Array<BusinessHourDetail> | []
+    currentSessionsList?: Array<BusinessHourDetail> | []
     patternIndex?: number
 }
 

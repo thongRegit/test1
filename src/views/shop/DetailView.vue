@@ -350,12 +350,15 @@ const getShopDetail = async () => {
 }
 
 const getListPattern = async () => {
-    await patternStore.listPattern()
-    patternList.value = patternStore.patterns.data.map((el: Pattern) => {
+    let query = {
+        all: 1
+    }
+    await patternStore.listPattern(query)
+    patternList.value = patternStore.allPatterns.map((el: Pattern) => {
         return {
             name: el.name,
             id: el.id,
-            details: el.details,
+            details: el.pattern_details,
         }
     })
 }
@@ -369,20 +372,14 @@ const updatePattern = (index: number) => {
 
 const updatePatternForSetting = (index: number, value: number) => {
     individuaSettings.value[index].patternIndex = value
-    patternList?.value[value]?.details
-    individuaSettings.value[index].currentSessionsList = [
-        ...(patternList.value[value].details?.length
-            ? patternList.value[value].details
-            : []),
-    ]
+    patternList?.value[value].details
+    individuaSettings.value[index].currentSessionsList = patternList.value[value].details
 }
 
 const onUpdatePattern = () => {
     individuaSettings.value.forEach((el) => {
         el.patternIndex = currentPatternIndex.value
-        el.currentSessionsList = [
-            ...patternList.value[currentPatternIndex.value].details,
-        ]
+        el.currentSessionsList = patternList.value[currentPatternIndex.value].details
     })
 }
 
@@ -396,7 +393,7 @@ const updateShopDetail = async (formEl: FormInstance | undefined) => {
         if (valid) {
             const business_hours: Array<BusinessHourForAPI> = []
             individuaSettings.value.forEach((el) => {
-                if (el.isShowDetail && el.currentSessionsList.length) {
+                if (el.isShowDetail && el.currentSessionsList?.length) {
                     el.currentSessionsList.forEach((sItem) => {
                         const data: BusinessHourForAPI = {
                             day: el.id,

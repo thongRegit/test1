@@ -9,7 +9,6 @@
         <template v-slot:body>
             <div
                 class="pattern-form"
-                style="width: 70%; margin: 0 auto; padding-left: 6em"
             >
                 <el-form
                     ref="ruleFormRef"
@@ -194,7 +193,7 @@ const showCreateModal = (item: Pattern) => {
     if (item) {
         patternName.value = item.name
         const tempArr: Array<Session> = []
-        item.details.forEach((el: SessionEl) => {
+        item.details?.forEach((el: SessionEl) => {
             tempArr.push({
                 start_time: el.start_time,
                 end_time: el.end_time,
@@ -362,6 +361,12 @@ onMounted(async () => {
 })
 </script>
 <style scoped lang="scss">
+.pattern-form {
+    width: 70%; 
+    margin: 0 auto; 
+    padding-left: 6em;
+}
+
 .small-input {
     width: 170px;
 }
