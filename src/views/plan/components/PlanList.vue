@@ -48,6 +48,8 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import BoxVue from '@/components/common/BoxVue.vue'
 import PlanSearchVue from './PlanSearch.vue'
+import { findStatus } from '@/libs/utils/common'
+import { ElIcon } from 'element-plus'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -55,7 +57,7 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'is_active', data: 'all' }],
+    filters: [{ key: 'is_active', data: 'all' }, { key: 'type', data: 'all'}],
 })
 const data = ref({
     currentPage: 1,
@@ -99,7 +101,7 @@ const columns = ref([
     },
 ])
 const buttons = ref([
-    { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
+    { id: '1', label: '編集', class: 'btn-action btn-update' },
 ])
 const sortProp = reactive({ key: 'created_at', dir: 'descending' })
 
@@ -110,11 +112,15 @@ const formatNumber = (value: any, format = '') => {
 
 const getListData = async () => {
     let query = {
+        'orders[0][key]': sortProp.key,
+        'orders[0][dir]': sortProp.dir,
+        'filters[0][key]': listQuery.value.filters[0].key,
+        'filters[0][data]': listQuery.value.filters[0].data,
+        'filters[1][key]': listQuery.value.filters[1].key,
+        'filters[1][data]': listQuery.value.filters[1].data,
         page: listQuery.value.page,
         search: listQuery.value.search,
-        filters: '',
     }
-    query.filters = JSON.stringify(listQuery.value.filters)
 
     const planStore = usePlanStore()
     await planStore.listPlan(query)
@@ -122,6 +128,7 @@ const getListData = async () => {
     data.value.currentPage = planStore.plans.current_page
     data.value.perPage = planStore.plans.per_page
     data.value.records = planStore.plans.data.map((e: any) => {
+        const status: any = findStatus(e.is_active)
         return {
             id: e.id,
             name: `<a class="text-link cursor-pointer">${e.name}</a>`,
@@ -131,7 +138,7 @@ const getListData = async () => {
                 e.type == 1
                     ? t('plan.type_plan.first_experience.can_be')
                     : t('plan.type_plan.first_experience.none'),
-            status: e.is_active ? t('plan.active') : t('plan.in_active'),
+            status: status.display,
         }
     })
     loading.value = false
@@ -165,7 +172,7 @@ const search = (search: any) => {
     loading.value = true
     listQuery.value.page = 1
     listQuery.value.search = search.name
-    listQuery.value.filters = [{ key: 'is_active', data: search.status }]
+    listQuery.value.filters = [{ key: 'is_active', data: search.status }, {key: 'type', data: search.type }]
     getListData()
 }
 
