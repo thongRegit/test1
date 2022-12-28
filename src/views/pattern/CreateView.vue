@@ -17,11 +17,11 @@
                     <el-form-item>
                         <el-row class="full-width">
                             <el-col span="24">
-                                <p class="label required">パターン名</p>
+                                <p class="label required">{{ t('pattern.pattern_name') }}</p>
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
-                                        class="pattern-input"
+                                        class="pattern-input base-input"
                                         size="large"
                                     />
                                 </el-form-item>
@@ -62,7 +62,7 @@
                                                     t('pattern.start_time')
                                                 "
                                                 format="HH:mm"
-                                                class="pattern-input"
+                                                class="pattern-input base-input"
                                                 size="large"
                                             />
                                         </el-form-item>
@@ -86,7 +86,7 @@
                                                     t('pattern.end_time')
                                                 "
                                                 format="HH:mm"
-                                                class="pattern-input"
+                                                class="pattern-input base-input"
                                                 size="large"
                                             />
                                         </el-form-item>
@@ -101,7 +101,7 @@
                                     <el-select
                                         v-model="item.period_id"
                                         placeholder="Session"
-                                        class="pattern-input pattern-select"
+                                        class="pattern-input pattern-select base-input"
                                         size="large"
                                     >
                                         <el-option
@@ -113,6 +113,13 @@
                                     </el-select>
                                 </el-form-item>
                             </el-col>
+                            <el-row class="full-width" v-show="item.error_msg">
+                                <el-col :span="24">
+                                    <div class="error-msg">
+                                        {{ item.error_msg }}
+                                    </div>
+                                </el-col>
+                            </el-row>
                         </el-row>
                     </el-form-item>
                     <el-row class="full-width">
@@ -141,6 +148,7 @@ import type {
     SessionEl,
 } from '@/libs/interface/patternInterface'
 import { useI18n } from 'vue3-i18n'
+import dayjs from 'dayjs'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
@@ -169,6 +177,7 @@ const showCreateModal = (item: Pattern) => {
             start_time: null,
             end_time: null,
             period_id: null,
+            error_msg: null,
         },
     ] as Array<Session>
     if (item) {
@@ -197,6 +206,7 @@ const addSessionBlock = () => {
         start_time: null,
         end_time: null,
         period_id: null,
+        error_msg: null,
     })
 }
 
@@ -204,6 +214,8 @@ const submitData = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate(async (valid) => {
         if (valid) {
+            if (!checkVailidTime()) return
+            ruleForm.name = ruleForm.name.trim()
             if (patternId) {
                 await patternStore.updatePattern(ruleForm, patternId, () => {
                     emit('onCreate')
@@ -221,38 +233,58 @@ const submitData = async (formEl: FormInstance | undefined) => {
     })
 }
 
+const checkVailidTime = () => {
+    let isVailid = true
+    ruleForm.pattern_details.forEach((el, index) => {
+        const startTime = dayjs(el.start_time, 'HH:mm')
+        const endTime = dayjs(el.end_time, 'HH:mm')
+        let period_value: number = 0;
+        periods.value.forEach(period => {
+            if(el.period_id == period.id) {
+                period_value = Number(period.value) 
+            }
+        })
+        const currentEndTime = startTime.add(period_value, 'minute')
+        if (startTime >= endTime || endTime.diff(currentEndTime, 'minute') != 0) {
+            el.error_msg = t('message.invalid')
+            isVailid = false
+        }
+    })
+    return isVailid
+}
+
 const rules = reactive<FormRules>({
     name: [
         {
             required: true,
-            message: 'Input pattern name',
+            message: t('validation.required', {'0': t('pattern.pattern_name')}),
             trigger: 'blur',
         },
         {
             min: 3,
             max: 255,
-            message: 'Length should be 3 to 255',
+            message: t('validation.between.string', {'0': t('pattern.pattern_name'), '1': '3', '2': '255'}),
             trigger: 'blur',
         },
     ],
     start_time: [
         {
             required: true,
-            message: 'Please select start time',
+            message: t('validation.required', {'0': t('pattern.start_time')}),
             trigger: 'change',
         },
     ],
     end_time: [
         {
             required: true,
-            message: 'Please select end time',
+            message: t('validation.required', {'0': t('pattern.end_time')}),
             trigger: 'change',
         },
     ],
     period_id: [
         {
             required: true,
-            message: 'Please select period',
+            message: t('validation.required', {'0': t('pattern.session_time')}),
             trigger: 'change',
         },
     ],
@@ -279,11 +311,16 @@ onMounted(async () => {
 })
 </script>
 <style scoped lang="scss">
+.small-input {
+    width: 170px;
+}
+
 .label {
     color: #212529;
 }
 
 .pattern-input {
+    width: 170px;
     &.ml-auto {
         margin-left: auto;
     }
@@ -306,5 +343,10 @@ onMounted(async () => {
     &:last-child {
         margin-bottom: 0;
     }
+}
+
+.error-msg {
+    color: #f56c6c;
+    font-size: 12px;
 }
 </style>

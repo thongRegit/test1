@@ -27,6 +27,7 @@ export interface Session {
     start_time: string | null
     end_time: string | null
     period_id: number | null
+    error_msg?: string | null
 }
 
 export interface SessionEl {

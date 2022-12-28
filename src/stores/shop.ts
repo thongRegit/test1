@@ -9,7 +9,8 @@ import type {
 import { LoadingVue } from '@/components/common/loading'
 import { useAlertStore } from './alert'
 import * as shopApi from '@/api/shopApi'
-import { ElNotification } from 'element-plus'
+import { makeNotification } from '@/libs/constants/constants'
+import i18n from '@/lang/index'
 
 export const useShopStore = defineStore('shops', () => {
     const shops = ref([] as any)
@@ -21,7 +22,6 @@ export const useShopStore = defineStore('shops', () => {
             const data = await shopApi.getListShop(payload)
             shops.value = data
         } catch (error) {
-            console.log(error)
             return error
         }
     }
@@ -30,16 +30,20 @@ export const useShopStore = defineStore('shops', () => {
         const alertStore = useAlertStore()
         const loading = LoadingVue()
         try {
-            const data = await shopApi.updateShop(id, payload)
-            shop.value = data
+            await shopApi.updateShop(id, payload)
             alertStore.createAlert({
-                title: `Update successfully!`,
+                title: i18n.t('message.update_success'),
                 type: 'success',
             })
             loading.close()
-        } catch (error) {
+            return { success: true }
+        } catch (error: any) {
             loading.close()
-            console.log(error)
+            makeNotification(
+                'error',
+                i18n.t('message.error_title'),
+                error.message
+            )
             return error
         }
     }
@@ -49,11 +53,6 @@ export const useShopStore = defineStore('shops', () => {
             const data: any = await shopApi.getShopDetail(payLoad.id)
             shopDetail.value = data
         } catch (error: any) {
-            ElNotification({
-                title: 'Error',
-                message: error.message,
-                type: 'error',
-            })
             return error
         }
     }

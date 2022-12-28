@@ -8,4 +8,5 @@ export default {
     pattern_registration: 'パターン登録',
     start_time: '始まる時間',
     end_time: '終了時間',
+    pattern_name: 'パターン名',
 }
