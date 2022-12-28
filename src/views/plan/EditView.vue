@@ -36,7 +36,9 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="amount">
-                    <p class="label required">{{ t('plan.form.basic_charge') }}</p>
+                    <p class="label required">
+                        {{ t('plan.form.basic_charge') }}
+                    </p>
                     <el-col :span="10">
                         <el-input
                             v-model="ruleForm.amount"
@@ -171,9 +173,9 @@ const rules = reactive<FormRules>({
         {
             type: 'number',
             required: true,
-            message: t('validation.required',[t('plan.form.fee')]),
+            message: t('validation.required', [t('plan.form.fee')]),
             trigger: 'blur',
-        }
+        },
     ],
     type: [
         {

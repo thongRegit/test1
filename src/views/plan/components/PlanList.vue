@@ -57,7 +57,10 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'is_active', data: 'all' }, { key: 'type', data: 'all'}],
+    filters: [
+        { key: 'is_active', data: 'all' },
+        { key: 'type', data: 'all' },
+    ],
 })
 const data = ref({
     currentPage: 1,
@@ -172,7 +175,10 @@ const search = (search: any) => {
     loading.value = true
     listQuery.value.page = 1
     listQuery.value.search = search.name
-    listQuery.value.filters = [{ key: 'is_active', data: search.status }, {key: 'type', data: search.type }]
+    listQuery.value.filters = [
+        { key: 'is_active', data: search.status },
+        { key: 'type', data: search.type },
+    ]
     getListData()
 }
 

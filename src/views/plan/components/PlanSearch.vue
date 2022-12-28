@@ -74,7 +74,7 @@ const statusArr = [
 const types = [
     {
         id: 'all',
-        title: t('plan.types.all')
+        title: t('plan.types.all'),
     },
     {
         id: 1,

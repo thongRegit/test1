@@ -153,7 +153,7 @@ const ruleForm = reactive({
 
 const validateDate = (rule: any, value: any, callback: any) => {
     if ((<any>Object).values(ruleForm.birthdays).includes('')) {
-        callback(new Error(t('validation.date', [t('coach.detail.label.birthday')])))
+        callback(new Error(t('validation.required', [t('coach.detail.label.birthday')])))
     } else {
         callback()
     }

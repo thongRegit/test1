@@ -44,6 +44,7 @@ const { t } = useI18n()
     background-image: url(./../assets/dribbble_1.gif);
     height: 400px;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .four_zero_four_bg h1 {

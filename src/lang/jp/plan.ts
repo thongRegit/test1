@@ -51,5 +51,5 @@ export default {
         first_experience: '初回体験',
         general: '一般',
         subscription: 'サブスクリプション',
-    }
+    },
 }
