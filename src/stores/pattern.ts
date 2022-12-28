@@ -18,7 +18,7 @@ export const usePatternStore = defineStore('patterns', () => {
     const pattern = ref({})
     const periods = ref([] as Array<Period>)
 
-    const listPattern = async (payload: patternPayload) => {
+    const listPattern = async (payload: patternPayload | null = null) => {
         try {
             const data: any = await patternAPI.getListPattern(payload)
             patterns.value = data

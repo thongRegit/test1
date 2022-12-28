@@ -39,6 +39,7 @@
                                 v-model="shopDetail.name"
                                 type="text"
                                 autocomplete="off"
+                                @change="onChangeName"
                             />
                         </el-form-item>
                         <el-form-item class="small-input" prop="station_amount">
@@ -349,10 +350,7 @@ const getShopDetail = async () => {
 }
 
 const getListPattern = async () => {
-    let query = {
-        page: 1,
-    }
-    await patternStore.listPattern(query)
+    await patternStore.listPattern()
     patternList.value = patternStore.patterns.data.map((el: Pattern) => {
         return {
             name: el.name,
@@ -468,6 +466,10 @@ const rules = reactive<FormRules>({
     ],
     station_amount: [{ validator: checkStationAmount, trigger: 'blur' }],
 })
+
+const onChangeName = () => {
+    shopDetail.name = shopDetail.name?.trim()
+}
 
 watch(
     currentPattern,

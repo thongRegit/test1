@@ -4,7 +4,7 @@ import type {
     createPatternPayload,
 } from '@/libs/interface/patternInterface'
 
-export const getListPattern = (payload: patternPayload) => {
+export const getListPattern = (payload: patternPayload | null) => {
     return axios.get('/patterns', {
         params: payload,
     })
