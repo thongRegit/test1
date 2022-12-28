@@ -1,4 +1,12 @@
-export const SIDE_MENU_ADMIN = {
+export const SIDE_MENU_ADMIN: {
+    [key: string]: {
+        index: string
+        label: string
+        route: string
+        class: string
+        menu_childs: any
+    }
+} = {
     shops: {
         index: '1',
         label: 'homepage.shops',

@@ -152,7 +152,7 @@ const ruleForm = reactive({
 
 const validateDate = (rule: any, value: any, callback: any) => {
     if ((<any>Object).values(ruleForm.birthdays).includes('')) {
-        callback(new Error(t('validation.date', ['date'])))
+        callback(new Error(t('validation.date', [t('coach.detail.label.birthday')])))
     } else {
         callback()
     }
@@ -161,7 +161,7 @@ const validateDate = (rule: any, value: any, callback: any) => {
 const checkRegexTel = (rule: any, value: any, callback: any) => {
     const regex = new RegExp(/^([0-9\s\-]*)$/);
     if (!regex.test(value)) {
-        callback(new Error(t('error.tel_format')));
+        callback(new Error(t('validation.tel_format')));
     } else {
         callback();
     }
@@ -171,26 +171,26 @@ const rules = reactive<FormRules>({
     first_name: [
         {
             required: true,
-            message: t('error.required', ['first_name']),
+            message: t('validation.required', [t('coach.detail.label.first_name')]),
             trigger: 'blur',
         },
-        { max: 255, message: t('error.max', ['first_name', 255]), trigger: 'blur' },
+        { max: 255, message: t('validation.max.string', [t('coach.detail.label.first_name'), 255]), trigger: 'blur' },
     ],
     last_name: [
         {
             required: true,
-            message: t('error.required', ['last_name']),
+            message: t('validation.required', [t('coach.detail.label.last_name')]),
             trigger: 'blur',
         },
-        { max: 255, message: t('error.max', ['last_name', 255]), trigger: 'blur' },
+        { max: 255, message: t('validation.max.string', [t('coach.detail.label.last_name'), 255]), trigger: 'blur' },
     ],
     first_name_furigana: [
-        { max: 255, message: t('error.max', ['first_name_furigana', 255]), trigger: 'blur' },
+        { max: 255, message: t('validation.max.string', [t('coach.detail.label.first_name_furigana'), 255]), trigger: 'blur' },
     ],
     last_name_furigana: [
-        { max: 255, message: t('error.max', ['last_name_furigana', 255]), trigger: 'blur' },
+        { max: 255, message: t('validation.max.string', [t('coach.detail.label.last_name_furigana'), 255]), trigger: 'blur' },
     ],
-    tel: [{ max: 20, message: t('error.max', ['tel', 20]), trigger: 'blur' }, { validator: checkRegexTel, trigger: 'blur' }],
+    tel: [{ max: 20, message: t('validation.max.string', [t('coach.detail.label.tel'), 20]), trigger: 'blur' }, { validator: checkRegexTel, trigger: 'blur' }],
     date: [
         { validator: validateDate, trigger: 'blur' },
     ],
@@ -212,7 +212,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate(async (valid) => {
         if (valid) {
             const id = route.params.id
-            ruleForm.birthday = (<any>Object).values(ruleForm.birthdays).join("/")
+            ruleForm.birthday = (<any>Object).values(ruleForm.birthdays).join("-")
             const coachStore = useCoachStore()
             const alertStore = useAlertStore()
             await coachStore.updateCoach(ruleForm, id)

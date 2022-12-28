@@ -72,6 +72,7 @@ export interface CoachInvited {
 
 export interface CoachSession {
     id: number
+    date: string
     shop_name: string
     plan_type: string
     order_status: string
