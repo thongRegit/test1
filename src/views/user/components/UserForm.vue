@@ -156,7 +156,12 @@ const validateDate = (rule: any, value: any, callback: any) => {
     if (ruleForm.birthdays.day === '' || ruleForm.birthdays.month === '' || ruleForm.birthdays.year === '') {
         callback(new Error(t('validation.required', [t('user.detail.label.birthday')])))
     } else {
-        callback()
+        const now = dayjs(new Date())
+        if (now.diff(new Date((<any>Object).values(ruleForm.birthdays).join("-"))) < 0) {
+            callback(new Error(t('validation.date_future', [t('user.detail.label.birthday')])))
+        } else {
+            callback()
+        }
     }
 }
 
