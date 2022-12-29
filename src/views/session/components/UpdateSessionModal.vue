@@ -132,7 +132,8 @@ const props = defineProps([
     'defaultDate',
     'periods',
 ])
-const { dialogVisible, shopId, stationNumber, defaultDate, periods } = toRefs(props)
+const { dialogVisible, shopId, stationNumber, defaultDate, periods } =
+    toRefs(props)
 
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({

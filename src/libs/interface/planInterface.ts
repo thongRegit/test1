@@ -1,3 +1,5 @@
+import type { ResponseList } from './commonInterface'
+
 export interface Period {
     id: number
     value: number
@@ -19,4 +21,17 @@ export interface PlanDetailPayload {
     amount: number
     plan_discounts: Array<PlanDiscount>
     is_active: boolean
+}
+
+export interface PlanRuleForm {
+    name: string
+    type: number
+    period_id: number
+    amount: number
+    plan_discounts: Array<PlanDiscount>
+    is_active: boolean
+}
+
+export interface ResponsePlanList extends ResponseList {
+    data?: PlanDetailPayload[]
 }
