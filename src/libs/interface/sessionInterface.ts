@@ -8,6 +8,7 @@ export interface Session {
 export interface Period {
     id: number
     value: number
+    color: string
 }
 
 export interface createSessionPayload {

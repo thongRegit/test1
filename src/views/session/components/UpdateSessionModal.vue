@@ -130,8 +130,9 @@ const props = defineProps([
     'shopId',
     'stationNumber',
     'defaultDate',
+    'periods',
 ])
-const { dialogVisible, shopId, stationNumber, defaultDate } = toRefs(props)
+const { dialogVisible, shopId, stationNumber, defaultDate, periods } = toRefs(props)
 
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
@@ -178,8 +179,6 @@ const rules = reactive<FormRules>({
 })
 
 const sessionStore = useSessionStore()
-
-const periods = ref([] as Array<Period>)
 
 const emit = defineEmits(['close', 'updated'])
 const close = () => {
@@ -237,20 +236,6 @@ const addSessionBlock = () => {
         period_id: null,
     })
 }
-
-const getPeriodData = async () => {
-    await sessionStore.getPeriod()
-    periods.value = sessionStore.periods?.map((e: Period) => {
-        return {
-            id: e.id,
-            value: e.value,
-        }
-    })
-}
-
-onMounted(async () => {
-    await getPeriodData()
-})
 </script>
 <style scoped>
 .dialog-footer button:first-child {
