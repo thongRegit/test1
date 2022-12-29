@@ -16,7 +16,11 @@
                 <el-form-item prop="name">
                     <p class="label required">{{ t('plan.form.name') }}</p>
                     <el-col :span="10">
-                        <el-input v-model="ruleForm.name" class="base-input" />
+                        <el-input
+                            v-model="ruleForm.name"
+                            class="base-input"
+                            @blur="trim('name')"
+                        />
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="session_time">
@@ -223,6 +227,12 @@ const rules = reactive<FormRules>({
     ],
 })
 
+const trim = (field: 'name') => {
+    if (ruleForm[field]) {
+        ruleForm[field] = ruleForm[field].trim()
+    }
+}
+
 const types = [
     {
         id: 1,
@@ -254,7 +264,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             const planStore = usePlanStore()
             planStore.createPlan(payload)
             alertStore.createAlert({
-                title: t('message.update_success'),
+                title: t('message.create_success'),
                 type: 'success',
             })
         } else {

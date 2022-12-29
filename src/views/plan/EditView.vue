@@ -16,7 +16,11 @@
                 <el-form-item prop="name">
                     <p class="label required">{{ t('plan.form.name') }}</p>
                     <el-col :span="10">
-                        <el-input v-model="ruleForm.name" class="base-input" />
+                        <el-input
+                            v-model="ruleForm.name"
+                            class="base-input"
+                            @blur="trim('name')"
+                        />
                     </el-col>
                 </el-form-item>
                 <el-form-item prop="session_time">
@@ -215,6 +219,12 @@ const rules = reactive<FormRules>({
         { validator: checkRegexAmount, trigger: 'blur' },
     ],
 })
+
+const trim = (field: 'name') => {
+    if (ruleForm.value[field]) {
+        ruleForm.value[field] = ruleForm.value[field].trim()
+    }
+}
 
 const types = [
     {
