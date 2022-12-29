@@ -244,6 +244,8 @@ const getData = async () => {
     ruleForm.first_name_furigana = coachStore.coach.first_name_furigana
     ruleForm.last_name_furigana = coachStore.coach.last_name_furigana
     ruleForm.nickname = coachStore.coach.nickname
+    ruleForm.invitation_code = coachStore.coach.invitation_code
+    ruleForm.people_invited = coachStore.coach.people_invited
     ruleForm.tel = coachStore.coach.tel
     ruleForm.birthday = coachStore.coach.birthday ? coachStore.coach.birthday : null
     ruleForm.birthdays.day = coachStore.coach.birthday ? dayjs(new Date(coachStore.coach.birthday)).format(

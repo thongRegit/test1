@@ -25,8 +25,8 @@ export interface CoachDetail {
     tel: string
     is_active: boolean
     is_active_name: string
-    users: any
-    session_details: any
+    invitation_code: string
+    people_invited: string
 }
 
 export interface CoachRuleForm {

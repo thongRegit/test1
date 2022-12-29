@@ -6,6 +6,7 @@ import coach from './coach'
 import plan from './plan'
 import message from './message'
 import validation from './validation'
+import reserve from './reserve'
 
 export const jp = {
     login: 'ログイン',
@@ -107,4 +108,5 @@ export const jp = {
     plan,
     message,
     validation,
+    reserve,
 }

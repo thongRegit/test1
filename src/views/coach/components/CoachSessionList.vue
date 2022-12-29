@@ -52,12 +52,6 @@ const columns = ref([
         class: '',
     },
     {
-        prop: 'full_name',
-        label: t('coach.columns.sessions.full_name'),
-        sortable: false,
-        class: '',
-    },
-    {
         prop: 'shop_name',
         label: t('coach.columns.sessions.shop_name'),
         sortable: false,
@@ -66,6 +60,12 @@ const columns = ref([
     {
         prop: 'plan_name',
         label: t('coach.columns.sessions.plan_name'),
+        sortable: false,
+        class: '',
+    },
+    {
+        prop: 'full_name',
+        label: t('coach.columns.sessions.full_name'),
         sortable: false,
         class: '',
     },

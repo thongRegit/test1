@@ -7,6 +7,7 @@ import { usePatternStore } from './pattern'
 import { useAlertStore } from './alert'
 import { useCoachStore } from './coach'
 import { useSessionStore } from './session'
+import { useReserveStore } from './reserve'
 
 export {
     useSettingStore,
@@ -18,4 +19,5 @@ export {
     useAlertStore,
     useCoachStore,
     useSessionStore,
+    useReserveStore,
 }
