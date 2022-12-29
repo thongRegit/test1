@@ -38,7 +38,7 @@
                 </el-col>
             </el-row>
             <el-row
-                class="full-width sesion-row"
+                class="full-width sesion-row align-items-center"
                 v-for="(item, i) in ruleForm.sessionData"
                 :key="i"
             >
@@ -87,6 +87,13 @@
                             />
                         </el-select>
                     </el-form-item>
+                </el-col>
+                <el-col :span="1">
+                    <el-icon
+                        class="cursor-pointer"
+                        @click="removeSession(index)"
+                        ><Close
+                    /></el-icon>
                 </el-col>
             </el-row>
             <el-row class="full-width">
@@ -216,6 +223,10 @@ const updateSession = async (formEl: FormInstance | undefined) => {
             })
         }
     })
+}
+
+const removeSession = (index: number) => {
+    ruleForm.sessionData.splice(index, 1)
 }
 
 const addSessionBlock = () => {
