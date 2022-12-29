@@ -44,14 +44,14 @@ const data = ref({
 const loading = ref(true)
 const columns = ref([
     {
-        prop: 'full_name',
-        label: t('coach.columns.invited.full_name'),
+        prop: 'created_at',
+        label: t('coach.columns.invited.created_at'),
         sortable: false,
         class: '',
     },
     {
-        prop: 'created_at',
-        label: t('coach.columns.invited.created_at'),
+        prop: 'full_name',
+        label: t('coach.columns.invited.full_name'),
         sortable: false,
         class: '',
     },
