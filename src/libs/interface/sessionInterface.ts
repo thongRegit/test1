@@ -1,3 +1,5 @@
+import type { ResponseList } from "./commonInterface"
+
 export interface Session {
     id?: any
     start_time: string
@@ -5,10 +7,18 @@ export interface Session {
     period_id: number
 }
 
+export interface ResponseSessionList extends ResponseList {
+    data?: Session[]
+}
+
 export interface Period {
     id: number
     value: number
     color: string
+}
+
+export interface ResponsePeriodList extends ResponseList {
+    data?: Period[]
 }
 
 export interface createSessionPayload {
