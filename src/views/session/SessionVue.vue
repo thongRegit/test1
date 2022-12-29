@@ -296,8 +296,8 @@ watch(ruleForm, () => {
     width: 40%;
 }
 
-.fc-event {
-    border-color: #dddddd;
+.fc-v-event {
+    border-color: #dddddd !important;
 }
 
 .period-group {
