@@ -351,7 +351,7 @@ const getShopDetail = async () => {
 
 const getListPattern = async () => {
     let query = {
-        all: 1
+        all: 1,
     }
     await patternStore.listPattern(query)
     patternList.value = patternStore.allPatterns.map((el: Pattern) => {
@@ -373,13 +373,15 @@ const updatePattern = (index: number) => {
 const updatePatternForSetting = (index: number, value: number) => {
     individuaSettings.value[index].patternIndex = value
     patternList?.value[value].details
-    individuaSettings.value[index].currentSessionsList = patternList.value[value].details
+    individuaSettings.value[index].currentSessionsList =
+        patternList.value[value].details
 }
 
 const onUpdatePattern = () => {
     individuaSettings.value.forEach((el) => {
         el.patternIndex = currentPatternIndex.value
-        el.currentSessionsList = patternList.value[currentPatternIndex.value].details
+        el.currentSessionsList =
+            patternList.value[currentPatternIndex.value].details
     })
 }
 

@@ -1,61 +1,53 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-import axios from '@/config/axios'
+import { getListPlan, update, create, getPlanDetail } from '@/api/planApi'
+import type {
+    ResponsePlanList,
+    PlanDetailPayload,
+    PlanRuleForm,
+} from '@/libs/interface/planInterface'
+import { makeNotification } from '@/libs/constants/constants'
+import type { ParamsList } from '@/libs/interface/commonInterface'
 
-export const usePlanStore = defineStore('plan_store', () => {
-    const plans = ref([] as any)
-    const plan = ref({} as any)
+export const usePlanStore = defineStore('plans', () => {
+    const plans = ref([] as ResponsePlanList)
+    const plan = ref({} as PlanDetailPayload)
 
-    const listPlan = async (payload: any) => {
+    const listPlan = async (payload: ParamsList) => {
         try {
-            const data = await axios.get('/plans', {
-                params: payload,
-            })
+            const data = await getListPlan(payload)
             plans.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
 
-    const createPlan = async (payload: any) => {
+    const createPlan = async (payload: PlanRuleForm) => {
         try {
-            // const data = await axios.post('/plan', { name: 'Axios POST Request Example' })
-            const data = await axios.post('/plans', payload)
-            plan.value = data
-        } catch (error) {
-            console.log(error)
+            await create(payload)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
 
     const updatePlan = async (payload: any, id: any) => {
         try {
-            const data = await axios.put(`plans/${id}`, payload)
-            plan.value = data
-        } catch (error) {
-            console.log(error)
-            return error
-        }
-    }
-
-    const deletePlan = async (payload: any, id: any) => {
-        try {
-            return await axios.delete(`/plans/${payload.id}`).then((res) => res)
-        } catch (error) {
-            console.log(error)
+            await update(payload, id)
+            await getPlanDetail(id)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
 
     const detailPlan = async (payload: any) => {
         try {
-            const data = await axios
-                .get(`/plans/${payload.id}`)
-                .then((res) => res)
+            const data = await getPlanDetail(payload.id).then((res) => res)
             plan.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
@@ -67,7 +59,6 @@ export const usePlanStore = defineStore('plan_store', () => {
         detailPlan,
         createPlan,
         updatePlan,
-        deletePlan,
     }
 })
 
