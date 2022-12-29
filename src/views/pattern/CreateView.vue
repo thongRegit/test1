@@ -7,9 +7,7 @@
         @submit="submitData(ruleFormRef)"
     >
         <template v-slot:body>
-            <div
-                class="pattern-form"
-            >
+            <div class="pattern-form">
                 <el-form
                     ref="ruleFormRef"
                     :model="ruleForm"
@@ -362,8 +360,8 @@ onMounted(async () => {
 </script>
 <style scoped lang="scss">
 .pattern-form {
-    width: 70%; 
-    margin: 0 auto; 
+    width: 70%;
+    margin: 0 auto;
     padding-left: 6em;
 }
 

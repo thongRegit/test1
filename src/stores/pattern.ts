@@ -6,7 +6,7 @@ import type {
     patternPayload,
     createPatternPayload,
     Period,
-    Pattern
+    Pattern,
 } from '@/libs/interface/patternInterface'
 import { useAlertStore } from './alert'
 import { LoadingVue } from '@/components/common/loading'
@@ -23,7 +23,7 @@ export const usePatternStore = defineStore('patterns', () => {
     const listPattern = async (payload: patternPayload | null = null) => {
         try {
             const data: any = await patternAPI.getListPattern(payload)
-            if(payload?.all) {
+            if (payload?.all) {
                 allPatterns.value = data
             } else {
                 patterns.value = data

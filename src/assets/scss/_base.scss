@@ -112,6 +112,16 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1p
         }
         .el-button {
             width: var(--vt-w-button);
+            &:focus {
+                border-color: var(--el-button-border-color);
+                background-color: var(--el-button-bg-color);
+                color: var(--el-button-text-color);
+            }
+            &:active {
+                background-color: var(--el-button-hover-border-color);
+                border-color: var(--el-button-hover-border-color);
+                color: var(--el-button-hover-text-color);
+            }
         }
         .el-checkbox__label {
             font-size: 12px;
