@@ -1,24 +1,23 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import axios from '@/config/axios'
-import type { Period } from '@/libs/interface/sessionInterface'
+import type { createSessionPayload, Period, ResponsePeriodList, ResponseSessionList } from '@/libs/interface/sessionInterface'
 import { makeNotification } from '@/libs/constants/constants'
 import { useAlertStore } from './alert'
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import * as coachAPI from '@/api/coachApi'
 
 import type { ResponseCoachList } from '@/libs/interface/coachInterface'
+import { getListSession, getListPeriod, create, createShift } from '@/api/sesssionApi'
 
 export const useSessionStore = defineStore('sessions', () => {
-    const sessions = ref([] as any)
-    const periods = ref([] as Array<Period>)
+    const sessions = ref([] as ResponseSessionList)
+    const periods = ref([] as ResponsePeriodList)
     const coaches = ref([] as ResponseCoachList)
 
-    const listSession = async (payload: any) => {
+    const listSession = async (payload: ParamsList) => {
         try {
-            const data = await axios.get('/sessions', {
-                params: payload,
-            })
+            const data = await getListSession(payload)
             sessions.value = data
         } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
@@ -28,7 +27,7 @@ export const useSessionStore = defineStore('sessions', () => {
 
     const getPeriod = async () => {
         try {
-            const data: Array<Period> = await axios.get(`/period`)
+            const data: ResponsePeriodList = await getListPeriod()
             periods.value = data
         } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
@@ -39,7 +38,7 @@ export const useSessionStore = defineStore('sessions', () => {
     const createSession = async (payload: any, cb?: Function) => {
         const alertStore = useAlertStore()
         try {
-            const data = await axios.post('/sessions', payload)
+            await create(payload)
             if (cb) {
                 cb()
             }
@@ -57,16 +56,16 @@ export const useSessionStore = defineStore('sessions', () => {
         try {
             const data = await coachAPI.coaches(payload)
             coaches.value = data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
             return error
         }
     }
 
-    const updateShift = async (payload: any, cb?: Function) => {
+    const updateShift = async (payload: createSessionPayload, cb?: Function) => {
         const alertStore = useAlertStore()
         try {
-            const data = await axios.post('/sessions/shift', payload)
+            const data = await createShift(payload)
             if (cb) {
                 cb()
             }
