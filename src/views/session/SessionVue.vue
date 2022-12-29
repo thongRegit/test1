@@ -96,11 +96,15 @@
                     <el-row>
                         <el-col>
                             <div class="flex justify-right">
-                                <div class="flex period-group align-items-center"
+                                <div
+                                    class="flex period-group align-items-center"
                                     v-for="item in periods"
                                     :key="item.id"
                                 >
-                                    <span class="period-note" :style="{ backgroundColor: item.color }"></span>
+                                    <span
+                                        class="period-note"
+                                        :style="{ backgroundColor: item.color }"
+                                    ></span>
                                     <span>{{ item.value }}分</span>
                                 </div>
                             </div>
@@ -296,8 +300,8 @@ watch(ruleForm, () => {
     width: 40%;
 }
 
-.fc-event {
-    border-color: #dddddd;
+.fc-v-event {
+    border-color: #dddddd !important;
 }
 
 .period-group {
