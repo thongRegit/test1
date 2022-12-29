@@ -93,6 +93,19 @@
                             </el-row>
                         </el-col>
                     </el-row>
+                    <el-row>
+                        <el-col>
+                            <div class="flex justify-right">
+                                <div class="flex period-group align-items-center"
+                                    v-for="item in periods"
+                                    :key="item.id"
+                                >
+                                    <span class="period-note" :style="{ backgroundColor: item.color }"></span>
+                                    <span>{{ item.value }}分</span>
+                                </div>
+                            </div>
+                        </el-col>
+                    </el-row>
                 </el-form>
             </div>
             <SessionCalendar :sessions="sessions" :firstDay="calendarDay" />
@@ -102,6 +115,7 @@
                 :shopId="ruleForm.shop"
                 :stationNumber="ruleForm.station"
                 :defaultDate="ruleForm.day"
+                :periods="periods"
                 @close="closeUpdateModal"
                 @updated="sessionUpdated"
             />
@@ -128,6 +142,7 @@ import { useSessionStore, useShopStore } from '@/stores'
 import dayjs from 'dayjs'
 import UpdateSessionModal from './components/UpdateSessionModal.vue'
 import UpdateShiftModal from './components/UpdateShiftModal.vue'
+import type { Period } from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 const ruleFormRef = ref<FormInstance>()
@@ -164,6 +179,10 @@ const isShiftOpen = ref(false)
 
 const refresh = ref(1)
 
+const periods = ref([] as Array<Period>)
+
+const sessionStore = useSessionStore()
+
 const closeUpdateModal = () => {
     isOpen.value = false
 }
@@ -175,17 +194,28 @@ const openUpdateModal = async (formEl: FormInstance | undefined) => {
     })
 }
 
+const getPeriodData = async () => {
+    await sessionStore.getPeriod()
+    periods.value = sessionStore.periods?.map((e: Period) => {
+        return {
+            id: e.id,
+            value: e.value,
+            color: e.color,
+        }
+    })
+}
+
 const getListShopData = async () => {
     let query = {
-        page: 1,
-        per_page: 100,
+        all: 1,
     }
 
     const shopStore = useShopStore()
     await shopStore.listShop(query)
-    shopArr.value = shopStore.shops.data
-    if (shopStore.shops.data.length > 0) {
-        ruleForm.shop = shopStore.shops.data[0].id
+    shopArr.value = shopStore.shops
+    if (shopStore.shops.length > 0) {
+        ruleForm.shop = shopStore.shops[0].id
+        stations.value = shopStore.shops[0].station_amount
         ruleForm.station = 1
     }
 }
@@ -215,7 +245,6 @@ const getListData = async () => {
         start_date: dayjs(ruleForm.day).format('YYYY-MM-DD'),
     }
 
-    const sessionStore = useSessionStore()
     await sessionStore.listSession(query)
 
     sessions.value = sessionStore.sessions.map((e: any) => {
@@ -224,6 +253,7 @@ const getListData = async () => {
             title: e.title || '',
             start: e.start,
             end: e.end,
+            backgroundColor: e.color,
         }
     })
 }
@@ -251,6 +281,7 @@ const shiftUpdated = () => {
 
 onMounted(async () => {
     await nextTick()
+    await getPeriodData()
     await getListShopData()
     await getListData()
 })
@@ -263,5 +294,24 @@ watch(ruleForm, () => {
 <style lang="scss">
 .w-40 {
     width: 40%;
+}
+
+.fc-event {
+    border-color: #dddddd;
+}
+
+.period-group {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.period-note {
+    border: 1px solid #dddddd;
+    height: 25px;
+    width: 25px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 5px;
 }
 </style>
