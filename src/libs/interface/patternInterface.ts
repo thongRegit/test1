@@ -8,7 +8,8 @@ export interface PatternData {
 export interface Pattern {
     id: number
     name: string
-    details: Array<Detail>
+    details?: Array<Detail> | []
+    pattern_details?: Array<Detail> | []
 }
 
 export interface Detail {
@@ -38,7 +39,8 @@ export interface SessionEl {
 }
 
 export interface patternPayload {
-    page: number
+    page?: number
+    all?: number | null
 }
 
 export interface createPatternPayload {

@@ -1,7 +1,7 @@
 import type { Period } from '@/libs/interface/patternInterface'
 export interface Shop {
     id: number
-    name: string | null
+    name: string | null | undefined
     station_amount: number | null
     status: number
     created_at: string
@@ -40,7 +40,7 @@ export interface IndividuaSetting {
     dayName: string | number
     isShowDetail: boolean
     // patternList?: Array<Pattern> | []
-    currentSessionsList: Array<BusinessHourDetail> | []
+    currentSessionsList?: Array<BusinessHourDetail> | []
     patternIndex?: number
 }
 

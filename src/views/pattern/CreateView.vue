@@ -7,7 +7,9 @@
         @submit="submitData(ruleFormRef)"
     >
         <template v-slot:body>
-            <div style="width: 70%; margin: 0 auto; padding-left: 6em">
+            <div
+                class="pattern-form"
+            >
                 <el-form
                     ref="ruleFormRef"
                     :model="ruleForm"
@@ -25,6 +27,7 @@
                                         v-model="ruleForm.name"
                                         class="pattern-input base-input"
                                         size="large"
+                                        @change="onChangeName"
                                     />
                                 </el-form-item>
                             </el-col>
@@ -46,7 +49,7 @@
                         <el-row
                             class="full-width sesion-row"
                             v-for="(item, i) in ruleForm.pattern_details"
-                            :key="`plan-create-${i}`"
+                            :key="`pattern-create-${i}`"
                         >
                             <el-col :span="11">
                                 <el-row>
@@ -55,15 +58,13 @@
                                             :prop="`pattern_details.${i}.start_time`"
                                             :rules="rules.start_time"
                                         >
-                                            <el-time-select
+                                            <el-time-picker
                                                 v-model="item.start_time"
-                                                start="00:00"
-                                                step="00:15"
-                                                end="23:30"
                                                 :placeholder="
                                                     t('pattern.start_time')
                                                 "
                                                 format="HH:mm"
+                                                value-format="HH:mm"
                                                 class="pattern-input base-input"
                                                 size="large"
                                             />
@@ -79,15 +80,13 @@
                                             :prop="`pattern_details.${i}.end_time`"
                                             :rules="rules.end_time"
                                         >
-                                            <el-time-select
+                                            <el-time-picker
                                                 v-model="item.end_time"
-                                                start="00:00"
-                                                step="00:15"
-                                                end="23:30"
                                                 :placeholder="
                                                     t('pattern.end_time')
                                                 "
                                                 format="HH:mm"
+                                                value-format="HH:mm"
                                                 class="pattern-input base-input"
                                                 size="large"
                                             />
@@ -96,24 +95,32 @@
                                 </el-row>
                             </el-col>
                             <el-col :span="13" style="padding-left: 90px">
-                                <el-form-item
-                                    :prop="`pattern_details.${i}.period_id`"
-                                    :rules="rules.period_id"
-                                >
-                                    <el-select
-                                        v-model="item.period_id"
-                                        placeholder="Session"
-                                        class="pattern-input pattern-select base-input"
-                                        size="large"
+                                <div class="flex align-items-center">
+                                    <el-form-item
+                                        :prop="`pattern_details.${i}.period_id`"
+                                        :rules="rules.period_id"
                                     >
-                                        <el-option
-                                            v-for="item in periods"
-                                            :key="item.id"
-                                            :label="`${item.value}分`"
-                                            :value="item.id"
+                                        <el-select
+                                            v-model="item.period_id"
+                                            placeholder="Session"
+                                            class="pattern-input pattern-select base-input"
+                                            size="large"
+                                        >
+                                            <el-option
+                                                v-for="item in periods"
+                                                :key="item.id"
+                                                :label="`${item.value}分`"
+                                                :value="item.id"
+                                            />
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-icon class="ml-5">
+                                        <Close
+                                            class="cursor-pointer"
+                                            @click="removeSessionBlock(i)"
                                         />
-                                    </el-select>
-                                </el-form-item>
+                                    </el-icon>
+                                </div>
                             </el-col>
                             <el-row class="full-width" v-show="item.error_msg">
                                 <el-col :span="24">
@@ -151,6 +158,7 @@ import type {
 } from '@/libs/interface/patternInterface'
 import { useI18n } from 'vue3-i18n'
 import dayjs from 'dayjs'
+import _ from 'lodash'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
@@ -185,7 +193,7 @@ const showCreateModal = (item: Pattern) => {
     if (item) {
         patternName.value = item.name
         const tempArr: Array<Session> = []
-        item.details.forEach((el: SessionEl) => {
+        item.details?.forEach((el: SessionEl) => {
             tempArr.push({
                 start_time: el.start_time,
                 end_time: el.end_time,
@@ -212,11 +220,14 @@ const addSessionBlock = () => {
     })
 }
 
+const removeSessionBlock = (index: number) => {
+    _.remove(ruleForm.pattern_details, (el, i) => index == i && el)
+}
+
 const submitData = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate(async (valid) => {
         if (valid) {
-            if (!checkVailidTime()) return
             ruleForm.name = ruleForm.name.trim()
             if (patternId) {
                 await patternStore.updatePattern(ruleForm, patternId, () => {
@@ -235,27 +246,56 @@ const submitData = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const checkVailidTime = () => {
+const vailidTime = (start: string, end: string, period_id: number) => {
+    const startTime = dayjs(start, 'HH:mm')
+    const endTime = dayjs(end, 'HH:mm')
+    let period_value: number = 0
     let isVailid = true
-    ruleForm.pattern_details.forEach((el, index) => {
-        const startTime = dayjs(el.start_time, 'HH:mm')
-        const endTime = dayjs(el.end_time, 'HH:mm')
-        let period_value: number = 0
-        periods.value.forEach((period) => {
-            if (el.period_id == period.id) {
-                period_value = Number(period.value)
-            }
-        })
-        const currentEndTime = startTime.add(period_value, 'minute')
-        if (
-            startTime >= endTime ||
-            endTime.diff(currentEndTime, 'minute') != 0
-        ) {
-            el.error_msg = t('message.invalid')
-            isVailid = false
+    periods.value.forEach((period) => {
+        if (period_id == period.id) {
+            period_value = Number(period.value)
         }
     })
+    const currentEndTime = startTime.add(period_value, 'minute')
+    if (startTime >= endTime || endTime.diff(currentEndTime, 'minute') < 0) {
+        isVailid = false
+    }
     return isVailid
+}
+
+const checkTime = (rule: any, value: any, callback: any) => {
+    const field = rule.field.split('.')
+    const index = parseInt(field[1])
+    const fieldName: string = field[2]
+    const startTime = ruleForm.pattern_details[index].start_time
+    const endTime = ruleForm.pattern_details[index].end_time
+    const periodId = ruleForm.pattern_details[index].period_id
+    ruleForm.pattern_details[index].error_msg = ''
+    const errorMsg = {
+        start_time: t('pattern.start_time'),
+        end_time: t('pattern.end_time'),
+        period_id: t('pattern.session_time'),
+    }
+    if (
+        (!startTime && fieldName == 'start_time') ||
+        (!endTime && fieldName == 'end_time') ||
+        (!periodId && fieldName == 'period_id')
+    ) {
+        callback(
+            new Error(t('validation.required', { '0': errorMsg[fieldName] }))
+        )
+    } else {
+        if (startTime && endTime && periodId) {
+            const check = vailidTime(startTime, endTime, periodId)
+            if (!check) {
+                ruleForm.pattern_details[index].error_msg = t('message.invalid')
+            } else {
+                callback()
+            }
+        } else {
+            callback()
+        }
+    }
 }
 
 const rules = reactive<FormRules>({
@@ -278,24 +318,19 @@ const rules = reactive<FormRules>({
     ],
     start_time: [
         {
-            required: true,
-            message: t('validation.required', { '0': t('pattern.start_time') }),
+            validator: checkTime,
             trigger: 'change',
         },
     ],
     end_time: [
         {
-            required: true,
-            message: t('validation.required', { '0': t('pattern.end_time') }),
+            validator: checkTime,
             trigger: 'change',
         },
     ],
     period_id: [
         {
-            required: true,
-            message: t('validation.required', {
-                '0': t('pattern.session_time'),
-            }),
+            validator: checkTime,
             trigger: 'change',
         },
     ],
@@ -311,6 +346,10 @@ const ruleForm = reactive({
     ] as Array<Session>,
 })
 
+const onChangeName = () => {
+    ruleForm.name = ruleForm.name.trim()
+}
+
 defineExpose({
     showCreateModal,
 })
@@ -322,6 +361,12 @@ onMounted(async () => {
 })
 </script>
 <style scoped lang="scss">
+.pattern-form {
+    width: 70%; 
+    margin: 0 auto; 
+    padding-left: 6em;
+}
+
 .small-input {
     width: 170px;
 }

@@ -1,19 +1,19 @@
-import axios from '@/config/axios'
+import request from '@/config/axios'
 import type {
     UpdateShopPayload,
     ShopListPayload,
 } from '@/libs/interface/shopInterface'
 
 export const getListShop = (payload: ShopListPayload) => {
-    return axios.get('/shops', {
+    return request.get('/shops', {
         params: payload,
     })
 }
 
 export const updateShop = (id: number, payload: UpdateShopPayload) => {
-    return axios.put(`shops/${id}/`, payload)
+    return request.put(`shops/${id}/`, payload)
 }
 
 export const getShopDetail = (id: number | string | string[]) => {
-    return axios.get(`/shops/${id}`)
+    return request.get(`/shops/${id}`)
 }
