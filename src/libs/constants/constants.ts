@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { ElNotification } from 'element-plus'
+import { ElNotification, ElMessage } from 'element-plus'
 
 export const START_YEAR = 1920
 export const CURRENT_YEAR = new Date().getFullYear()
@@ -60,7 +60,14 @@ export function makeNotification(
         type: type,
     })
 }
-// individual setting for ShopDetail screen
+
+export function makeMessage(type: 'success' | 'warning' | 'info' | 'error', message: string, grouping: boolean = true) {
+    ElMessage({
+        message: message,
+        grouping: grouping,
+        type: type,
+    })
+}
 
 export const dayList: any = {
     1: '日曜日',

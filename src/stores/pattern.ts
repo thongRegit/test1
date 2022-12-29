@@ -10,7 +10,7 @@ import type {
 } from '@/libs/interface/patternInterface'
 import { useAlertStore } from './alert'
 import { LoadingVue } from '@/components/common/loading'
-import { makeNotification } from '@/libs/constants/constants'
+import { makeMessage } from '@/libs/constants/constants'
 import * as patternAPI from '@/api/patternAPI'
 import i18n from '@/lang/index'
 
@@ -51,7 +51,7 @@ export const usePatternStore = defineStore('patterns', () => {
             })
             loading.close()
         } catch (error: any) {
-            makeNotification('error', 'Error', error?.message)
+            makeMessage('error', error?.message)
             loading.close()
             return error
         }
@@ -76,7 +76,7 @@ export const usePatternStore = defineStore('patterns', () => {
             })
             loading.close()
         } catch (error: any) {
-            makeNotification('error', 'Error', error?.message)
+            makeMessage('error', error?.message)
             loading.close()
             return error
         }
