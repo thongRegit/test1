@@ -2,8 +2,8 @@
     <el-dialog
         v-model="dialogVisible"
         title="セッション設定"
-        width="80%"
         :before-close="close"
+        custom-class="dialog-custom"
     >
         <el-form
             ref="ruleFormRef"

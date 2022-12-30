@@ -6,6 +6,7 @@
         :show-close="false"
         :before-close="handleClose"
         destroy-on-close
+        custom-class="dialog-custom"
     >
         <template #header>
             <div class="head-title">

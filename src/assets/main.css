@@ -1,4 +1,0 @@
-@import './base.css';
-*, *::before, *::after {
-  position: unset;
-}

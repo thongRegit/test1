@@ -1,0 +1,11 @@
+.el-dialog {
+    &.dialog-custom {
+        --el-dialog-width: 1000px;
+        @media (max-width: 1200px) {
+            --el-dialog-width: 900px;
+        }
+        @media (max-width: 940px) {
+            --el-dialog-width: calc(100% - 40px);
+        }
+    }
+}

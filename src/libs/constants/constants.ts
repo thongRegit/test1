@@ -37,12 +37,13 @@ export const FORMAT_DAY = (day: any, format = 'YYYY-MM-DD') => {
 export const FORMAT_DAY_WIDTH_TIME = (
     day: any,
     start_time: any,
-    end_time: any
+    end_time: any,
+    show_day_week = true
 ) => {
     const day_of_week = FORMAT_DAY(day, 'd') + 1
     return (
         FORMAT_DAY(day, 'YYYY/MM/DD') +
-        dayList[parseInt(day_of_week)].slice(0, 1) +
+        (show_day_week ? dayList[parseInt(day_of_week)].slice(0, 1) : '') +
         start_time.slice(0, 5) +
         '〜' +
         end_time.slice(0, 5)
