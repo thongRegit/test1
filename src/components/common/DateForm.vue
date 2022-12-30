@@ -113,14 +113,6 @@ const changeDate = () => {
     emit('changeDate', date.data)
 }
 
-const formatDay = computed(() => {
-    if (!props.date.year || !props.date.month || !props.date.day) {
-        return ''
-    }
-
-    return props.date.year + '/' + props.date.month + '/' + props.date.day
-})
-
 const days = computed(() => {
     if (!props.date.year || !props.date.month) {
         return []

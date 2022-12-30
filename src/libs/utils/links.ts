@@ -21,13 +21,6 @@ export const SIDE_MENU_ADMIN: {
         class: '',
         menu_childs: [],
     },
-    shifts: {
-        index: '3',
-        label: 'homepage.shifts',
-        route: '/shifts',
-        class: '',
-        menu_childs: [],
-    },
     users: {
         index: '4',
         label: 'homepage.users',

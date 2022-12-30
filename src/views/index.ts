@@ -1,6 +1,5 @@
 const Login = () => import('@/views/LoginVue.vue')
 const ChangePassword = () => import('@/views/password/ChangePasswordVue.vue')
-const Home = () => import('@/views/home/HomeVue.vue')
 const PageNotFound = () => import('@/views/PageNotFound.vue')
 const ShopList = () => import('@/views/shop/ShopView.vue')
 const ShopDetail = () => import('@/views/shop/DetailView.vue')
@@ -21,7 +20,6 @@ const PlanList = () => import('@/views/plan/PlanView.vue')
 const PlanCreate = () => import('@/views/plan/CreateView.vue')
 const PlanUpdate = () => import('@/views/plan/EditView.vue')
 export {
-    Home,
     Login,
     ChangePassword,
     PageNotFound,

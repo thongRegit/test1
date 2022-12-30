@@ -132,7 +132,7 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="backToList(ruleFormRef)">{{
+                    <el-button type="info" @click="backToList()">{{
                         t('btn_cancel')
                     }}</el-button>
                     <el-button
@@ -273,7 +273,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const backToList = (formEl: FormInstance | undefined) => {
+const backToList = () => {
     router.push({
         name: 'plans',
         replace: true,

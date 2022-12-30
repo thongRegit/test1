@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRef } from 'vue'
+import { toRef } from 'vue'
 
 const props = defineProps({
     title: String,

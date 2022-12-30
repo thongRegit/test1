@@ -26,6 +26,13 @@ export interface createSessionPayload {
     sessions: Array<Session>
 }
 
+export interface createShiftPayload {
+    shop_id: string
+    station_number: number
+    date: string
+    shifts: Array<Session>
+}
+
 export interface Coach {
     id: number
     full_name: string
