@@ -9,7 +9,7 @@ export const findIndex = (arr: any, index: number): number => {
     return arr.findIndex((item: any) => item.index === index)
 }
 
-export const findStatus = (isActive: number) => {
+export const findStatus = (isActive: number | boolean) => {
     return ACTIVE_STATUS.find((item) => item.is_active == isActive)
 }
 

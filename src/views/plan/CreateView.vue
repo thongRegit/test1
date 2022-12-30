@@ -132,7 +132,7 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="backToList()">{{
+                    <el-button type="info" @click="backToList">{{
                         t('btn_cancel')
                     }}</el-button>
                     <el-button
@@ -257,10 +257,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
-            const payload = { ...ruleForm }
-            payload.plan_discounts = payload.plan_discounts.filter((item) => {
-                return item.frequency && item.discount_amount
-            })
+            const payload: any = { ...ruleForm }
+            payload.plan_discounts = payload.plan_discounts.filter(
+                (item: any) => {
+                    return item.frequency && item.discount_amount
+                }
+            )
             const planStore = usePlanStore()
             planStore.createPlan(payload)
             alertStore.createAlert({

@@ -9,7 +9,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import jaLocale from '@fullcalendar/core/locales/ja'
 
-const props = defineProps(['sessions', 'firstDay'])
+const props = defineProps(['sessions', 'firstDay'] as any)
 const { sessions, firstDay } = toRefs(props)
 const refresh = ref(1)
 

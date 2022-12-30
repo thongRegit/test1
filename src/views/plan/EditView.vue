@@ -132,7 +132,7 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="backToList()">{{
+                    <el-button type="info" @click="backToList">{{
                         t('btn_cancel')
                     }}</el-button>
                     <el-button
