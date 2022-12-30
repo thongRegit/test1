@@ -9,7 +9,7 @@ import type {
 import { LoadingVue } from '@/components/common/loading'
 import { useAlertStore } from './alert'
 import * as shopApi from '@/api/shopApi'
-import { makeNotification } from '@/libs/constants/constants'
+import { makeMessage } from '@/libs/constants/constants'
 import i18n from '@/lang/index'
 
 export const useShopStore = defineStore('shops', () => {
@@ -39,11 +39,7 @@ export const useShopStore = defineStore('shops', () => {
             return { success: true }
         } catch (error: any) {
             loading.close()
-            makeNotification(
-                'error',
-                i18n.t('message.error_title'),
-                error.message
-            )
+            makeMessage('error', error?.message)
             return error
         }
     }
