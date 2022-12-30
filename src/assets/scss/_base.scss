@@ -248,6 +248,20 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
     }
 }
 
+.el-button.el-button--primary {
+    &:focus {
+        border-color: var(--el-color-primary);
+        background-color: var(--el-color-primary);
+        color: var(--el-color-white);
+        outline: var(--el-color-primary-light-5);
+    }
+    &:active {
+        background-color: var(--el-button-hover-border-color);
+        border-color: var(--el-button-hover-border-color);
+        color: var(--el-button-hover-text-color);
+    }
+}
+
 .el-group-title-child {
     h4 {
         font-size: 20px;

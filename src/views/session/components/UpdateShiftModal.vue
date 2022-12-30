@@ -12,8 +12,8 @@
             :rules="rules"
             class="update-form"
         >
-            <el-row class="full-width">
-                <el-col :span="24">
+            <el-row class="full-width" :gutter="20">
+                <el-col :span="7">
                     <p class="label">{{ t('session.date') }}</p>
                     <el-form-item prop="day">
                         <el-date-picker
@@ -31,7 +31,7 @@
                         {{ t('session.business_hours') }}
                     </p>
                 </el-col>
-                <el-col :span="10" style="padding-left: 60px">
+                <el-col :span="10" class="pl-10">
                     <p class="label">
                         {{ t('session.energist') }}
                     </p>
@@ -41,11 +41,13 @@
                 class="full-width sesion-row align-items-center"
                 v-for="(item, i) in ruleForm.shifts"
                 :key="i"
+                :gutter="20"
             >
-                <el-col :span="8">
+                <el-col :span="7">
                     <el-form-item
                         :prop="`shifts.${i}.start_time`"
                         :rules="rules.start_time"
+                        class="full-width"
                     >
                         <el-time-picker
                             v-model="item.start_time"
@@ -54,7 +56,7 @@
                         />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-form-item
                         :prop="`shifts.${i}.end_time`"
                         :rules="rules.end_time"
@@ -66,7 +68,7 @@
                         />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6" style="padding-left: 60px">
+                <el-col :span="7" class="pl-20">
                     <el-form-item
                         :prop="`shifts.${i}.coach_id`"
                         :rules="rules.coach_id"
@@ -276,6 +278,14 @@ onMounted(async () => {
 }
 
 .update-form {
-    margin-left: 20px;
+    padding: 0 80px;
+}
+
+.pl-20 {
+    padding-left: 20px !important;
+}
+
+.pl-10 {
+    padding-left: 10px !important;
 }
 </style>
