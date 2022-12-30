@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore, useAlertStore } from '@/stores'
+import { useAuthStore } from '@/stores'
 
 import {
     ShopList,
@@ -257,8 +257,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
-    const alertStore = useAlertStore()
-    alertStore.removeAlert()
     if (to.meta.requiresAuth && !authStore.isAuthenticated)
         next({ name: 'Login' })
     else next()

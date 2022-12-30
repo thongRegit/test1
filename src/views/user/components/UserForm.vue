@@ -55,10 +55,12 @@
                 </el-row>
             </div>
             <div>
-                <p class="label required">{{ t('user.detail.label.birthday') }}</p>
+                <p class="label required">
+                    {{ t('user.detail.label.birthday') }}
+                </p>
                 <el-form-item prop="date">
                     <DateForm
-                        @change-date="e => ruleForm.birthdays = e"
+                        @change-date="(e) => (ruleForm.birthdays = e)"
                         :date="ruleForm.birthdays"
                         :yearPlaceHolder="t('input_placeholder.year')"
                         :listYear="listYear"
@@ -78,7 +80,9 @@
                 </el-col>
             </div>
             <el-form-item prop="line_name">
-                <p class="label required">{{ t('user.detail.label.line_name') }}</p>
+                <p class="label required">
+                    {{ t('user.detail.label.line_name') }}
+                </p>
                 <el-col :span="18">
                     <el-input
                         class="base-input"
@@ -97,14 +101,25 @@
             <el-form-item prop="status">
                 <p class="label">{{ t('user.detail.label.status') }}</p>
                 <el-radio-group v-model="ruleForm.status">
-                    <el-radio label="1">{{ t('user.detail.value.status.1') }}</el-radio>
-                    <el-radio label="2">{{ t('user.detail.value.status.2') }}</el-radio>
-                    <el-radio label="3">{{ t('user.detail.value.status.3') }}</el-radio>
+                    <el-radio label="1">{{
+                        t('user.detail.value.status.1')
+                    }}</el-radio>
+                    <el-radio label="2">{{
+                        t('user.detail.value.status.2')
+                    }}</el-radio>
+                    <el-radio label="3">{{
+                        t('user.detail.value.status.3')
+                    }}</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item prop="is_active">
                 <p class="label">{{ t('coach.detail.label.is_active') }}</p>
-                <el-switch v-model="ruleForm.is_active" /> <span style="padding-left: 8px;">{{ ruleForm.is_active ? t('user.detail.value.is_active.active') : t('user.detail.value.is_active.inactive') }}</span>
+                <el-switch v-model="ruleForm.is_active" />
+                <span class="pl-8">{{
+                    ruleForm.is_active
+                        ? t('user.detail.value.is_active.active')
+                        : t('user.detail.value.is_active.inactive')
+                }}</span>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm(ruleFormRef)">{{
@@ -153,12 +168,30 @@ const ruleForm = reactive({
 } as UserDetail)
 
 const validateDate = (rule: any, value: any, callback: any) => {
-    if (ruleForm.birthdays.day === '' || ruleForm.birthdays.month === '' || ruleForm.birthdays.year === '') {
-        callback(new Error(t('validation.required', [t('user.detail.label.birthday')])))
+    if (
+        ruleForm.birthdays.day === '' ||
+        ruleForm.birthdays.month === '' ||
+        ruleForm.birthdays.year === ''
+    ) {
+        callback(
+            new Error(
+                t('validation.required', [t('user.detail.label.birthday')])
+            )
+        )
     } else {
         const now = dayjs(new Date())
-        if (now.diff(new Date((<any>Object).values(ruleForm.birthdays).join("-"))) < 0) {
-            callback(new Error(t('validation.date_future', [t('user.detail.label.birthday')])))
+        if (
+            now.diff(
+                new Date((<any>Object).values(ruleForm.birthdays).join('-'))
+            ) < 0
+        ) {
+            callback(
+                new Error(
+                    t('validation.date_future', [
+                        t('user.detail.label.birthday'),
+                    ])
+                )
+            )
         } else {
             callback()
         }
@@ -166,11 +199,11 @@ const validateDate = (rule: any, value: any, callback: any) => {
 }
 
 const checkRegexTel = (rule: any, value: any, callback: any) => {
-    const regex = new RegExp(/^([0-9\s\-]*)$/);
+    const regex = new RegExp(/^([0-9\s\-]*)$/)
     if (!regex.test(value) && value !== null) {
-        callback(new Error(t('validation.tel_format')));
+        callback(new Error(t('validation.tel_format')))
     } else {
-        callback();
+        callback()
     }
 }
 
@@ -178,30 +211,69 @@ const rules = reactive<FormRules>({
     first_name: [
         {
             required: true,
-            message: t('validation.required', [t('user.detail.label.first_name')]),
+            message: t('validation.required', [
+                t('user.detail.label.first_name'),
+            ]),
             trigger: 'blur',
         },
-        { max: 255, message: t('validation.max.string', [t('user.detail.label.first_name'), 255]), trigger: 'blur' },
+        {
+            max: 255,
+            message: t('validation.max.string', [
+                t('user.detail.label.first_name'),
+                255,
+            ]),
+            trigger: 'blur',
+        },
     ],
     last_name: [
         {
             required: true,
-            message: t('validation.required', [t('user.detail.label.last_name')]),
+            message: t('validation.required', [
+                t('user.detail.label.last_name'),
+            ]),
             trigger: 'blur',
         },
-        { max: 255, message: t('validation.max.string', [t('user.detail.label.last_name'), 255]), trigger: 'blur' },
+        {
+            max: 255,
+            message: t('validation.max.string', [
+                t('user.detail.label.last_name'),
+                255,
+            ]),
+            trigger: 'blur',
+        },
     ],
     first_name_furigana: [
-        { max: 255, message: t('validation.max.string', [t('user.detail.label.first_name_furigana'), 255]), trigger: 'blur' },
+        {
+            max: 255,
+            message: t('validation.max.string', [
+                t('user.detail.label.first_name_furigana'),
+                255,
+            ]),
+            trigger: 'blur',
+        },
     ],
     last_name_furigana: [
-        { max: 255, message: t('validation.max.string', [t('user.detail.label.last_name_furigana'), 255]), trigger: 'blur' },
+        {
+            max: 255,
+            message: t('validation.max.string', [
+                t('user.detail.label.last_name_furigana'),
+                255,
+            ]),
+            trigger: 'blur',
+        },
     ],
-    tel: [{ max: 20, message: t('validation.max.string', [t('user.detail.label.tel'), 20]), trigger: 'blur' },
-    { validator: checkRegexTel, trigger: 'blur' },],
-    date: [
-        { validator: validateDate, trigger: 'blur' },
+    tel: [
+        {
+            max: 20,
+            message: t('validation.max.string', [
+                t('user.detail.label.tel'),
+                20,
+            ]),
+            trigger: 'blur',
+        },
+        { validator: checkRegexTel, trigger: 'blur' },
     ],
+    date: [{ validator: validateDate, trigger: 'blur' }],
 })
 
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -211,7 +283,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
         if (valid) {
             const id = route.params.id
             if (!(<any>Object).values(ruleForm.birthdays).includes('')) {
-                ruleForm.birthday = (<any>Object).values(ruleForm.birthdays).join("-")
+                ruleForm.birthday = (<any>Object)
+                    .values(ruleForm.birthdays)
+                    .join('-')
             }
             const userStore = useUserStore()
             const alertStore = useAlertStore()
@@ -229,9 +303,16 @@ const submitForm = (formEl: FormInstance | undefined) => {
     })
 }
 
-const trim = (field: 'tel' | 'first_name' | 'last_name' | 'first_name_furigana' | 'last_name_furigana') => {
+const trim = (
+    field:
+        | 'tel'
+        | 'first_name'
+        | 'last_name'
+        | 'first_name_furigana'
+        | 'last_name_furigana'
+) => {
     if (ruleForm[field]) {
-        ruleForm[field] = ruleForm[field].trim();
+        ruleForm[field] = ruleForm[field].trim()
     }
 }
 
@@ -251,15 +332,15 @@ const getData = async () => {
     ruleForm.tel = useStore.user.tel
     ruleForm.line_name = useStore.user.line_name
     ruleForm.birthday = useStore.user.birthday ? useStore.user.birthday : null
-    ruleForm.birthdays.day = useStore.user.birthday ? dayjs(new Date(useStore.user.birthday)).format(
-        'DD'
-    ) : ''
-    ruleForm.birthdays.month = useStore.user.birthday ? dayjs(new Date(useStore.user.birthday)).format(
-        'MM'
-    ) : ''
-    ruleForm.birthdays.year = useStore.user.birthday ? dayjs(new Date(useStore.user.birthday)).format(
-        'YYYY'
-    ): ''
+    ruleForm.birthdays.day = useStore.user.birthday
+        ? dayjs(new Date(useStore.user.birthday)).format('DD')
+        : ''
+    ruleForm.birthdays.month = useStore.user.birthday
+        ? dayjs(new Date(useStore.user.birthday)).format('MM')
+        : ''
+    ruleForm.birthdays.year = useStore.user.birthday
+        ? dayjs(new Date(useStore.user.birthday)).format('YYYY')
+        : ''
     ruleForm.gender = `${useStore.user.gender}`
     ruleForm.status = `${useStore.user.status}`
     ruleForm.is_active = !!useStore.user.is_active

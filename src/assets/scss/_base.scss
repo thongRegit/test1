@@ -93,7 +93,9 @@ body {
     padding: 5px;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     position: unset;
 }
 
@@ -243,6 +245,20 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
         .el-checkbox__label {
             font-size: 12px;
         }
+    }
+}
+
+.el-button.el-button--primary {
+    &:focus {
+        border-color: var(--el-color-primary);
+        background-color: var(--el-color-primary);
+        color: var(--el-color-white);
+        outline: var(--el-color-primary-light-5);
+    }
+    &:active {
+        background-color: var(--el-button-hover-border-color);
+        border-color: var(--el-button-hover-border-color);
+        color: var(--el-button-hover-text-color);
     }
 }
 
@@ -696,4 +712,7 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
     .el-input--large .el-input__wrapper {
         width: 170px;
     }
+}
+.pl-8 {
+    padding-left: 8px;
 }

@@ -12,8 +12,8 @@
             :rules="rules"
             class="update-form"
         >
-            <el-row class="full-width">
-                <el-col :span="24">
+            <el-row class="full-width" :gutter="20">
+                <el-col :span="7">
                     <p class="label">日付</p>
                     <el-form-item prop="day">
                         <el-date-picker
@@ -31,7 +31,7 @@
                         {{ t('session.business_hours') }}
                     </p>
                 </el-col>
-                <el-col :span="10" style="padding-left: 60px">
+                <el-col :span="10" class="pl-10">
                     <p class="label">
                         {{ t('session.session_time') }}
                     </p>
@@ -41,11 +41,13 @@
                 class="full-width session-row align-items-center"
                 v-for="(item, i) in ruleForm.sessionData"
                 :key="i"
+                :gutter="20"
             >
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-form-item
                         :prop="`sessionData.${i}.start_time`"
                         :rules="rules.start_time"
+                        class="full-width"
                     >
                         <el-time-picker
                             v-model="item.start_time"
@@ -54,10 +56,7 @@
                         />
                     </el-form-item>
                 </el-col>
-                <el-col class="text-center" :span="2">
-                    <div class="text-gray-500 text-center">~</div>
-                </el-col>
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-form-item
                         :prop="`sessionData.${i}.end_time`"
                         :rules="rules.end_time"
@@ -69,7 +68,7 @@
                         />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6" style="padding-left: 60px">
+                <el-col :span="7" class="pl-20">
                     <el-form-item
                         :prop="`sessionData.${i}.period_id`"
                         :rules="rules.period_id"
@@ -89,9 +88,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="1">
-                    <el-icon
-                        class="cursor-pointer"
-                        @click="removeSession(index)"
+                    <el-icon class="cursor-pointer" @click="removeSession(i)"
                         ><Close
                     /></el-icon>
                 </el-col>
@@ -182,6 +179,7 @@ const sessionStore = useSessionStore()
 
 const emit = defineEmits(['close', 'updated'])
 const close = () => {
+    ruleFormRef.value?.clearValidate()
     ruleForm.sessionData = [
         {
             id: 1,
@@ -219,6 +217,7 @@ const updateSession = async (formEl: FormInstance | undefined) => {
                     },
                 ]
                 emit('updated')
+                ruleFormRef.value?.resetFields()
             })
         }
     })
@@ -258,6 +257,14 @@ const addSessionBlock = () => {
 }
 
 .update-form {
-    margin-left: 20px;
+    padding: 0 80px;
+}
+
+.pl-20 {
+    padding-left: 20px !important;
+}
+
+.pl-10 {
+    padding-left: 10px !important;
 }
 </style>

@@ -12,8 +12,8 @@
             :rules="rules"
             class="update-form"
         >
-            <el-row class="full-width">
-                <el-col :span="24">
+            <el-row class="full-width" :gutter="20">
+                <el-col :span="7">
                     <p class="label">{{ t('session.date') }}</p>
                     <el-form-item prop="day">
                         <el-date-picker
@@ -31,7 +31,7 @@
                         {{ t('session.business_hours') }}
                     </p>
                 </el-col>
-                <el-col :span="10" style="padding-left: 60px">
+                <el-col :span="10" class="pl-10">
                     <p class="label">
                         {{ t('session.energist') }}
                     </p>
@@ -41,11 +41,13 @@
                 class="full-width sesion-row align-items-center"
                 v-for="(item, i) in ruleForm.shifts"
                 :key="i"
+                :gutter="20"
             >
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-form-item
                         :prop="`shifts.${i}.start_time`"
                         :rules="rules.start_time"
+                        class="full-width"
                     >
                         <el-time-picker
                             v-model="item.start_time"
@@ -54,10 +56,7 @@
                         />
                     </el-form-item>
                 </el-col>
-                <el-col class="text-center" :span="2">
-                    <div class="text-gray-500 text-align-center">~</div>
-                </el-col>
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-form-item
                         :prop="`shifts.${i}.end_time`"
                         :rules="rules.end_time"
@@ -69,7 +68,7 @@
                         />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6" style="padding-left: 60px">
+                <el-col :span="7" class="pl-20">
                     <el-form-item
                         :prop="`shifts.${i}.coach_id`"
                         :rules="rules.coach_id"
@@ -91,7 +90,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="1">
-                    <el-icon class="cursor-pointer" @click="removeShift(index)"
+                    <el-icon class="cursor-pointer" @click="removeShift(i)"
                         ><Close
                     /></el-icon>
                 </el-col>
@@ -179,10 +178,12 @@ const rules = reactive<FormRules>({
 
 const sessionStore = useSessionStore()
 
-const coaches = ref([] as Array<Coach>)
+const coaches = ref([] as Array<any>)
 
 const emit = defineEmits(['close', 'updated'])
+
 const close = () => {
+    ruleFormRef.value?.clearValidate()
     ruleForm.shifts = [
         {
             id: 1,
@@ -211,7 +212,7 @@ const updateShift = async (formEl: FormInstance | undefined) => {
                 }),
             }
 
-            sessionStore.updateShift(query, () => {
+            await sessionStore.updateShift(query, () => {
                 ruleForm.shifts = [
                     {
                         id: 1,
@@ -241,14 +242,13 @@ const addShiftBlock = () => {
 
 const getCoachesData = async () => {
     const query = {
-        page: 1,
-        per_page: 999,
+        all: 1,
     }
     await sessionStore.getCoaches(query)
-    coaches.value = sessionStore.coaches.data?.map((e) => {
+    coaches.value = sessionStore.coaches.map((e: any) => {
         return {
             id: e.id,
-            full_name: e.full_name,
+            full_name: e.first_name + e.last_name,
         }
     })
 }
@@ -278,6 +278,14 @@ onMounted(async () => {
 }
 
 .update-form {
-    margin-left: 20px;
+    padding: 0 80px;
+}
+
+.pl-20 {
+    padding-left: 20px !important;
+}
+
+.pl-10 {
+    padding-left: 10px !important;
 }
 </style>

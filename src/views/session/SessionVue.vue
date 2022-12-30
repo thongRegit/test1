@@ -68,6 +68,7 @@
                                         type="date"
                                         :size="'default'"
                                         @change="dateChange"
+                                        :clearable="false"
                                     />
                                 </el-col>
                                 <el-col :span="18" class="text-right">
