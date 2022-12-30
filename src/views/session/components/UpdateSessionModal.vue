@@ -42,7 +42,7 @@
                 v-for="(item, i) in ruleForm.sessionData"
                 :key="i"
             >
-                <el-col :span="6">
+                <el-col :span="8">
                     <el-form-item
                         :prop="`sessionData.${i}.start_time`"
                         :rules="rules.start_time"
@@ -53,9 +53,6 @@
                             format="HH:mm"
                         />
                     </el-form-item>
-                </el-col>
-                <el-col class="text-center" :span="2">
-                    <div class="text-gray-500 text-center">~</div>
                 </el-col>
                 <el-col :span="6">
                     <el-form-item
@@ -89,9 +86,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="1">
-                    <el-icon
-                        class="cursor-pointer"
-                        @click="removeSession(index)"
+                    <el-icon class="cursor-pointer" @click="removeSession(i)"
                         ><Close
                     /></el-icon>
                 </el-col>
@@ -182,6 +177,7 @@ const sessionStore = useSessionStore()
 
 const emit = defineEmits(['close', 'updated'])
 const close = () => {
+    ruleFormRef.value?.clearValidate()
     ruleForm.sessionData = [
         {
             id: 1,
@@ -219,6 +215,7 @@ const updateSession = async (formEl: FormInstance | undefined) => {
                     },
                 ]
                 emit('updated')
+                ruleFormRef.value?.resetFields()
             })
         }
     })

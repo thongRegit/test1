@@ -8,6 +8,7 @@ export const useAlertStore = defineStore('alerts', () => {
     const createAlert = async (payload: Alert) => {
         alerts.value = []
         alerts.value.push(payload)
+        setTimeout(() => removeAlert(), 2000)
     }
 
     const removeAlert = async () => {
