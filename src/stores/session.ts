@@ -1,14 +1,24 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import axios from '@/config/axios'
-import type { createSessionPayload, Period, ResponsePeriodList, ResponseSessionList } from '@/libs/interface/sessionInterface'
+import type {
+    createSessionPayload,
+    Period,
+    ResponsePeriodList,
+    ResponseSessionList,
+} from '@/libs/interface/sessionInterface'
 import { makeNotification } from '@/libs/constants/constants'
 import { useAlertStore } from './alert'
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import * as coachAPI from '@/api/coachApi'
 
 import type { ResponseCoachList } from '@/libs/interface/coachInterface'
-import { getListSession, getListPeriod, create, createShift } from '@/api/sesssionApi'
+import {
+    getListSession,
+    getListPeriod,
+    create,
+    createShift,
+} from '@/api/sesssionApi'
 
 export const useSessionStore = defineStore('sessions', () => {
     const sessions = ref([] as ResponseSessionList)
@@ -62,7 +72,10 @@ export const useSessionStore = defineStore('sessions', () => {
         }
     }
 
-    const updateShift = async (payload: createSessionPayload, cb?: Function) => {
+    const updateShift = async (
+        payload: createSessionPayload,
+        cb?: Function
+    ) => {
         const alertStore = useAlertStore()
         try {
             const data = await createShift(payload)

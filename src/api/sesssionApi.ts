@@ -1,6 +1,10 @@
 import request from '@/config/axios'
 import type { ResponseCoachSessionList } from '@/libs/interface/coachInterface'
-import type { Period, ResponsePeriodList, ResponseSessionList } from '@/libs/interface/sessionInterface'
+import type {
+    Period,
+    ResponsePeriodList,
+    ResponseSessionList,
+} from '@/libs/interface/sessionInterface'
 
 export const getListSession = (payload: object | {}) => {
     const url = '/sessions'
