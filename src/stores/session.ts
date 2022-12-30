@@ -1,9 +1,7 @@
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from '@/config/axios'
 import type {
     createSessionPayload,
-    Period,
     ResponsePeriodList,
     ResponseSessionList,
 } from '@/libs/interface/sessionInterface'
@@ -78,7 +76,7 @@ export const useSessionStore = defineStore('sessions', () => {
     ) => {
         const alertStore = useAlertStore()
         try {
-            const data = await createShift(payload)
+            await createShift(payload)
             if (cb) {
                 cb()
             }

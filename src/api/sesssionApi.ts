@@ -1,9 +1,10 @@
 import request from '@/config/axios'
 import type { ResponseCoachSessionList } from '@/libs/interface/coachInterface'
 import type {
-    Period,
     ResponsePeriodList,
     ResponseSessionList,
+    createSessionPayload,
+    createShiftPayload,
 } from '@/libs/interface/sessionInterface'
 
 export const getListSession = (payload: object | {}) => {
@@ -35,7 +36,7 @@ export const getListPeriod = () => {
     })
 }
 
-export const create = (payload: object | {}) => {
+export const create = (payload: createSessionPayload | {}) => {
     const url = `sessions`
     return request({
         url,
@@ -44,7 +45,7 @@ export const create = (payload: object | {}) => {
     })
 }
 
-export const createShift = (payload: object | {}) => {
+export const createShift = (payload: createShiftPayload | {}) => {
     const url = `/sessions/shift`
     return request({
         url,

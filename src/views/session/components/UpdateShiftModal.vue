@@ -121,7 +121,7 @@ import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
-import type { Session, Coach } from '@/libs/interface/sessionInterface'
+import type { Coach } from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 

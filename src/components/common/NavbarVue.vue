@@ -31,10 +31,11 @@
                 />
                 <span>{{ profile.name }}</span>
             </template>
-            <el-menu-item index="3-1">Logout</el-menu-item>
-            <el-menu-item index="3-2" route="/change-password"
+            <el-menu-item index="3-1">{{ t('logout') }}</el-menu-item>
+            <!--<el-menu-item index="3-2" route="/change-password"
                 >Change password</el-menu-item
-            >
+            >-->
+            
         </el-sub-menu>
     </el-menu>
 </template>
@@ -45,20 +46,21 @@ import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 import { useSettingStore } from '../../stores/setting'
 import type { Profile } from '@/libs/interface/userInterface'
+import { useI18n } from 'vue3-i18n'
 
 const router = useRouter()
 const settingStore = useSettingStore()
 const authStore = useAuthStore()
 const show = ref(true)
 const profile = ref({} as Profile)
+const { t } = useI18n()
 
 const handleCollapse = () => {
     show.value = !show.value
     settingStore.handleCollapse()
 }
 
-const handleSelect = (key: string, keyPath: string[]) => {
-    // console.log(key, keyPath)
+const handleSelect = (key: string) => {
     if (key === '3-1') {
         authStore.logout()
         router.push({ name: 'login' })

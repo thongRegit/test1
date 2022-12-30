@@ -83,14 +83,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import AccountTableVue from './components/AccountTable.vue'
 import BoxVue from '@/components/common/BoxVue.vue'
-import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
 
 const { t } = useI18n()
-const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     shops: [],
     stations: [],

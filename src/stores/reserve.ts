@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { ParamsList, ResponseList } from '@/libs/interface/commonInterface'
+import type { ParamsList } from '@/libs/interface/commonInterface'
 import * as reserveAPI from '@/api/reserveApi'
 import type {
     ReserveDetail,

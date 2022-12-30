@@ -193,7 +193,7 @@ const closeUpdateModal = () => {
 
 const openUpdateModal = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate((valid, fields) => {
+    await formEl.validate((valid) => {
         if (valid) isOpen.value = true
     })
 }
@@ -269,7 +269,7 @@ const sessionUpdated = () => {
 
 const openShiftModal = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate((valid, fields) => {
+    await formEl.validate((valid) => {
         if (valid) isShiftOpen.value = true
     })
 }

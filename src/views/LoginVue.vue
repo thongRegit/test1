@@ -28,7 +28,7 @@
                         type="password"
                         autocomplete="off"
                         @blur="trim('password')"
-                        @keyup.enter.native="submitForm(ruleFormRef)"
+                        @keyup.enter="submitForm(ruleFormRef)"
                     />
                 </el-form-item>
                 <el-form-item class="box-btn">

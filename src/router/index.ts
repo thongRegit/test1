@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore, useAlertStore } from '@/stores'
 
 import {
-    Home,
     ShopList,
     ShopDetail,
     ShopCreate,

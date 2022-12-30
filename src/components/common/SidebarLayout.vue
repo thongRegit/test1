@@ -125,13 +125,11 @@ settingStore.$subscribe((mutations, state) => {
     isCollapse.value = state.collapse
 })
 
-const handleOpen = (key: string, keyPath: string[]) => {
+const handleOpen = (key: string) => {
     isActive.value = key
     isOpen.value = false
 }
-const handleClose = (key: string, keyPath: string[]) => {
-    // console.log(key, keyPath)
-}
+const handleClose = () => {}
 
 onMounted(async () => {
     await router.isReady()
@@ -145,7 +143,7 @@ onMounted(async () => {
                 isActive.value = SIDE_MENU_ADMIN[key].index
             }
         } else {
-            arr_child.forEach(function (key2: any, index2: any) {
+            arr_child.forEach(function (index2: any) {
                 if (route.path.includes(arr_child[index2].route)) {
                     isActive.value = SIDE_MENU_ADMIN[key].index
                 }

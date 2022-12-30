@@ -38,7 +38,7 @@
                 </el-col>
             </el-row>
             <el-row
-                class="full-width sesion-row align-items-center"
+                class="full-width session-row align-items-center"
                 v-for="(item, i) in ruleForm.sessionData"
                 :key="i"
             >
@@ -116,12 +116,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, reactive, onMounted } from 'vue'
+import { ref, toRefs, reactive } from 'vue'
 import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
-import type { Session, Period } from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 
@@ -196,7 +195,7 @@ const close = () => {
 
 const updateSession = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    await formEl.validate(async (valid, fields) => {
+    await formEl.validate(async (valid) => {
         if (valid) {
             let query = {
                 shop_id: shopId.value,
@@ -243,7 +242,7 @@ const addSessionBlock = () => {
     margin-right: 10px;
 }
 
-.sesion-row {
+.session-row {
     margin-bottom: 20px;
 }
 

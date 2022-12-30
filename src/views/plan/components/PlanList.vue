@@ -107,7 +107,7 @@ const buttons = ref([
 ])
 const sortProp = reactive({ key: 'created_at', dir: 'descending' })
 
-const formatNumber = (value: any, format = '') => {
+const formatNumber = (value: any) => {
     let formatter = new Intl.NumberFormat()
     return formatter.format(parseFloat(value))
 }

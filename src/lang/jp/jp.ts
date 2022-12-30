@@ -9,6 +9,7 @@ import validation from './validation'
 import reserve from './reserve'
 
 export const jp = {
+    logout: 'ログアウト',
     login: 'ログイン',
     mail_address: 'メールアドレス',
     login_id: 'ログインID',
