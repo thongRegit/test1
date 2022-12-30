@@ -34,6 +34,21 @@ export const FORMAT_DAY = (day: any, format = 'YYYY-MM-DD') => {
     return dayjs(new Date(day)).format(format)
 }
 
+export const FORMAT_DAY_WIDTH_TIME = (
+    day: any,
+    start_time: any,
+    end_time: any
+) => {
+    const day_of_week = FORMAT_DAY(day, 'd') + 1
+    return (
+        FORMAT_DAY(day, 'YYYY/MM/DD') +
+        dayList[parseInt(day_of_week)].slice(0, 1) +
+        start_time.slice(0, 5) +
+        '〜' +
+        end_time.slice(0, 5)
+    )
+}
+
 export const ACTIVE_STATUS = [
     {
         is_active: 0,

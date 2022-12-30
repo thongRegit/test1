@@ -21,7 +21,7 @@ import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
-import { FORMAT_DAY } from '@/libs/constants/constants'
+import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -73,7 +73,7 @@ const columns = ref([
     },
 ])
 const buttons = ref([
-    { id: '1', label: '編集', icon: 'Monitor', class: 'btn-action btn-update' },
+    { id: '1', label: '編集', class: 'btn-action btn-update' },
 ])
 const sortProp = reactive({ key: 'id', dir: 'descending' })
 
@@ -104,12 +104,7 @@ const getListData = async () => {
     data.value.records = userStore.cancel_fee_users.data.map((e: any) => {
         return {
             id: e.id,
-            date:
-                FORMAT_DAY(e.date, 'YYYY/MM/DD') +
-                ':' +
-                e.start_time +
-                ' - ' +
-                e.end_time,
+            date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
             shop_name: e.shop_name,
             plan_name: e.plan_name,
             amount: e.amount,

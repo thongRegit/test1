@@ -1,4 +1,4 @@
-import type { ResponseList } from "./commonInterface"
+import type { ResponseList } from './commonInterface'
 
 export interface Session {
     id?: any
