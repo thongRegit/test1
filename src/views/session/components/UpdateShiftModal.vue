@@ -127,7 +127,7 @@ const props = defineProps([
     'shopId',
     'stationNumber',
     'defaultDate',
-])
+] as any)
 const { dialogVisible, shopId, stationNumber, defaultDate } = toRefs(props)
 
 const ruleFormRef = ref<FormInstance>()

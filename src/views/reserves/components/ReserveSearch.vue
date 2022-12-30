@@ -238,7 +238,7 @@ const options = reactive({
 })
 
 const handleShowForm = () => {
-    showForm.value = true
+    showForm.value = !showForm.value
 }
 
 const rules = reactive<FormRules>({

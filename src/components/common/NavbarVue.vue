@@ -35,7 +35,6 @@
             <!--<el-menu-item index="3-2" route="/change-password"
                 >Change password</el-menu-item
             >-->
-            
         </el-sub-menu>
     </el-menu>
 </template>

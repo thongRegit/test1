@@ -49,6 +49,10 @@ import BoxVue from '@/components/common/BoxVue.vue'
 import PlanSearchVue from './PlanSearch.vue'
 import { findStatus } from '@/libs/utils/common'
 import { ElIcon } from 'element-plus'
+import type {
+    PlanDetailPayload,
+    ResponsePlanList,
+} from '@/libs/interface/planInterface'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -67,7 +71,7 @@ const data = ref({
     perPage: 10,
     records: [],
     total: 0,
-})
+} as ResponsePlanList)
 
 const loading = ref(true)
 const columns = ref([
@@ -129,7 +133,7 @@ const getListData = async () => {
     data.value.total = planStore.plans.total
     data.value.currentPage = planStore.plans.current_page
     data.value.perPage = planStore.plans.per_page
-    data.value.records = planStore.plans.data.map((e: any) => {
+    data.value.records = planStore.plans.data?.map((e: PlanDetailPayload) => {
         const status: any = findStatus(e.is_active)
         return {
             id: e.id,

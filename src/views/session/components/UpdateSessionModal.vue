@@ -125,7 +125,7 @@ const props = defineProps([
     'stationNumber',
     'defaultDate',
     'periods',
-])
+] as any)
 const { dialogVisible, shopId, stationNumber, defaultDate, periods } =
     toRefs(props)
 

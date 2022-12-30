@@ -112,7 +112,7 @@ const getListData = async () => {
                 date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
                 shop_name: e.shop_name,
                 plan_name: e.plan_type,
-                full_name: e.shop_name,
+                full_name: e.full_name,
                 order_status: e.order_status,
             }
         }

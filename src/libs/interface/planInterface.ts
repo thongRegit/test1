@@ -18,9 +18,10 @@ export interface PlanDetailPayload {
     name: string
     type: number
     period_id: number
+    period?: any
     amount: number
     plan_discounts: Array<PlanDiscount>
-    is_active: boolean
+    is_active: number | boolean
 }
 
 export interface PlanRuleForm {
@@ -29,7 +30,7 @@ export interface PlanRuleForm {
     period_id: number
     amount: number
     plan_discounts: Array<PlanDiscount>
-    is_active: boolean
+    is_active: number | boolean
 }
 
 export interface ResponsePlanList extends ResponseList {
