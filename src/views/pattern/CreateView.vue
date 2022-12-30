@@ -1,7 +1,6 @@
 <template>
     <modal-box
         :title="t('pattern.pattern_registration')"
-        width="1193"
         :open="isShowModal"
         @close="oncloseModal"
         @submit="submitData(ruleFormRef)"
@@ -38,7 +37,7 @@
                                     {{ t('pattern.business_hours') }}
                                 </p>
                             </el-col>
-                            <el-col :span="12" style="padding-left: 60px">
+                            <el-col :span="12" style="padding-left: 80px">
                                 <p class="label required">
                                     {{ t('pattern.session_time') }}
                                 </p>
@@ -49,7 +48,7 @@
                             v-for="(item, i) in ruleForm.pattern_details"
                             :key="`pattern-create-${i}`"
                         >
-                            <el-col :span="11">
+                            <el-col :span="12">
                                 <el-row>
                                     <el-col :span="10">
                                         <el-form-item
@@ -92,33 +91,37 @@
                                     </el-col>
                                 </el-row>
                             </el-col>
-                            <el-col :span="13" style="padding-left: 90px">
-                                <div class="flex align-items-center">
-                                    <el-form-item
-                                        :prop="`pattern_details.${i}.period_id`"
-                                        :rules="rules.period_id"
-                                    >
-                                        <el-select
-                                            v-model="item.period_id"
-                                            placeholder="Session"
-                                            class="pattern-input pattern-select base-input"
-                                            size="large"
+                            <el-col :span="12" style="padding-left: 80px">
+                                <el-row :gutter="20">
+                                    <el-col :span="22">
+                                        <el-form-item
+                                            :prop="`pattern_details.${i}.period_id`"
+                                            :rules="rules.period_id"
                                         >
-                                            <el-option
-                                                v-for="item in periods"
-                                                :key="item.id"
-                                                :label="`${item.value}分`"
-                                                :value="item.id"
+                                            <el-select
+                                                v-model="item.period_id"
+                                                placeholder="Session"
+                                                class="pattern-input pattern-select base-input full-width"
+                                                size="large"
+                                            >
+                                                <el-option
+                                                    v-for="item in periods"
+                                                    :key="item.id"
+                                                    :label="`${item.value}分`"
+                                                    :value="item.id"
+                                                />
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <el-icon class="icon-fix">
+                                            <Close
+                                                class="cursor-pointer"
+                                                @click="removeSessionBlock(i)"
                                             />
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-icon class="ml-5">
-                                        <Close
-                                            class="cursor-pointer"
-                                            @click="removeSessionBlock(i)"
-                                        />
-                                    </el-icon>
-                                </div>
+                                        </el-icon>
+                                    </el-col>
+                                </el-row>
                             </el-col>
                             <el-row class="full-width" v-show="item.error_msg">
                                 <el-col :span="24">
@@ -360,9 +363,8 @@ onMounted(async () => {
 </script>
 <style scoped lang="scss">
 .pattern-form {
-    width: 70%;
+    width: 86%;
     margin: 0 auto;
-    padding-left: 6em;
 }
 
 .small-input {
@@ -402,5 +404,10 @@ onMounted(async () => {
 .error-msg {
     color: #f56c6c;
     font-size: 12px;
+}
+.icon-fix {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 </style>

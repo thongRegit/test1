@@ -9,13 +9,9 @@
                     />
                 </div>
             </a>
-            <a
-                href="https://www.creative-tim.com/product/vue-material-dashboard"
-                target="_blank"
-                class="simple-text logo-normal"
-            >
+            <router-link :to="{ name: 'home' }" class="simple-text logo-normal">
                 BVEASTS
-            </a>
+            </router-link>
         </div>
         <el-menu
             :default-active="isActive"
@@ -142,7 +138,10 @@ onMounted(async () => {
     Object.keys(SIDE_MENU_ADMIN).forEach((key: string) => {
         const arr_child = SIDE_MENU_ADMIN[key].menu_childs
         if (arr_child.length === 0 && arr_child.route !== '') {
-            if (route.path.includes(SIDE_MENU_ADMIN[key].route)) {
+            if (
+                route.path.includes(SIDE_MENU_ADMIN[key].route) ||
+                SIDE_MENU_ADMIN[key].route === '/shops'
+            ) {
                 isActive.value = SIDE_MENU_ADMIN[key].index
             }
         } else {

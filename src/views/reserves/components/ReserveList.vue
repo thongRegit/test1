@@ -46,6 +46,7 @@ import type {
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import BoxVue from '@/components/common/BoxVue.vue'
 import ReserveSearchVue from './ReserveSearch.vue'
+import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -169,7 +170,12 @@ const getListData = async () => {
     data.value.records = reserveStore.reserves.data?.map((e: Reserve) => {
         return {
             id: e.id,
-            date: e.date,
+            date: FORMAT_DAY_WIDTH_TIME(
+                e.date,
+                e.start_time,
+                e.end_time,
+                false
+            ),
             shop_name: e.shop_name,
             plan_name: e.plan_name,
             full_name: e.user_name,
