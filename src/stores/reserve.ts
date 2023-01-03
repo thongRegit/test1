@@ -67,7 +67,6 @@ export const useReserveStore = defineStore('reserve', () => {
         payload.is_active = payload.is_active ? 1 : 0
         try {
             await reserveAPI.update(payload, id)
-            await reserveAPI.reserve(id)
         } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
             return error

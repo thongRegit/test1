@@ -31,6 +31,14 @@
             </section>
         </template>
     </BoxVue>
+    <UpdateStatusModal
+        :key="statusModal.refresh"
+        :dialogVisible="statusModal.isUpdateOpen"
+        :reserveData="statusModal.reserveData"
+        :status="statusModal.reserveData.status_id"
+        @close="closeUpdateModal"
+        @updated="updatedStatus"
+    />
 </template>
 
 <script setup lang="ts">
@@ -47,11 +55,18 @@ import type { ParamsList } from '@/libs/interface/commonInterface'
 import BoxVue from '@/components/common/BoxVue.vue'
 import ReserveSearchVue from './ReserveSearch.vue'
 import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
+import UpdateStatusModal from './UpdateStatusModal.vue'
 
 const { t } = useI18n()
 const router = useRouter()
 
 const loading = ref(true)
+
+const statusModal = reactive({
+    isUpdateOpen: false,
+    reserveData: {},
+    refresh: 1,
+})
 
 const columns = ref([
     {
@@ -113,8 +128,19 @@ const buttons = ref([
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'reserves-detail', params: { id: row.id } })
+        statusModal.refresh += 1
+        statusModal.reserveData = row
+        statusModal.isUpdateOpen = true
     }
+}
+
+const closeUpdateModal = () => {
+    statusModal.isUpdateOpen = false
+}
+
+const updatedStatus = () => {
+    statusModal.isUpdateOpen = false
+    getListData()
 }
 
 const data = ref({
@@ -181,11 +207,15 @@ const getListData = async () => {
                 e.end_time,
                 false
             ),
+            reserve_date: e.date,
+            start_time: e.start_time,
+            end_time: e.end_time,
             shop_name: e.shop_name,
             plan_name: e.plan_name,
             coach_name: e.coach_name,
             user_name: e.user_name,
             status: e.status_name,
+            status_id: e.status,
         }
     })
 
