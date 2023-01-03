@@ -77,7 +77,11 @@ export function makeNotification(
     })
 }
 
-export function makeMessage(type: 'success' | 'warning' | 'info' | 'error', message: string, grouping: boolean = true) {
+export function makeMessage(
+    type: 'success' | 'warning' | 'info' | 'error',
+    message: string,
+    grouping: boolean = true
+) {
     ElMessage({
         message: message,
         grouping: grouping,
@@ -93,6 +97,18 @@ export const dayList: any = {
     5: '木曜日',
     6: '金曜日',
     7: '土曜日',
+}
+
+export const STATUS_USERS: any = {
+    1: '予約中',
+    2: '当日キャンセル',
+    3: '予約取り消し',
+    4: '実施',
+}
+
+export const CANCELLING_PAY_STATUS_USERS: any = {
+    1: '支払い待ち',
+    2: '支払い済',
 }
 
 export const perPage = 20

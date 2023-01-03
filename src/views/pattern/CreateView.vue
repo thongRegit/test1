@@ -286,12 +286,11 @@ const checkTime = (rule: any, value: any, callback: any) => {
             new Error(t('validation.required', { '0': errorMsg[fieldName] }))
         )
     } else {
-        const prevEndTime = index > 0 ? ruleForm.pattern_details[index-1]?.end_time : null
-        if(startTime && fieldName == 'start_time' && prevEndTime) {
-            if(dayjs(startTime, 'HH:mm') <= dayjs(prevEndTime, 'HH:mm')) {
-                callback(
-                    new Error('開始日が無効です')
-                )
+        const prevEndTime =
+            index > 0 ? ruleForm.pattern_details[index - 1]?.end_time : null
+        if (startTime && fieldName == 'start_time' && prevEndTime) {
+            if (dayjs(startTime, 'HH:mm') <= dayjs(prevEndTime, 'HH:mm')) {
+                callback(new Error('開始日が無効です'))
                 return
             }
         }

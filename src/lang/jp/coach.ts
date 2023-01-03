@@ -26,7 +26,7 @@ export default {
         edit: '編集',
         invited: {
             created_at: '日時',
-            full_name: '店舗',
+            full_name: '名前',
         },
         sessions: {
             date: '日時',

@@ -107,7 +107,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm(ruleFormRef)">{{
-                    t('btn_search')
+                    t('btn_update')
                 }}</el-button>
             </el-form-item>
         </el-col>
@@ -239,6 +239,13 @@ const getData = async () => {
     const id = route.params.id
     const coachStore = useCoachStore()
     await coachStore.detailCoach(id)
+    let query: any = {
+        'orders[0][key]': 'id',
+        'orders[0][dir]': 'descending',
+        page: 1,
+        per_page: 20,
+    }
+    await coachStore.listCoachInvited(query, id)
     ruleForm.first_name = coachStore.coach.first_name
     ruleForm.last_name = coachStore.coach.last_name
     ruleForm.first_name_furigana = coachStore.coach.first_name_furigana

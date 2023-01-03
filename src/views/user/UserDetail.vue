@@ -1,5 +1,9 @@
 <template>
-    <BoxVue :title="t('homepage.users')" :type="'table'" :padding="20">
+    <BoxVue
+        :title="t('homepage.user_detail', [age])"
+        :type="'table'"
+        :padding="20"
+    >
         <template v-slot:header>
             <el-icon :size="24">
                 <UserFilled />
@@ -8,7 +12,7 @@
         <template v-slot:body>
             <el-tabs type="border-card">
                 <el-tab-pane :label="t('user.tabs.1')">
-                    <UserForm />
+                    <UserForm @on-get-age="(e: any) => age = e" />
                 </el-tab-pane>
                 <el-tab-pane :label="t('user.tabs.2')">
                     <UserListSession />
@@ -27,6 +31,8 @@ import UserForm from './components/UserForm.vue'
 import UserListSession from './components/UserListSession.vue'
 import UserListCancelFee from './components/UserListCancelFee.vue'
 import { useI18n } from 'vue3-i18n'
+import { ref } from 'vue'
 
 const { t } = useI18n()
+const age = ref(0)
 </script>
