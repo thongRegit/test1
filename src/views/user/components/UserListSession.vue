@@ -21,7 +21,7 @@ import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
-import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
+import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -108,7 +108,7 @@ const getListData = async () => {
             shop_name: e.shop_name,
             plan_name: e.plan_name,
             coach_name: e.coach_first_name + ' ' + e.coach_last_name,
-            status: e.status,
+            status: STATUS_USERS[e.status],
         }
     })
     loading.value = false

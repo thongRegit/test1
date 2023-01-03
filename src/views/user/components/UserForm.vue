@@ -123,7 +123,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm(ruleFormRef)">{{
-                    t('btn_search')
+                    t('btn_update')
                 }}</el-button>
             </el-form-item>
         </el-col>
@@ -146,6 +146,8 @@ const { t } = useI18n()
 const route = useRoute()
 
 const listYear = ref(YEARS)
+
+const emit = defineEmits(['onGetAge'])
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -344,6 +346,7 @@ const getData = async () => {
     ruleForm.gender = `${useStore.user.gender}`
     ruleForm.status = `${useStore.user.status}`
     ruleForm.is_active = !!useStore.user.is_active
+    emit('onGetAge', useStore.user.age)
 }
 
 onMounted(async () => {

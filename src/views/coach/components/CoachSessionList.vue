@@ -25,7 +25,7 @@ import type {
     PaginateCoachSessionParams,
 } from '@/libs/interface/coachInterface'
 import type { ParamsList } from '@/libs/interface/commonInterface'
-import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
+import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -113,7 +113,7 @@ const getListData = async () => {
                 shop_name: e.shop_name,
                 plan_name: e.plan_type,
                 full_name: e.full_name,
-                order_status: e.order_status,
+                order_status: STATUS_USERS[e.order_status],
             }
         }
     )
