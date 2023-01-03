@@ -102,12 +102,15 @@ const getListData = async () => {
     data.value.currentPage = userStore.session_users.current_page
     data.value.perPage = userStore.session_users.per_page
     data.value.records = userStore.session_users.data.map((e: any) => {
+        const fullName =
+            (e.coach_first_name ? e.coach_first_name : '') +
+            (e.coach_last_name ? e.coach_last_name : '')
         return {
             id: e.id,
             date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
             shop_name: e.shop_name,
             plan_name: e.plan_name,
-            coach_name: e.coach_first_name + ' ' + e.coach_last_name,
+            coach_name: fullName,
             status: STATUS_USERS[e.status],
         }
     })
