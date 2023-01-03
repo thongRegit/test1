@@ -150,7 +150,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item prop="day">
+                    <el-form-item prop="days">
                         <p class="label">
                             {{ t('reserve.search_form.day') }}
                         </p>
