@@ -22,7 +22,7 @@
                                 <el-form-item prop="name">
                                     <el-input
                                         v-model="ruleForm.name"
-                                        class="pattern-input base-input"
+                                        class="pattern-input"
                                         size="large"
                                         @change="onChangeName"
                                     />
@@ -62,7 +62,7 @@
                                                 "
                                                 format="HH:mm"
                                                 value-format="HH:mm"
-                                                class="pattern-input base-input"
+                                                class="pattern-input"
                                                 size="large"
                                             />
                                         </el-form-item>
@@ -84,7 +84,7 @@
                                                 "
                                                 format="HH:mm"
                                                 value-format="HH:mm"
-                                                class="pattern-input base-input"
+                                                class="pattern-input"
                                                 size="large"
                                             />
                                         </el-form-item>
@@ -101,7 +101,7 @@
                                             <el-select
                                                 v-model="item.period_id"
                                                 placeholder="Session"
-                                                class="pattern-input pattern-select base-input full-width"
+                                                class="pattern-input pattern-select"
                                                 size="large"
                                             >
                                                 <el-option
