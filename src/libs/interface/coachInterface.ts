@@ -76,7 +76,7 @@ export interface CoachSession {
     date: string
     shop_name: string
     full_name: string
-    plan_type: string
+    plan_name: string
     order_status: string
     start_time: string
     end_time: string
