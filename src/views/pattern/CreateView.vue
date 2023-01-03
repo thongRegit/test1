@@ -55,13 +55,15 @@
                                             :prop="`pattern_details.${i}.start_time`"
                                             :rules="rules.start_time"
                                         >
-                                            <el-time-picker
+                                            <el-time-select
                                                 v-model="item.start_time"
+                                                start="00:00"
+                                                step="00:15"
+                                                end="23:45"
                                                 :placeholder="
                                                     t('pattern.start_time')
                                                 "
                                                 format="HH:mm"
-                                                value-format="HH:mm"
                                                 class="pattern-input"
                                                 size="large"
                                             />
@@ -77,13 +79,15 @@
                                             :prop="`pattern_details.${i}.end_time`"
                                             :rules="rules.end_time"
                                         >
-                                            <el-time-picker
+                                            <el-time-select
                                                 v-model="item.end_time"
+                                                start="00:00"
+                                                step="00:15"
+                                                end="23:45"
                                                 :placeholder="
                                                     t('pattern.end_time')
                                                 "
                                                 format="HH:mm"
-                                                value-format="HH:mm"
                                                 class="pattern-input"
                                                 size="large"
                                             />
@@ -247,21 +251,24 @@ const submitData = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const validateTime = (start: string, end: string, period_id: number) => {
+const vailidTime = (start: string, end: string, period_id: number) => {
     const startTime = dayjs(start, 'HH:mm')
     const endTime = dayjs(end, 'HH:mm')
     let period_value: number = 0
-    let isValidate = true
+    let isVailid = true
     periods.value.forEach((period) => {
         if (period_id == period.id) {
             period_value = Number(period.value)
         }
     })
     const currentEndTime = startTime.add(period_value, 'minute')
-    if (startTime >= endTime || endTime.diff(currentEndTime, 'minute') < 0) {
-        isValidate = false
+    if (
+        startTime >= endTime ||
+        (period_value && endTime.diff(currentEndTime, 'minute') < 0)
+    ) {
+        isVailid = false
     }
-    return isValidate
+    return isVailid
 }
 
 const checkTime = (rule: any, value: any, callback: any) => {
@@ -270,7 +277,7 @@ const checkTime = (rule: any, value: any, callback: any) => {
     const fieldName: string = field[2]
     const startTime = ruleForm.pattern_details[index].start_time
     const endTime = ruleForm.pattern_details[index].end_time
-    const periodId = ruleForm.pattern_details[index].period_id
+    const periodId = ruleForm.pattern_details[index].period_id || 0
     ruleForm.pattern_details[index].error_msg = ''
     const errorMsg = {
         start_time: t('pattern.start_time'),
@@ -288,20 +295,38 @@ const checkTime = (rule: any, value: any, callback: any) => {
     } else {
         const prevEndTime =
             index > 0 ? ruleForm.pattern_details[index - 1]?.end_time : null
-        if (startTime && fieldName == 'start_time' && prevEndTime) {
-            if (dayjs(startTime, 'HH:mm') < dayjs(prevEndTime, 'HH:mm')) {
-                callback(new Error('開始日が無効です'))
-                return
+        if (fieldName == 'start_time') {
+            if (prevEndTime) {
+                if (dayjs(startTime, 'HH:mm') <= dayjs(prevEndTime, 'HH:mm')) {
+                    callback(new Error('開始時刻が無効です'))
+                    return
+                }
             }
-        }
-        if (startTime && endTime && periodId) {
-            const check = validateTime(startTime, endTime, periodId)
-            if (!check) {
-                ruleForm.pattern_details[index].error_msg = t('message.invalid')
+            if (startTime && endTime) {
+                const check = vailidTime(startTime, endTime, periodId)
+                if (!check) {
+                    ruleForm.pattern_details[index].error_msg =
+                        t('message.invalid')
+                }
             }
             callback()
         } else {
-            callback()
+            if (
+                startTime &&
+                prevEndTime &&
+                dayjs(startTime, 'HH:mm') <= dayjs(prevEndTime, 'HH:mm')
+            ) {
+                callback()
+            } else {
+                if (startTime && endTime) {
+                    const check = vailidTime(startTime, endTime, periodId)
+                    if (!check) {
+                        ruleForm.pattern_details[index].error_msg =
+                            t('message.invalid')
+                    }
+                }
+                callback()
+            }
         }
     }
 }
