@@ -29,6 +29,7 @@ export default {
         user_name: '名前',
         status: 'ステータス',
         edit: '編集',
+        full_name: '名前',
     },
     detail: {
         label: {
