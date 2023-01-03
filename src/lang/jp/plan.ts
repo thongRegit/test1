@@ -45,6 +45,13 @@ export default {
         fee: '料金(税抜)',
         link: '割引設定を追加する',
         active: '有効',
+        is_active: '有効/無効',
+        value: {
+            is_active: {
+                active: '有効',
+                inactive: '無効',
+            },
+        },
     },
     types: {
         all: '全て',

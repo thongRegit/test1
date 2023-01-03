@@ -53,12 +53,12 @@ const statusArr = [
         title: t('coach.ruleForm.status.value.all'),
     },
     {
-        id: '0',
-        title: t('coach.ruleForm.status.value.0'),
-    },
-    {
         id: '1',
         title: t('coach.ruleForm.status.value.1'),
+    },
+    {
+        id: '0',
+        title: t('coach.ruleForm.status.value.0'),
     },
 ]
 
