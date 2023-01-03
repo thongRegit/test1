@@ -3,7 +3,7 @@ import type { ResponseList, PaginateParams } from './commonInterface'
 export interface ReserveSearch {
     search: string
     status: Array<string>
-    day: Array<string>
+    days: Array<string>
     shop_id: Array<string>
     plan_id: Array<string>
     coach_id: Array<string>
@@ -68,7 +68,8 @@ export interface PaginateReserveParams extends PaginateParams {
         date: string
         shop_name: string
         plan_name: string
-        full_name: string
+        coach_name: string
+        user_name: string
         status: string
     }[]
 }

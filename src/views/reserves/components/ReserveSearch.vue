@@ -133,7 +133,7 @@
                         <el-select
                             v-model="ruleForm.coach_id"
                             class="base-input full-width"
-                            placeholder="Select"
+                            placeholder="エナジスト"
                             filterable
                             multiple
                             collapse-tags
@@ -143,7 +143,7 @@
                             <el-option
                                 v-for="item in options.coaches"
                                 :key="item.id"
-                                :label="item.first_name"
+                                :label="`${item.first_name}${item.last_name}`"
                                 :value="item.id"
                             />
                         </el-select>
@@ -154,7 +154,7 @@
                         <p class="label">
                             {{ t('reserve.search_form.day') }}
                         </p>
-                        <el-checkbox-group v-model="ruleForm.day">
+                        <el-checkbox-group v-model="ruleForm.days">
                             <el-checkbox
                                 :label="item"
                                 :key="item"
@@ -222,7 +222,7 @@ const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     status: [],
-    day: [],
+    days: [],
     search: '',
     shop_id: [],
     plan_id: [],

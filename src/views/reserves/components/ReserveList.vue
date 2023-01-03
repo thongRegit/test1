@@ -73,8 +73,14 @@ const columns = ref([
         class: '',
     },
     {
-        prop: 'full_name',
-        label: t('reserve.columns.full_name'),
+        prop: 'user_name',
+        label: t('reserve.columns.user_name'),
+        sortable: true,
+        class: '',
+    },
+    {
+        prop: 'coach_name',
+        label: t('reserve.columns.coach_name'),
         sortable: true,
         class: '',
     },
@@ -92,7 +98,7 @@ const listQuery = ref({
     filters: [
         { key: 'coach_id', data: [] },
         { key: 'plan_id', data: [] },
-        { key: 'day', data: [] },
+        { key: 'days', data: [] },
         { key: 'shop_id', data: [] },
         { key: 'status', data: [] },
         { key: 'created_at', data: [] },
@@ -120,13 +126,12 @@ const data = ref({
 } as PaginateReserveParams)
 
 const search = (search: ReserveSearch) => {
-    console.log('search >> ', search)
     loading.value = true
     listQuery.value.search = search.search
     listQuery.value.filters = [
         { key: 'coach_id', data: JSON.stringify(search.coach_id) },
         { key: 'plan_id', data: JSON.stringify(search.plan_id) },
-        { key: 'day', data: JSON.stringify(search.day) },
+        { key: 'days', data: JSON.stringify(search.days) },
         { key: 'shop_id', data: JSON.stringify(search.shop_id) },
         { key: 'status', data: JSON.stringify(search.status) },
         {
@@ -178,7 +183,8 @@ const getListData = async () => {
             ),
             shop_name: e.shop_name,
             plan_name: e.plan_name,
-            full_name: e.user_name,
+            coach_name: e.coach_name,
+            user_name: e.user_name,
             status: e.status_name,
         }
     })
