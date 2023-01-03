@@ -36,5 +36,12 @@ export default {
         business_hours_setting: '営業時間設定',
         choice: '選択',
         individual_settings: '個別設定',
+        is_active: '有効/無効',
+        value: {
+            is_active: {
+                active: '有効',
+                inactive: '無効',
+            },
+        },
     },
 }

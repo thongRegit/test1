@@ -52,12 +52,19 @@
                                 autocomplete="off"
                             />
                         </el-form-item>
-                        <p>{{ t('shop.details.status_label') }}</p>
-                        <el-form-item>
+                        <el-form-item prop="is_active">
+                            <p class="label">
+                                {{ t('shop.details.is_active') }}
+                            </p>
                             <el-switch
                                 v-model="shopStatus"
                                 @change="onChangeStatus"
                             />
+                            <span style="padding-left: 8px">{{
+                                shopStatus
+                                    ? t('shop.details.value.is_active.active')
+                                    : t('shop.details.value.is_active.inactive')
+                            }}</span>
                         </el-form-item>
                         <el-form-item class="small-input">
                             <p>

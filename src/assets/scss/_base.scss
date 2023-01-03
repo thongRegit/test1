@@ -249,6 +249,7 @@ $box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
 }
 
 .el-button.el-button--primary {
+    width: var(--vt-w-button);
     &:focus {
         border-color: var(--el-color-primary);
         background-color: var(--el-color-primary);

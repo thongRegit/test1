@@ -61,9 +61,14 @@
                         >
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item prop="active">
-                    <p class="label">{{ t('plan.form.active') }}</p>
+                <el-form-item prop="is_active">
+                    <p class="label">{{ t('plan.form.is_active') }}</p>
                     <el-switch v-model="ruleForm.is_active" />
+                    <span style="padding-left: 8px">{{
+                        ruleForm.is_active
+                            ? t('plan.form.value.is_active.active')
+                            : t('plan.form.value.is_active.inactive')
+                    }}</span>
                 </el-form-item>
                 <div class="el-group-title-child">
                     <h4>{{ t('plan.form.discount_settings') }}</h4>
@@ -132,7 +137,7 @@
                     }}</el-link>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="info" @click="backToList">{{
+                    <el-button @click="backToList">{{
                         t('btn_cancel')
                     }}</el-button>
                     <el-button
