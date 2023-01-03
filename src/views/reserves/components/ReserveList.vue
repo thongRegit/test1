@@ -242,7 +242,7 @@ const resetForm = () => {
     listQuery.value.filters = [
         { key: 'coach_id', data: [] },
         { key: 'plan_id', data: [] },
-        { key: 'date', data: [] },
+        { key: 'days', data: [] },
         { key: 'shop_id', data: [] },
         { key: 'status', data: [] },
         { key: 'created_at', data: [] },

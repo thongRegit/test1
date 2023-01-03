@@ -5,11 +5,7 @@
         :before-close="close"
         width="50%"
     >
-        <el-form
-            ref="ruleFormRef"
-            status-icon
-            class="update-form"
-        >
+        <el-form ref="ruleFormRef" status-icon class="update-form">
             <el-row class="full-width">
                 <el-col :span="4">
                     <p class="label">{{ t('reserve.columns.date') }}:</p>
@@ -47,9 +43,7 @@
                     <p class="label">{{ t('reserve.columns.status') }}:</p>
                 </el-col>
                 <el-col :span="16">
-                    <el-select
-                        v-model="status_model"
-                    >
+                    <el-select v-model="status_model">
                         <el-option
                             v-for="item in ORDER_STATUS"
                             :key="item.id"
@@ -80,11 +74,7 @@ import { useReserveStore } from '@/stores'
 
 const { t } = useI18n()
 
-const props = defineProps([
-    'dialogVisible',
-    'reserveData',
-    'status'
-])
+const props = defineProps(['dialogVisible', 'reserveData', 'status'])
 
 const { dialogVisible, reserveData, status } = toRefs(props)
 const status_model = ref(props.status)
@@ -101,7 +91,7 @@ const close = () => {
 
 const updateStatus = async () => {
     const query = {
-        status: status_model.value
+        status: status_model.value,
     }
     const reserveStore = useReserveStore()
     await reserveStore.updateReserve(query, reserveData.value.id)
