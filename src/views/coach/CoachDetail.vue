@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :title="t('homepage.coach_detail')" :type="'table'" :padding="20">
+    <BoxVue :title="title" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
                 <UserFilled />
@@ -8,7 +8,7 @@
         <template v-slot:body>
             <el-tabs type="border-card">
                 <el-tab-pane :label="t('coach.tabs.1')">
-                    <UserForm />
+                    <UserForm @on-title-detail="(e: any) => title = e" />
                 </el-tab-pane>
                 <el-tab-pane :label="t('coach.tabs.2')">
                     <CoachInvitedList />
@@ -27,6 +27,8 @@ import UserForm from './components/CoachForm.vue'
 import CoachSessionList from './components/CoachSessionList.vue'
 import CoachInvitedList from './components/CoachInvitedList.vue'
 import { useI18n } from 'vue3-i18n'
+import { ref } from 'vue'
 
 const { t } = useI18n()
+const title = ref('')
 </script>

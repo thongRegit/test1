@@ -5,15 +5,24 @@ export default {
             title: 'ステータス',
             value: {
                 1: '予約中',
-                2: 'キャンセル',
-                3: '予約取消',
-                4: '実施済',
+                2: '当日キャンセル',
+                3: '予約取り消し',
+                4: '実施',
             },
         },
-        shop_id: '店舗',
-        plan_id: 'コース',
+        shop_id: {
+            title: '店舗',
+            placeholder: '店舗',
+        },
+        plan_id: {
+            title: 'コース',
+            placeholder: 'コース',
+        },
         btn_toggle: '検索条件を増やす',
-        coach_id: 'エナジスト検索',
+        coach_id: {
+            title: 'エナジスト検索',
+            placeholder: '田中 康史',
+        },
         order_created_at: '期間検索',
         day: '曜日',
         search: {

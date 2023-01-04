@@ -1,4 +1,7 @@
-import { ACTIVE_STATUS } from '@/libs/constants/constants'
+import {
+    ACTIVE_STATUS,
+    CANCELLING_PAY_STATUS_USERS,
+} from '@/libs/constants/constants'
 
 export const findData = (arr: any, id: any) => {
     if (arr.length > 0) return arr.find((item: any) => item.id == id)
@@ -19,4 +22,10 @@ export const getFormikErr = (data: any) => {
         errorData[k] = v + ''
     })
     return errorData
+}
+
+export const cancellingPayStatusLabel = (status: number) => {
+    return `<span class="${status === 1 ? 'text-danger' : ''}">${
+        CANCELLING_PAY_STATUS_USERS[status]
+    }</span>`
 }

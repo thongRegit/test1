@@ -129,6 +129,8 @@ import { YEARS } from '@/libs/constants/constants'
 const { t } = useI18n()
 const route = useRoute()
 
+const emit = defineEmits(['onTitleDetail'])
+
 const listYear = ref(YEARS)
 
 const formSize = ref('default')
@@ -265,6 +267,7 @@ const getData = async () => {
         'YYYY'
     ) : ''
     ruleForm.is_active = !!coachStore.coach.is_active
+    emit('onTitleDetail', `${coachStore.coach.first_name}${coachStore.coach.last_name} ${coachStore.coach?.age ? ('('+coachStore.coach?.age +'歳)') : ''}`)
 }
 
 onMounted(async () => {

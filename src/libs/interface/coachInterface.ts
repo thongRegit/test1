@@ -27,6 +27,7 @@ export interface CoachDetail {
     is_active_name: string
     invitation_code: string
     people_invited: string
+    age?: number
 }
 
 export interface CoachRuleForm {

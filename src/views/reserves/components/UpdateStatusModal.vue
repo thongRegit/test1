@@ -67,7 +67,6 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, toRefs } from 'vue'
-import dayjs from 'dayjs'
 import { useI18n } from 'vue3-i18n'
 import { ORDER_STATUS } from '@/libs/constants/orders'
 import { useReserveStore } from '@/stores'
@@ -76,8 +75,8 @@ const { t } = useI18n()
 
 const props = defineProps(['dialogVisible', 'reserveData', 'status'])
 
-const { dialogVisible, reserveData, status } = toRefs(props)
-const statusModel = ref(props.status)
+const { dialogVisible, reserveData } = toRefs(props as any)
+const status_model = ref(props.status)
 
 onMounted(() => {
     statusModel.value = props.status

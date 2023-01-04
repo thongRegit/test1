@@ -120,7 +120,6 @@ import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
-import type { Coach } from '@/libs/interface/sessionInterface'
 
 const { t } = useI18n()
 
@@ -199,7 +198,7 @@ const updateShift = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate(async (valid) => {
         if (valid) {
-            let query = {
+            let query: any = {
                 shop_id: shopId.value,
                 station_number: stationNumber.value,
                 date: dayjs(ruleForm.day).format('YYYY-MM-DD'),

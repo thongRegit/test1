@@ -98,20 +98,6 @@
                     <el-radio label="2">{{ t('gender.female') }}</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item prop="status">
-                <p class="label">{{ t('user.detail.label.status') }}</p>
-                <el-radio-group v-model="ruleForm.status">
-                    <el-radio label="1">{{
-                        t('user.detail.value.status.1')
-                    }}</el-radio>
-                    <el-radio label="2">{{
-                        t('user.detail.value.status.2')
-                    }}</el-radio>
-                    <el-radio label="3">{{
-                        t('user.detail.value.status.3')
-                    }}</el-radio>
-                </el-radio-group>
-            </el-form-item>
             <el-form-item prop="is_active">
                 <p class="label">{{ t('coach.detail.label.is_active') }}</p>
                 <el-switch v-model="ruleForm.is_active" />
@@ -147,7 +133,7 @@ const route = useRoute()
 
 const listYear = ref(YEARS)
 
-const emit = defineEmits(['onGetAge'])
+const emit = defineEmits(['onTitleDetail'])
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -165,7 +151,6 @@ const ruleForm = reactive({
     tel: '',
     line_name: '',
     gender: '1',
-    status: '0',
     is_active: false,
 } as UserDetail)
 
@@ -344,9 +329,8 @@ const getData = async () => {
         ? dayjs(new Date(useStore.user.birthday)).format('YYYY')
         : ''
     ruleForm.gender = `${useStore.user.gender}`
-    ruleForm.status = `${useStore.user.status}`
     ruleForm.is_active = !!useStore.user.is_active
-    emit('onGetAge', useStore.user.age)
+    emit('onTitleDetail', `${useStore.user.first_name}${useStore.user.last_name} (${useStore.user.age}歳)`)
 }
 
 onMounted(async () => {
