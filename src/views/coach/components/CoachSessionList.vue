@@ -13,11 +13,90 @@
             @click-button="handleClickButtonTable"
         ></table-data>
     </section>
+    <modal-box
+        title="エナジスト詳細"
+        :open="statusModal.isUpdateOpen"
+        width="50%"
+        @close="closeUpdateModal"
+        @click="updateStatus"
+    >
+        <template v-slot:body>
+            <div class="pattern-form">
+                <el-form ref="ruleFormRef" status-icon class="update-form">
+                    <el-row class="full-width">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.date') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.coachSessionData.date }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.shop_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.coachSessionData.shop_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.plan_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.coachSessionData.plan_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.full_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.coachSessionData.full_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4 mb-4">
+                        <el-col :span="6" class="pr-10">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.order_status') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <el-select v-model="statusModel">
+                                <el-option
+                                    v-for="item in ORDER_STATUS"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id"
+                                />
+                            </el-select>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+        </template>
+    </modal-box>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useCoachStore } from '@/stores'
+import { useCoachStore, useReserveStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import type {
@@ -26,9 +105,27 @@ import type {
 } from '@/libs/interface/coachInterface'
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
+import { ORDER_STATUS } from '@/libs/constants/orders'
 
 const { t } = useI18n()
 const router = useRouter()
+const props = defineProps(['dialogVisible', 'coachSessionData', 'status'])
+const statusModel = ref(0)
+
+const statusModal = reactive({
+    isUpdateOpen: false,
+    coachSessionData: {
+        date: '',
+        full_name: '',
+        id: '',
+        order_status: '',
+        plan_name: '',
+        shop_name: '',
+        status_id: '',
+        order_id: '',
+    },
+    refresh: 1,
+})
 
 const listQuery = ref({
     page: 1,
@@ -83,8 +180,28 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'users-update', params: { id: row.id } })
+        statusModal.refresh += 1
+        statusModal.coachSessionData = row
+        statusModal.isUpdateOpen = true
+        statusModel.value = row.status_id
     }
+}
+
+const closeUpdateModal = () => {
+    statusModal.isUpdateOpen = false
+}
+
+const updateStatus = async () => {
+    const payload = {
+        status: statusModel.value,
+    }
+    const sessionStore = useReserveStore()
+    await sessionStore.updateReserve(
+        payload,
+        statusModal.coachSessionData.order_id
+    )
+    await getListData()
+    statusModal.isUpdateOpen = false
 }
 
 const getListData = async () => {
@@ -114,6 +231,8 @@ const getListData = async () => {
                 plan_name: e.plan_name,
                 full_name: e.full_name,
                 order_status: STATUS_USERS[e.order_status],
+                status_id: e.order_status,
+                order_id: e.order_id,
             }
         }
     )

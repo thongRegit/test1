@@ -43,7 +43,7 @@
                     <p class="label">{{ t('reserve.columns.status') }}:</p>
                 </el-col>
                 <el-col :span="18">
-                    <el-select v-model="status_model">
+                    <el-select v-model="statusModel">
                         <el-option
                             v-for="item in ORDER_STATUS"
                             :key="item.id"
@@ -77,10 +77,10 @@ const { t } = useI18n()
 const props = defineProps(['dialogVisible', 'reserveData', 'status'])
 
 const { dialogVisible, reserveData, status } = toRefs(props)
-const status_model = ref(props.status)
+const statusModel = ref(props.status)
 
 onMounted(() => {
-    status_model.value = props.status
+    statusModel.value = props.status
 })
 
 const emit = defineEmits(['close', 'updated'])
@@ -91,10 +91,10 @@ const close = () => {
 
 const updateStatus = async () => {
     const query = {
-        status: status_model.value,
+        status: statusModel.value,
     }
     const reserveStore = useReserveStore()
-    await reserveStore.updateReserve(query, reserveData.value.id)
+    await reserveStore.updateReserve(query, reserveData?.value.id)
     emit('updated')
 }
 </script>

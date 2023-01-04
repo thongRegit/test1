@@ -47,15 +47,32 @@
             :label="t('user.columns.edit')"
         >
             <template #default="scope">
-                <el-button
-                    v-for="(button, index) in buttons"
-                    :icon="button.icon"
-                    :type="button.type"
-                    :class="button.class"
-                    :key="index"
-                    @click="$emit('clickButton', button.class, scope.row)"
-                    >{{ button.label }}
-                </el-button>
+                <div v-if="'order_id' in scope.row">
+                    <div v-if="scope.row.order_id">
+                        <el-button
+                            v-for="(button, index) in buttons"
+                            :icon="button.icon"
+                            :type="button.type"
+                            :class="button.class"
+                            :key="index"
+                            @click="
+                                $emit('clickButton', button.class, scope.row)
+                            "
+                            >{{ button.label }}
+                        </el-button>
+                    </div>
+                </div>
+                <div v-else>
+                    <el-button
+                        v-for="(button, index) in buttons"
+                        :icon="button.icon"
+                        :type="button.type"
+                        :class="button.class"
+                        :key="index"
+                        @click="$emit('clickButton', button.class, scope.row)"
+                        >{{ button.label }}
+                    </el-button>
+                </div>
             </template>
         </el-table-column>
         <el-table-column v-if="links && links.length" align="right">

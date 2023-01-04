@@ -9,7 +9,7 @@
     >
         <template #header>
             <div class="head-title">
-                <h4>{{ title }}</h4>
+                <span>{{ title }}</span>
             </div>
         </template>
         <slot name="body"></slot>
@@ -67,18 +67,17 @@ const handleClose = () => {
 }
 
 .head-title {
-    text-align: center;
-    h4 {
-        font-size: 28px;
-        font-weight: bold;
-        color: #212529;
+    span {
+        line-height: var(--el-dialog-font-line-height);
+        font-size: var(--el-dialog-title-font-size);
+        color: var(--el-text-color-primary);
     }
 }
 
-.dialog-footer {
+.footer {
     width: 79%;
     display: flex;
-    justify-content: center;
+    justify-content: end;
     margin: 0 auto;
     padding: 70px 0;
 }

@@ -64,7 +64,19 @@ const loading = ref(true)
 
 const statusModal = reactive({
     isUpdateOpen: false,
-    reserveData: {},
+    reserveData: {
+        coach_name: '',
+        date: '',
+        end_time: '',
+        id: '',
+        plan_name: '',
+        reserve_date: '',
+        shop_name: '',
+        start_time: '',
+        status: '',
+        status_id: '',
+        user_name: '',
+    },
     refresh: 1,
 })
 
