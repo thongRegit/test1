@@ -44,7 +44,7 @@
                             </el-col>
                         </el-row>
                         <el-row
-                            class="full-width sesion-row"
+                            class="full-width session-row"
                             v-for="(item, i) in ruleForm.pattern_details"
                             :key="`pattern-create-${i}`"
                         >
@@ -247,11 +247,11 @@ const submitData = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const vailidTime = (start: string, end: string, period_id: number) => {
+const validateTime = (start: string, end: string, period_id: number) => {
     const startTime = dayjs(start, 'HH:mm')
     const endTime = dayjs(end, 'HH:mm')
     let period_value: number = 0
-    let isVailid = true
+    let isValidate = true
     periods.value.forEach((period) => {
         if (period_id == period.id) {
             period_value = Number(period.value)
@@ -259,9 +259,9 @@ const vailidTime = (start: string, end: string, period_id: number) => {
     })
     const currentEndTime = startTime.add(period_value, 'minute')
     if (startTime >= endTime || endTime.diff(currentEndTime, 'minute') < 0) {
-        isVailid = false
+        isValidate = false
     }
-    return isVailid
+    return isValidate
 }
 
 const checkTime = (rule: any, value: any, callback: any) => {
@@ -289,13 +289,13 @@ const checkTime = (rule: any, value: any, callback: any) => {
         const prevEndTime =
             index > 0 ? ruleForm.pattern_details[index - 1]?.end_time : null
         if (startTime && fieldName == 'start_time' && prevEndTime) {
-            if (dayjs(startTime, 'HH:mm') <= dayjs(prevEndTime, 'HH:mm')) {
+            if (dayjs(startTime, 'HH:mm') < dayjs(prevEndTime, 'HH:mm')) {
                 callback(new Error('開始日が無効です'))
                 return
             }
         }
         if (startTime && endTime && periodId) {
-            const check = vailidTime(startTime, endTime, periodId)
+            const check = validateTime(startTime, endTime, periodId)
             if (!check) {
                 ruleForm.pattern_details[index].error_msg = t('message.invalid')
             }
@@ -401,7 +401,7 @@ onMounted(async () => {
     line-height: 1.5;
 }
 
-.sesion-row {
+.session-row {
     margin-bottom: 20px;
     &:last-child {
         margin-bottom: 0;
