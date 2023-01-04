@@ -19,7 +19,7 @@
         :open="statusModal.isUpdateOpen"
         width="50%"
         @close="closeUpdateModal"
-        @click="updateStatus"
+        @submit="updateStatus"
     >
         <template v-slot:body>
             <div class="pattern-form">
@@ -27,7 +27,7 @@
                     <el-row class="full-width">
                         <el-col :span="6">
                             <p class="label">
-                                {{ t('coach.columns.sessions.date') }}:
+                                {{ t('user.columns.sessions.date') }}:
                             </p>
                         </el-col>
                         <el-col :span="18">
@@ -39,7 +39,7 @@
                     <el-row class="full-width mt-4">
                         <el-col :span="6">
                             <p class="label">
-                                {{ t('coach.columns.sessions.shop_name') }}:
+                                {{ t('user.columns.sessions.shop_name') }}:
                             </p>
                         </el-col>
                         <el-col :span="18">
@@ -51,7 +51,7 @@
                     <el-row class="full-width mt-4">
                         <el-col :span="6">
                             <p class="label">
-                                {{ t('coach.columns.sessions.plan_name') }}:
+                                {{ t('user.columns.sessions.plan_name') }}:
                             </p>
                         </el-col>
                         <el-col :span="18">
@@ -63,7 +63,11 @@
                     <el-row class="full-width mt-4 mb-4">
                         <el-col :span="6" class="pr-10">
                             <p class="label">
-                                {{ t('coach.columns.sessions.order_status') }}:
+                                {{
+                                    t(
+                                        'user.columns.cancel_fees.cancelling_pay_status'
+                                    )
+                                }}:
                             </p>
                         </el-col>
                         <el-col :span="18">
@@ -178,13 +182,15 @@ const closeUpdateModal = () => {
 }
 
 const updateStatus = async () => {
-    const payload = {
-        cancelling_pay_status: cancellingPayStatus.value,
-        status: statusModal.userData.status,
+    if (cancellingPayStatus.value in CANCELLING_PAY_STATUS_USERS) {
+        const payload = {
+            cancelling_pay_status: cancellingPayStatus.value,
+            status: statusModal.userData.status,
+        }
+        const sessionStore = useReserveStore()
+        await sessionStore.updateReserve(payload, statusModal.userData.id)
+        await getListData()
     }
-    const sessionStore = useReserveStore()
-    await sessionStore.updateReserve(payload, statusModal.userData.id)
-    await getListData()
     statusModal.isUpdateOpen = false
 }
 
