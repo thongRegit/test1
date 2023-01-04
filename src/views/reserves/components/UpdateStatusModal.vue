@@ -7,42 +7,42 @@
     >
         <el-form ref="ruleFormRef" status-icon class="update-form">
             <el-row class="full-width">
-                <el-col :span="4">
+                <el-col :span="6">
                     <p class="label">{{ t('reserve.columns.date') }}:</p>
                 </el-col>
-                <el-col :span="20">
+                <el-col :span="18">
                     <p class="label">{{ reserveData.date }}</p>
                 </el-col>
             </el-row>
             <el-row class="full-width mt-4">
-                <el-col :span="4">
+                <el-col :span="6">
                     <p class="label">{{ t('reserve.columns.shop_name') }}:</p>
                 </el-col>
-                <el-col :span="20">
+                <el-col :span="18">
                     <p class="label">{{ reserveData.shop_name }}</p>
                 </el-col>
             </el-row>
             <el-row class="full-width mt-4">
-                <el-col :span="4">
+                <el-col :span="6">
                     <p class="label">{{ t('reserve.columns.plan_name') }}:</p>
                 </el-col>
-                <el-col :span="20">
+                <el-col :span="18">
                     <p class="label">{{ reserveData.plan_name }}</p>
                 </el-col>
             </el-row>
             <el-row class="full-width mt-4">
-                <el-col :span="4">
+                <el-col :span="6">
                     <p class="label">{{ t('reserve.columns.full_name') }}:</p>
                 </el-col>
-                <el-col :span="20">
-                    <p class="label">{{ reserveData.full_name }}</p>
+                <el-col :span="18">
+                    <p class="label">{{ reserveData.user_name }}</p>
                 </el-col>
             </el-row>
             <el-row class="full-width mt-4 mb-4">
-                <el-col :span="4">
+                <el-col :span="6" class="pr-10">
                     <p class="label">{{ t('reserve.columns.status') }}:</p>
                 </el-col>
-                <el-col :span="16">
+                <el-col :span="18">
                     <el-select v-model="status_model">
                         <el-option
                             v-for="item in ORDER_STATUS"
@@ -101,5 +101,9 @@ const updateStatus = async () => {
 <style scoped>
 .update-form {
     margin-left: 20px;
+}
+
+.pr-10 {
+    padding-right: 10px !important;
 }
 </style>
