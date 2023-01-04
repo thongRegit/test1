@@ -6,7 +6,7 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <el-tabs type="border-card">
+            <el-tabs type="border-card" @tab-click="handleClick">
                 <el-tab-pane :label="t('user.tabs.1')">
                     <UserForm @on-title-detail="(e: any) => title = e" />
                 </el-tab-pane>
@@ -14,7 +14,7 @@
                     <UserListSession />
                 </el-tab-pane>
                 <el-tab-pane :label="t('user.tabs.3')">
-                    <UserListCancelFee />
+                    <UserListCancelFee :tab-title="tabTitle" />
                 </el-tab-pane>
             </el-tabs>
         </template>
@@ -28,7 +28,13 @@ import UserListSession from './components/UserListSession.vue'
 import UserListCancelFee from './components/UserListCancelFee.vue'
 import { useI18n } from 'vue3-i18n'
 import { ref } from 'vue'
+import type { TabsPaneContext } from 'element-plus'
 
 const { t } = useI18n()
 const title = ref('')
+
+const tabTitle = ref('' as any)
+const handleClick = (tab: TabsPaneContext) => {
+    tabTitle.value = tab.props.label
+}
 </script>

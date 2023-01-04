@@ -106,6 +106,7 @@ import { ORDER_STATUS } from '@/libs/constants/orders'
 const { t } = useI18n()
 const router = useRouter()
 const statusModel = ref(0)
+const statusModelOld = ref(0)
 
 const statusModal = reactive({
     isUpdateOpen: false,
@@ -178,6 +179,7 @@ const handleClickButtonTable = (classList: any, row: any) => {
         statusModal.userSessionData = row
         statusModal.isUpdateOpen = true
         statusModel.value = row.status_id
+        statusModelOld.value = row.status_id
     }
 }
 
@@ -192,6 +194,9 @@ const updateStatus = async () => {
     const sessionStore = useReserveStore()
     await sessionStore.updateReserve(payload, statusModal.userSessionData.id)
     await getListData()
+    const value = parseInt(Object.keys(STATUS_USERS)[1])
+    if (statusModel.value == value || statusModelOld.value == value)
+        localStorage.setItem('status', 'true')
     statusModal.isUpdateOpen = false
 }
 
