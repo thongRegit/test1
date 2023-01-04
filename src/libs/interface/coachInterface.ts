@@ -80,6 +80,7 @@ export interface CoachSession {
     order_status: string
     start_time: string
     end_time: string
+    order_id: number
 }
 
 export interface ResponseCoachList extends ResponseList {
