@@ -10,7 +10,7 @@
                 </div>
             </a>
             <router-link :to="{ name: 'home' }" class="simple-text logo-normal">
-                BVEASTS
+                BVEATS
             </router-link>
         </div>
         <el-menu
