@@ -18,7 +18,7 @@
         :open="statusModal.isUpdateOpen"
         width="50%"
         @close="closeUpdateModal"
-        @click="updateStatus"
+        @submit="updateStatus"
     >
         <template v-slot:body>
             <div class="pattern-form">

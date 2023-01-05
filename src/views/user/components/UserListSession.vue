@@ -14,17 +14,112 @@
             @click-button="handleClickButtonTable"
         ></table-data>
     </section>
+    <modal-box
+        title="エナジスト詳細"
+        :open="statusModal.isUpdateOpen"
+        width="50%"
+        @close="closeUpdateModal"
+        @submit="updateStatus"
+    >
+        <template v-slot:body>
+            <div class="pattern-form">
+                <el-form ref="ruleFormRef" status-icon class="update-form">
+                    <el-row class="full-width">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('user.columns.sessions.date') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userSessionData.date }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('user.columns.sessions.shop_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userSessionData.shop_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('user.columns.sessions.plan_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userSessionData.plan_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('user.columns.sessions.coach_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userSessionData.coach_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4 mb-4">
+                        <el-col :span="6" class="pr-10">
+                            <p class="label">
+                                {{ t('user.columns.sessions.status') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <el-select v-model="statusModel">
+                                <el-option
+                                    v-for="item in ORDER_STATUS"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id"
+                                />
+                            </el-select>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+        </template>
+    </modal-box>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useUserStore } from '@/stores'
+import { useUserStore, useReserveStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
 import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
+import { ORDER_STATUS } from '@/libs/constants/orders'
 
 const { t } = useI18n()
 const router = useRouter()
+const statusModel = ref(0)
+
+const statusModal = reactive({
+    isUpdateOpen: false,
+    userSessionData: {
+        coach_name: '',
+        date: '',
+        id: '',
+        plan_name: '',
+        shop_name: '',
+        status: '',
+        status_id: '',
+    },
+    refresh: 1,
+})
 
 const listQuery = ref({
     page: 1,
@@ -79,8 +174,25 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'users-update', params: { id: row.id } })
+        statusModal.refresh += 1
+        statusModal.userSessionData = row
+        statusModal.isUpdateOpen = true
+        statusModel.value = row.status_id
     }
+}
+
+const closeUpdateModal = () => {
+    statusModal.isUpdateOpen = false
+}
+
+const updateStatus = async () => {
+    const payload = {
+        status: statusModel.value,
+    }
+    const sessionStore = useReserveStore()
+    await sessionStore.updateReserve(payload, statusModal.userSessionData.id)
+    await getListData()
+    statusModal.isUpdateOpen = false
 }
 
 const getListData = async () => {
@@ -112,6 +224,7 @@ const getListData = async () => {
             plan_name: e.plan_name,
             coach_name: fullName,
             status: STATUS_USERS[e.status],
+            status_id: e.status,
         }
     })
     loading.value = false
