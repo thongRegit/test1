@@ -9,8 +9,12 @@ import { makeNotification } from '@/libs/constants/constants'
 import { useAlertStore } from './alert'
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import * as coachAPI from '@/api/coachApi'
+import * as sessionHistoryAPI from '@/api/sessionHistoryAPI'
+import * as shiftHistoryAPI from '@/api/shiftHistoryAPI'
 
 import type { ResponseCoachList } from '@/libs/interface/coachInterface'
+import type { ResponseSessionHistoryList } from '@/libs/interface/sessionHistoryInterface'
+import type { ResponseShiftHistoryList } from '@/libs/interface/shiftHistoryInterface'
 import {
     getListSession,
     getListPeriod,
@@ -22,6 +26,9 @@ export const useSessionStore = defineStore('sessions', () => {
     const sessions = ref([] as ResponseSessionList)
     const periods = ref([] as ResponsePeriodList)
     const coaches = ref([] as ResponseCoachList)
+    const sessionHistories = ref([] as ResponseSessionHistoryList)
+    const shiftHistories = ref([] as ResponseShiftHistoryList)
+    const alertStore = useAlertStore()
 
     const listSession = async (payload: ParamsList) => {
         try {
@@ -44,7 +51,6 @@ export const useSessionStore = defineStore('sessions', () => {
     }
 
     const createSession = async (payload: any, cb?: Function) => {
-        const alertStore = useAlertStore()
         try {
             await create(payload)
             if (cb) {
@@ -64,6 +70,26 @@ export const useSessionStore = defineStore('sessions', () => {
         try {
             const data = await coachAPI.coaches(payload)
             coaches.value = data
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
+            return error
+        }
+    }
+
+    const getSessionHistories = async (payload: ParamsList) => {
+        try {
+            const data = await sessionHistoryAPI.sessionHistories(payload)
+            sessionHistories.value = data
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
+            return error
+        }
+    }
+
+    const getShiftHistories = async (payload: ParamsList) => {
+        try {
+            const data = await shiftHistoryAPI.shiftHistories(payload)
+            shiftHistories.value = data
         } catch (error: any) {
             makeNotification('error', 'Error', error?.message)
             return error
@@ -94,10 +120,14 @@ export const useSessionStore = defineStore('sessions', () => {
         sessions,
         periods,
         coaches,
+        sessionHistories,
+        shiftHistories,
         listSession,
         createSession,
         getPeriod,
         getCoaches,
         updateShift,
+        getSessionHistories,
+        getShiftHistories,
     }
 })

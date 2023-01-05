@@ -21,6 +21,7 @@
                             type="date"
                             :size="'default'"
                             :clearable="false"
+                            @change="changeDate"
                         />
                     </el-form-item>
                 </el-col>
@@ -113,7 +114,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, reactive } from 'vue'
+import { ref, toRefs, reactive, onMounted } from 'vue'
 import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
@@ -180,14 +181,6 @@ const sessionStore = useSessionStore()
 const emit = defineEmits(['close', 'updated'])
 const close = () => {
     ruleFormRef.value?.clearValidate()
-    ruleForm.sessionData = [
-        {
-            id: 1,
-            start_time: '',
-            end_time: '',
-            period_id: null,
-        },
-    ]
     emit('close')
 }
 
@@ -222,6 +215,38 @@ const updateSession = async (formEl: FormInstance | undefined) => {
         }
     })
 }
+const changeDate = () => {
+    getSessionHistories()
+}
+
+const getSessionHistories = async () => {
+    let query = {
+        shop_id: shopId.value,
+        station_number: stationNumber.value,
+        date: dayjs(ruleForm.day).format('YYYY-MM-DD'),
+    }
+
+    await sessionStore.getSessionHistories(query)
+    if (sessionStore.sessionHistories.length) {
+        ruleForm.sessionData = sessionStore.sessionHistories.map((e: any) => {
+            return {
+                id: e.id,
+                start_time: `${e.date} ${e.start_time}`,
+                end_time: `${e.date} ${e.end_time}`,
+                period_id: e.period_id,
+            }
+        })
+    } else {
+        ruleForm.sessionData = [
+        {
+            id: 1,
+            start_time: '',
+            end_time: '',
+            period_id: null,
+        },
+    ]
+    }
+}
 
 const removeSession = (index: number) => {
     ruleForm.sessionData.splice(index, 1)
@@ -235,6 +260,10 @@ const addSessionBlock = () => {
         period_id: null,
     })
 }
+
+onMounted(async () => {
+    await getSessionHistories()
+})
 </script>
 <style scoped>
 .dialog-footer button:first-child {

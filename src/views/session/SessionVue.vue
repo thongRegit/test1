@@ -115,7 +115,7 @@
             </div>
             <SessionCalendar :sessions="sessions" :firstDay="calendarDay" />
             <UpdateSessionModal
-                :key="refresh"
+                :key="refreshUpdateModal"
                 :dialogVisible="isOpen"
                 :shopId="ruleForm.shop"
                 :stationNumber="ruleForm.station"
@@ -125,7 +125,7 @@
                 @updated="sessionUpdated"
             />
             <UpdateShiftModal
-                :key="refresh"
+                :key="refreshShiftModal"
                 :dialogVisible="isShiftOpen"
                 :shopId="ruleForm.shop"
                 :stationNumber="ruleForm.station"
@@ -182,7 +182,8 @@ const calendarDay = ref(dayjs().format('YYYY-MM-DD'))
 const isOpen = ref(false)
 const isShiftOpen = ref(false)
 
-const refresh = ref(1)
+const refreshUpdateModal = ref(1)
+const refreshShiftModal = ref(1)
 
 const periods = ref([] as Array<Period>)
 
@@ -193,6 +194,7 @@ const closeUpdateModal = () => {
 }
 
 const openUpdateModal = async (formEl: FormInstance | undefined) => {
+    refreshUpdateModal.value += refreshUpdateModal.value
     if (!formEl) return
     await formEl.validate((valid) => {
         if (valid) isOpen.value = true
@@ -269,6 +271,7 @@ const sessionUpdated = () => {
 }
 
 const openShiftModal = async (formEl: FormInstance | undefined) => {
+    refreshShiftModal.value += refreshShiftModal.value
     if (!formEl) return
     await formEl.validate((valid) => {
         if (valid) isShiftOpen.value = true
@@ -291,9 +294,6 @@ onMounted(async () => {
     await getListData()
 })
 
-watch(ruleForm, () => {
-    refresh.value += refresh.value
-})
 </script>
 
 <style lang="scss">
