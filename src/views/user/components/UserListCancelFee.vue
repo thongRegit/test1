@@ -14,18 +14,104 @@
             @click-button="handleClickButtonTable"
         ></table-data>
     </section>
+    <modal-box
+        title="ユーザー詳細"
+        :open="statusModal.isUpdateOpen"
+        width="50%"
+        @close="closeUpdateModal"
+        @click="updateStatus"
+    >
+        <template v-slot:body>
+            <div class="pattern-form">
+                <el-form ref="ruleFormRef" status-icon class="update-form">
+                    <el-row class="full-width">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.date') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userData.date }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.shop_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userData.shop_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4">
+                        <el-col :span="6">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.plan_name') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <p class="label">
+                                {{ statusModal.userData.plan_name }}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-row class="full-width mt-4 mb-4">
+                        <el-col :span="6" class="pr-10">
+                            <p class="label">
+                                {{ t('coach.columns.sessions.order_status') }}:
+                            </p>
+                        </el-col>
+                        <el-col :span="18">
+                            <el-select v-model="cancellingPayStatus">
+                                <el-option
+                                    v-for="(
+                                        value, key
+                                    ) in CANCELLING_PAY_STATUS_USERS"
+                                    :key="key"
+                                    :label="value"
+                                    :value="key"
+                                />
+                            </el-select>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+        </template>
+    </modal-box>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useUserStore } from '@/stores'
+import { useUserStore, useReserveStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
-import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
-import { cancellingPayStatusLabel } from '@/libs/utils/common'
+import {
+    FORMAT_DAY_WIDTH_TIME,
+    CANCELLING_PAY_STATUS_USERS,
+} from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
+const cancellingPayStatus = ref(0)
+
+const statusModal = reactive({
+    isUpdateOpen: false,
+    userData: {
+        date: '',
+        id: '',
+        plan_name: '',
+        shop_name: '',
+        status: '',
+        amount: '',
+        cancelling_pay_status: '',
+    },
+    refresh: 1,
+})
 
 const listQuery = ref({
     page: 1,
@@ -80,8 +166,26 @@ const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
-        router.push({ name: 'users-update', params: { id: row.id } })
+        statusModal.refresh += 1
+        statusModal.userData = row
+        statusModal.isUpdateOpen = true
+        cancellingPayStatus.value = row.cancelling_pay_status
     }
+}
+
+const closeUpdateModal = () => {
+    statusModal.isUpdateOpen = false
+}
+
+const updateStatus = async () => {
+    const payload = {
+        cancelling_pay_status: cancellingPayStatus.value,
+        status: statusModal.userData.status,
+    }
+    const sessionStore = useReserveStore()
+    await sessionStore.updateReserve(payload, statusModal.userData.id)
+    await getListData()
+    statusModal.isUpdateOpen = false
 }
 
 const getListData = async () => {
@@ -109,9 +213,10 @@ const getListData = async () => {
             shop_name: e.shop_name,
             plan_name: e.plan_name,
             amount: e.amount,
-            cancelling_pay_status: cancellingPayStatusLabel(
-                e.cancelling_pay_status
-            ),
+            cancelling_pay_status:
+                CANCELLING_PAY_STATUS_USERS[e.cancelling_pay_status],
+            status: e.status,
+            cancelling_pay_status_id: e.cancelling_pay_status,
         }
     })
     loading.value = false
