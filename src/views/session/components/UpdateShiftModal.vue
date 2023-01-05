@@ -21,6 +21,7 @@
                             type="date"
                             :size="'default'"
                             :clearable="false"
+                            @change="changeDate"
                         />
                     </el-form-item>
                 </el-col>
@@ -183,14 +184,6 @@ const emit = defineEmits(['close', 'updated'])
 
 const close = () => {
     ruleFormRef.value?.clearValidate()
-    ruleForm.shifts = [
-        {
-            id: 1,
-            start_time: '',
-            end_time: '',
-            coach_id: null,
-        },
-    ]
     emit('close')
 }
 
@@ -252,8 +245,42 @@ const getCoachesData = async () => {
     })
 }
 
+const changeDate = () => {
+    getSessionHistories()
+}
+
+const getSessionHistories = async () => {
+    let query = {
+        shop_id: shopId.value,
+        station_number: stationNumber.value,
+        date: dayjs(ruleForm.day).format('YYYY-MM-DD'),
+    }
+
+    await sessionStore.getShiftHistories(query)
+    if (sessionStore.shiftHistories.length) {
+        ruleForm.shifts = sessionStore.shiftHistories.map((e: any) => {
+            return {
+                id: e.id,
+                start_time: `${e.date} ${e.start_time}`,
+                end_time: `${e.date} ${e.end_time}`,
+                coach_id: e.coach_id,
+            }
+        })
+    } else {
+        ruleForm.shifts = [
+            {
+                id: 1,
+                start_time: '',
+                end_time: '',
+                coach_id: null,
+            },
+        ]
+    }
+}
+
 onMounted(async () => {
     await getCoachesData()
+    await getSessionHistories()
 })
 </script>
 <style scoped>
