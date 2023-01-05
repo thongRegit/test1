@@ -135,7 +135,7 @@
                     <el-link @click="addBlock" target="_blank" type="primary">{{
                         t('plan.form.link')
                     }}</el-link>
-                </el-form-item>
+                </el-form-item>-->
                 <el-form-item>
                     <el-button @click="backToList">{{
                         t('btn_cancel')
@@ -145,7 +145,7 @@
                         @click="submitForm(ruleFormRef)"
                         >{{ t('btn_create') }}</el-button
                     >
-                </el-form-item>-->
+                </el-form-item>
             </el-form>
         </template>
     </BoxVue>
