@@ -76,7 +76,7 @@ const { t } = useI18n()
 const props = defineProps(['dialogVisible', 'reserveData', 'status'])
 
 const { dialogVisible, reserveData } = toRefs(props as any)
-const status_model = ref(props.status)
+const statusModel = ref(props.status)
 
 onMounted(() => {
     statusModel.value = props.status
