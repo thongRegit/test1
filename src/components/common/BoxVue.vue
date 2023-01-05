@@ -54,7 +54,7 @@ const emit = defineEmits(['onCreate'])
     .box-head {
         display: flex;
         flex-wrap: wrap;
-
+        margin-bottom: 10px;
         .head-icon {
             padding: 24px;
             color: var(--vt-c-white);

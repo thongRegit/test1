@@ -70,7 +70,7 @@
                             : t('plan.form.value.is_active.inactive')
                     }}</span>
                 </el-form-item>
-                <div class="el-group-title-child">
+                <!--<div class="el-group-title-child">
                     <h4>{{ t('plan.form.discount_settings') }}</h4>
                 </div>
                 <div
@@ -145,7 +145,7 @@
                         @click="submitForm(ruleFormRef)"
                         >{{ t('btn_update') }}</el-button
                     >
-                </el-form-item>
+                </el-form-item>-->
             </el-form>
         </template>
     </BoxVue>
@@ -154,7 +154,6 @@
 <script lang="ts" setup>
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import BoxVue from '@/components/common/BoxVue.vue'
 import { useI18n } from 'vue3-i18n'
 import { usePatternStore, usePlanStore, useAlertStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
