@@ -154,6 +154,7 @@
 <script lang="ts" setup>
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
+import BoxVue from '@/components/common/BoxVue.vue'
 import { useI18n } from 'vue3-i18n'
 import { usePatternStore, usePlanStore, useAlertStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
