@@ -22,11 +22,15 @@
         <el-row class="full-width" :gutter="40">
             <el-col :span="8">
                 <el-form-item prop="shop_id">
-                    <p class="label">{{ t('reserve.search_form.shop_id') }}</p>
+                    <p class="label">
+                        {{ t('reserve.search_form.shop_id.title') }}
+                    </p>
                     <el-select
                         v-model="ruleForm.shop_id"
                         class="base-input full-width"
-                        placeholder="Select"
+                        :placeholder="
+                            t('reserve.search_form.shop_id.placeholder')
+                        "
                         filterable
                         multiple
                         collapse-tags
@@ -45,12 +49,14 @@
             <el-col :span="8">
                 <el-form-item prop="plan_id">
                     <p class="label">
-                        {{ t('reserve.search_form.plan_id') }}
+                        {{ t('reserve.search_form.plan_id.title') }}
                     </p>
                     <el-select
                         v-model="ruleForm.plan_id"
                         class="base-input full-width"
-                        placeholder="Select"
+                        :placeholder="
+                            t('reserve.search_form.plan_id.placeholder')
+                        "
                         filterable
                         multiple
                         collapse-tags
@@ -67,7 +73,7 @@
                 </el-form-item>
             </el-col>
         </el-row>
-        <div v-if="showForm">
+        <div v-show="showForm">
             <el-row class="full-width" :gutter="40">
                 <el-col :span="8">
                     <p class="label">
@@ -123,17 +129,19 @@
                 </el-col>
             </el-row>
         </div>
-        <div v-if="showForm">
+        <div v-show="showForm">
             <el-row class="full-width" :gutter="40">
                 <el-col :span="8">
                     <el-form-item prop="coach_id">
                         <p class="label">
-                            {{ t('reserve.search_form.coach_id') }}
+                            {{ t('reserve.search_form.coach_id.title') }}
                         </p>
                         <el-select
                             v-model="ruleForm.coach_id"
                             class="base-input full-width"
-                            placeholder="エナジスト"
+                            :placeholder="
+                                t('reserve.search_form.coach_id.placeholder')
+                            "
                             filterable
                             multiple
                             collapse-tags

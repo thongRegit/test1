@@ -33,7 +33,6 @@ export interface UserDetail {
     tel: string
     line_name: string
     gender: string | number
-    status: string | number
     is_active: boolean | number
     age?: number
 }
@@ -46,7 +45,6 @@ export interface UserUpdate {
     tel: string
     birthday?: string | null
     gender: string | number
-    status: string | number
     is_active: boolean | number
 }
 

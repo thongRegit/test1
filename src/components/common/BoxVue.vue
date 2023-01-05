@@ -74,6 +74,7 @@ const emit = defineEmits(['onCreate'])
         }
 
         .head-title {
+            width: calc(100% - 80px);
             &.heading {
                 padding: 12px 24px;
                 color: var(--vt-c-white);
@@ -90,6 +91,11 @@ const emit = defineEmits(['onCreate'])
             h4 {
                 font-size: 20px;
                 font-weight: bold;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
             }
         }
 

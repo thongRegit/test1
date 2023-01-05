@@ -44,7 +44,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue3-i18n'
-import { useRouter } from 'vue-router'
 import { useReserveStore } from '@/stores'
 import type {
     ReserveSearch,
@@ -58,7 +57,6 @@ import { FORMAT_DAY_WIDTH_TIME } from '@/libs/constants/constants'
 import UpdateStatusModal from './UpdateStatusModal.vue'
 
 const { t } = useI18n()
-const router = useRouter()
 
 const loading = ref(true)
 
@@ -78,7 +76,7 @@ const statusModal = reactive({
         user_name: '',
     },
     refresh: 1,
-})
+} as any)
 
 const columns = ref([
     {
