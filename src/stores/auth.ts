@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
     const token = ref(JSON.parse(TOKEN_STR || '{}'))
 
     const isAuthenticated = computed(() => {
-        return Object.keys(token.value).length > 0 && !!token.value
+        return Object.keys(token.value).length > 0
     })
 
     const login = async (payload: LoginDto | {}) => {
@@ -33,8 +33,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const logout = () => {
-        localStorage.clear()
-        token.value = ''
+        setTimeout(() => {
+            localStorage.clear()
+            token.value = ''
+        }, 1000)
     }
 
     return {

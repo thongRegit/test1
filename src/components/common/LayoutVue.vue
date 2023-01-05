@@ -17,7 +17,7 @@
             <AppFooterVue />
         </section>
     </template>
-    <template v-else>
+    <template v-if="!isLogin">
         <slot />
     </template>
 </template>
@@ -26,6 +26,7 @@
 import { AlertVue, AppFooterVue, AppHeaderVue, SidebarLayoutVue } from './index'
 import { useSettingStore, useAuthStore, useAlertStore } from '@/stores/index'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
 const alertStore = useAlertStore()
@@ -33,6 +34,7 @@ const settingStore = useSettingStore()
 const isLogin = ref(authStore.isAuthenticated)
 const isCollapse = ref(settingStore.getCollapse)
 const alerts = ref(alertStore.alerts)
+const router = useRouter()
 
 alertStore.$subscribe((mutations, state) => {
     alerts.value = state.alerts
@@ -40,6 +42,9 @@ alertStore.$subscribe((mutations, state) => {
 
 authStore.$subscribe((mutations, state) => {
     isLogin.value = !!state.token
+    if (!authStore.isAuthenticated) {
+        router.push({ name: 'login' })
+    }
 })
 
 settingStore.$subscribe((mutations, state) => {
