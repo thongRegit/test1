@@ -28,7 +28,7 @@
                     <el-col :span="10">
                         <el-select
                             v-model="ruleForm.period_id"
-                            :placeholder="t('shops.placeholders.select')"
+                            :placeholder="t('shop.placeholders.select')"
                         >
                             <el-option
                                 :disabled="true"

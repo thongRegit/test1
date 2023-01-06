@@ -24,7 +24,7 @@
                                         <el-select
                                             v-model="ruleForm.shops"
                                             :placeholder="
-                                                t('shops.placeholders.select')
+                                                t('shop.placeholders.select')
                                             "
                                         >
                                             <el-option
