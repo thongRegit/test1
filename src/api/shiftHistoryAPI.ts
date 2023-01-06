@@ -1,7 +1,5 @@
 import request from '@/config/axios'
-import type {
-    ResponseShiftHistoryList,
-} from '@/libs/interface/shiftHistoryInterface'
+import type { ResponseShiftHistoryList } from '@/libs/interface/shiftHistoryInterface'
 
 export const shiftHistories = (payload: object | {}) => {
     const url = '/shift-histories'

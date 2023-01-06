@@ -3,6 +3,7 @@ import type { ResponseList, PaginateParams } from './commonInterface'
 export interface CoachSearch {
     search: string
     status: string
+    type: string
 }
 
 export interface Date {
@@ -28,9 +29,11 @@ export interface CoachDetail {
     invitation_code: string
     people_invited: string
     age?: number
+    type: string
 }
 
 export interface CoachRuleForm {
+    type?: string
     full_name: string
     first_name: string
     last_name: string
@@ -64,6 +67,7 @@ export interface Coach {
     is_active: number
     is_active_name: string
     created_at?: string
+    type: string
 }
 
 export interface CoachInvited {

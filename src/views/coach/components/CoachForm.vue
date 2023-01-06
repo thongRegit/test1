@@ -9,6 +9,19 @@
     >
         <el-col :span="12">
             <div>
+                <el-form-item prop="type">
+                    <p class="label">{{ t('coach.ruleForm.type') }}</p>
+                    <el-radio-group v-model="ruleForm.type">
+                        <el-radio
+                            :label="item"
+                            :key="item"
+                            v-for="item in Object.keys(COACH_TYPE)"
+                            >{{ COACH_TYPE[item] }}</el-radio
+                        >
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+            <div>
                 <p class="label required">{{ t('coach.detail.label.name') }}</p>
                 <el-row class="full-width" :gutter="16">
                     <el-col :span="12">
@@ -124,7 +137,7 @@ import dayjs from 'dayjs'
 import type { CoachRuleForm } from '@/libs/interface/coachInterface'
 import { LoadingVue } from '@/components/common/loading'
 import DateFormVue from '@/components/common/DateForm.vue'
-import { YEARS } from '@/libs/constants/constants'
+import { COACH_TYPE, YEARS } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -136,6 +149,7 @@ const listYear = ref(YEARS)
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
+    type: '',
     first_name: '',
     last_name: '',
     first_name_furigana: '',
@@ -256,6 +270,7 @@ const getData = async () => {
     ruleForm.invitation_code = coachStore.coach.invitation_code
     ruleForm.people_invited = coachStore.invited_coaches.count
     ruleForm.tel = coachStore.coach.tel
+    ruleForm.type = String(coachStore.coach.type)
     ruleForm.birthday = coachStore.coach.birthday ? coachStore.coach.birthday : null
     ruleForm.birthdays.day = coachStore.coach.birthday ? dayjs(new Date(coachStore.coach.birthday)).format(
         'DD'

@@ -1,20 +1,20 @@
 <template>
-    <BoxVue :title="t('reserve.list_title')" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.reserves')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
-                <Document />
+                <Reading />
             </el-icon>
         </template>
         <template v-slot:body>
             <ReserveSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue>
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
+    <BoxVue
+        :title="t('homepage.list.reserves')"
+        :type="'table'"
+        :padding="20"
+        :show-header="false"
+    >
         <template v-slot:body>
             <section class="box-list">
                 <table-data

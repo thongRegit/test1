@@ -9,12 +9,12 @@
             <UserSearch @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue>
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
+    <BoxVue
+        :title="t('homepage.list.users')"
+        :type="'table'"
+        :padding="20"
+        :show-header="false"
+    >
         <template v-slot:body>
             <section class="box-list">
                 <table-data

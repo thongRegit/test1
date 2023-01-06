@@ -44,12 +44,6 @@
                         ><Collection
                     /></el-icon>
                     <el-icon
-                        v-else-if="item.index == '3'"
-                        :size="24"
-                        style="margin-right: 16px"
-                        ><Postcard
-                    /></el-icon>
-                    <el-icon
                         v-else-if="item.index == '4'"
                         :size="24"
                         style="margin-right: 16px"
