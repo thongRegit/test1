@@ -67,7 +67,7 @@ const handleSelect = (key: string) => {
 }
 
 onMounted(async () => {
-    profile.value = await authStore.me()
+    profile.value = authStore.me
 })
 </script>
 
