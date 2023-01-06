@@ -13,7 +13,7 @@
         :title="'プラン一覧'"
         :type="'table'"
         :padding="20"
-        :btnCreate="true"
+        :btnCreate="false"
         @on-create="handleCreate"
     >
         <template v-slot:header>

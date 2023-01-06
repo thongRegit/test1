@@ -31,6 +31,7 @@
                             :placeholder="t('shops.placeholders.select')"
                         >
                             <el-option
+                                :disabled="true"
                                 v-for="item in periods"
                                 :key="item.id"
                                 :label="`${item.value}分`"
@@ -54,6 +55,7 @@
                 <el-form-item prop="type">
                     <el-radio-group v-model="ruleForm.type">
                         <el-radio
+                            :disabled="true"
                             :label="item.id"
                             :key="item.id"
                             v-for="item in types"
