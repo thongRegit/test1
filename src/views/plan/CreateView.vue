@@ -45,8 +45,10 @@
                     </p>
                     <el-col :span="10">
                         <el-input
+                            maxlength="10"
                             v-model="ruleForm.amount"
                             class="base-input"
+                            :formatter="(value) => `$ ${value}`.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')"
                         />
                     </el-col>
                     <el-col class="currency" :span="1"> 円 </el-col>

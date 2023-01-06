@@ -16,7 +16,7 @@
         <template #footer>
             <div class="dialog-footer">
                 <el-button @click="close">キャンセル</el-button>
-                <el-button type="primary" @click="onSubmit"> 更新 </el-button>
+                <el-button type="primary" @click="onSubmit"> {{ isUpdate ? '更新' : '登録'  }} </el-button>
             </div>
         </template>
     </el-dialog>
@@ -29,6 +29,10 @@ const props = defineProps({
     title: String,
     open: Boolean,
     width: String,
+    isUpdate: {
+        type: Boolean,
+        default: true
+    }
 })
 
 const title = toRef(props, 'title')

@@ -1,7 +1,8 @@
 <template>
     <modal-box
-        :title="t('pattern.pattern_registration')"
+        :title="isUpdate ? t('pattern.pattern_edit') : t('pattern.pattern_registration')"
         :open="isShowModal"
+        :isUpdate="isUpdate"
         @close="oncloseModal"
         @submit="submitData(ruleFormRef)"
     >
@@ -170,6 +171,7 @@ const { t } = useI18n()
 const patternStore = usePatternStore()
 const isShowModal = ref(false)
 const periods = ref([] as Array<Period>)
+const isUpdate = ref(false)
 
 const getPeriodData = async () => {
     await patternStore.getPeriod()
@@ -196,6 +198,7 @@ const showCreateModal = (item: Pattern) => {
         },
     ] as Array<Session>
     if (item) {
+        isUpdate.value = true
         patternName.value = item.name
         const tempArr: Array<Session> = []
         item.details?.forEach((el: SessionEl) => {
@@ -210,6 +213,8 @@ const showCreateModal = (item: Pattern) => {
             ruleForm.pattern_details = tempArr
         }
         patternId = item.id
+    } else {
+        isUpdate.value = false
     }
     isShowModal.value = true
 }
@@ -251,11 +256,11 @@ const submitData = async (formEl: FormInstance | undefined) => {
     })
 }
 
-const vailidTime = (start: string, end: string, period_id: number) => {
+const validTime = (start: string, end: string, period_id: number) => {
     const startTime = dayjs(start, 'HH:mm')
     const endTime = dayjs(end, 'HH:mm')
     let period_value: number = 0
-    let isVailid = true
+    let isValid = true
     periods.value.forEach((period) => {
         if (period_id == period.id) {
             period_value = Number(period.value)
@@ -266,9 +271,9 @@ const vailidTime = (start: string, end: string, period_id: number) => {
         startTime >= endTime ||
         (period_value && endTime.diff(currentEndTime, 'minute') < 0)
     ) {
-        isVailid = false
+        isValid = false
     }
-    return isVailid
+    return isValid
 }
 
 const checkTime = (rule: any, value: any, callback: any) => {
@@ -303,7 +308,7 @@ const checkTime = (rule: any, value: any, callback: any) => {
                 }
             }
             if (startTime && endTime) {
-                const check = vailidTime(startTime, endTime, periodId)
+                const check = validTime(startTime, endTime, periodId)
                 if (!check) {
                     ruleForm.pattern_details[index].error_msg =
                         t('message.invalid')
@@ -319,7 +324,7 @@ const checkTime = (rule: any, value: any, callback: any) => {
                 callback()
             } else {
                 if (startTime && endTime) {
-                    const check = vailidTime(startTime, endTime, periodId)
+                    const check = validTime(startTime, endTime, periodId)
                     if (!check) {
                         ruleForm.pattern_details[index].error_msg =
                             t('message.invalid')
