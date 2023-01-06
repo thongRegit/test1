@@ -238,13 +238,13 @@ const getSessionHistories = async () => {
         })
     } else {
         ruleForm.sessionData = [
-        {
-            id: 1,
-            start_time: '',
-            end_time: '',
-            period_id: null,
-        },
-    ]
+            {
+                id: 1,
+                start_time: '',
+                end_time: '',
+                period_id: null,
+            },
+        ]
     }
 }
 

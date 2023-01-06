@@ -1,5 +1,5 @@
 export default {
-    list_title: 'ENERGIST一覧',
+    list_title: 'MEMBER一覧',
     status: 'ステータス',
     keyword_search: 'キーワード検索',
     first_experience: '初回体験',
@@ -16,6 +16,7 @@ export default {
             title: 'キーワード検索',
             placeholder: '名前、電話番号',
         },
+        type: '全て',
     },
     columns: {
         full_name: '名前',
@@ -35,6 +36,7 @@ export default {
             full_name: '名前',
             order_status: 'ステータス',
         },
+        type: '選択を',
     },
     tabs: {
         1: '基本設定',

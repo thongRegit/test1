@@ -1,20 +1,20 @@
 <template>
-    <BoxVue :title="t('coach.list_title')" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.coaches')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
-                <Document />
+                <Avatar />
             </el-icon>
         </template>
         <template v-slot:body>
             <CoachSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue>
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
+    <BoxVue
+        :title="t('homepage.list.coaches')"
+        :type="'table'"
+        :padding="20"
+        :show-header="false"
+    >
         <template v-slot:body>
             <section class="box-list">
                 <table-data
@@ -47,6 +47,7 @@ import type {
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import BoxVue from '@/components/common/BoxVue.vue'
 import CoachSearchVue from './CoachSearchVue.vue'
+import { COACH_TYPE } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -54,6 +55,12 @@ const router = useRouter()
 const loading = ref(true)
 
 const columns = ref([
+    {
+        prop: 'type',
+        label: t('coach.columns.type'),
+        sortable: true,
+        class: '',
+    },
     {
         prop: 'full_name',
         label: t('coach.columns.full_name'),
@@ -89,7 +96,10 @@ const columns = ref([
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'status', data: 'all' }],
+    filters: [
+        { key: 'status', data: 'all' },
+        { key: 'type', data: '' },
+    ],
 })
 
 const sortProp = reactive({ key: 'id', dir: 'descending' })
@@ -115,10 +125,15 @@ const data = ref({
 const search = (search: CoachSearch) => {
     loading.value = true
     listQuery.value.search = search.search
+    listQuery.value.search = search.search
     listQuery.value.filters = [
         {
             key: 'is_active',
             data: search.status === 'all' ? '' : search.status,
+        },
+        {
+            key: 'type',
+            data: search.type,
         },
     ]
     listQuery.value.page = 1
@@ -131,6 +146,8 @@ const getListData = async () => {
         'orders[0][dir]': sortProp.dir,
         'filters[0][key]': listQuery.value.filters[0].key,
         'filters[0][data]': listQuery.value.filters[0].data,
+        'filters[1][key]': listQuery.value.filters[1].key,
+        'filters[1][data]': listQuery.value.filters[1].data,
         page: listQuery.value.page,
         search: listQuery.value.search,
         per_page: 20,
@@ -145,6 +162,7 @@ const getListData = async () => {
         const status: any = findStatus(e.is_active)
         return {
             id: e.id,
+            type: COACH_TYPE[e.type],
             full_name: e.full_name,
             nickname: e.nickname,
             tel: e.tel,

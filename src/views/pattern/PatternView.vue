@@ -8,7 +8,7 @@
     >
         <template v-slot:header>
             <el-icon :size="24">
-                <Document />
+                <Checked />
             </el-icon>
         </template>
         <template v-slot:body>

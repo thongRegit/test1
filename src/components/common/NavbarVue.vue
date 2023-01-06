@@ -10,20 +10,7 @@
                 ><el-icon><ArrowLeftBold /></el-icon
             ></span>
         </el-menu-item>
-        <el-menu-item index="7">
-            <span>TOP PAGE</span>
-        </el-menu-item>
         <div class="flex-grow" />
-        <el-menu-item index="1">
-            <div>
-                <el-icon><ChatDotRound /></el-icon>
-            </div>
-        </el-menu-item>
-        <el-menu-item index="2">
-            <div>
-                <el-icon><Bell /></el-icon>
-            </div>
-        </el-menu-item>
         <el-sub-menu index="3">
             <template #title>
                 <el-avatar

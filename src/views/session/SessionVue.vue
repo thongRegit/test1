@@ -7,7 +7,7 @@
     >
         <template v-slot:header>
             <el-icon :size="24">
-                <UserFilled />
+                <Collection />
             </el-icon>
         </template>
         <template v-slot:body>
@@ -139,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onMounted, nextTick, watch } from 'vue'
+import { reactive, ref, onMounted, nextTick } from 'vue'
 import SessionCalendar from './components/SessionCalendar.vue'
 import BoxVue from '@/components/common/BoxVue.vue'
 import type { FormInstance, FormRules } from 'element-plus'
@@ -156,7 +156,7 @@ const ruleForm = reactive({
     shop: null,
     station: null,
     day: dayjs().format('YYYY-MM-DD'),
-})
+} as any)
 
 const rules = reactive<FormRules>({
     shop: [
@@ -176,7 +176,7 @@ const rules = reactive<FormRules>({
 })
 
 const sessions = ref([])
-const shopArr = ref([])
+const shopArr = ref([] as any)
 const stations = ref(0)
 const calendarDay = ref(dayjs().format('YYYY-MM-DD'))
 
@@ -214,7 +214,7 @@ const getPeriodData = async () => {
 }
 
 const getListShopData = async () => {
-    let query = {
+    let query: any = {
         all: 1,
     }
 
@@ -228,8 +228,8 @@ const getListShopData = async () => {
     }
 }
 
-const shopChange = (value) => {
-    let shop = shopArr.value.find((item) => item.id == value)
+const shopChange = (value: any) => {
+    let shop: any = shopArr.value.find((item: any) => item.id == value)
     stations.value = shop.station_amount
     ruleForm.station = 1
     getListData()
@@ -239,7 +239,7 @@ const stationChange = () => {
     getListData()
 }
 
-const dateChange = (value) => {
+const dateChange = (value: any) => {
     if (value == null) return
     calendarDay.value = dayjs(value).format('YYYY-MM-DD')
     getListData()

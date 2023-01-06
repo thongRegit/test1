@@ -1,20 +1,22 @@
 <template>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.plans')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
-                <Document />
+                <DocumentAdd />
             </el-icon>
         </template>
         <template v-slot:body>
             <PlanSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue :btnCreate="false" @on-create="handleCreate">
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
+    <BoxVue
+        :title="t('homepage.list.plans')"
+        :type="'table'"
+        :padding="20"
+        :btnCreate="false"
+        @on-create="handleCreate"
+        :show-header="false"
+    >
         <template v-slot:body>
             <section class="box-list">
                 <table-data

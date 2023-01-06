@@ -113,4 +113,9 @@ export const CANCELLING_PAY_STATUS_USERS: any = {
     2: '支払い済',
 }
 
+export const COACH_TYPE: any = {
+    1: 'ENERGIST',
+    2: 'ARMY',
+}
+
 export const perPage = 20

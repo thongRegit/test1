@@ -1,15 +1,20 @@
 <template>
-    <BoxVue :title="'店舗管理'" :type="'table'" :padding="20">
+    <BoxVue :title="t('homepage.shops')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
-                <Document />
+                <Discount />
             </el-icon>
         </template>
         <template v-slot:body>
             <ShopSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue>
+    <BoxVue
+        :title="t('homepage.list.shops')"
+        :type="'table'"
+        :padding="20"
+        :show-header="false"
+    >
         <template v-slot:body>
             <section class="box-list">
                 <table-data

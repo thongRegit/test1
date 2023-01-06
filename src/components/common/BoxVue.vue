@@ -3,7 +3,7 @@
         <div class="box-head">
             <div
                 class="head-icon"
-                v-if="type === 'table'"
+                v-if="type === 'table' && showHeader"
                 :style="{ padding: padding + 'px' }"
             >
                 <slot name="header"></slot>
@@ -27,15 +27,25 @@
 <script setup lang="ts">
 import { toRefs } from 'vue'
 
-const props = defineProps([
-    'type',
-    'title',
-    'description',
-    'padding',
-    'btnCreate',
-    'width',
-])
-const { type, title, description, padding, btnCreate, width } = toRefs(props)
+const props = defineProps({
+    type: String,
+    title: String,
+    description: String,
+    padding: Number,
+    btnCreate: {
+        type: Boolean,
+        default: false,
+    },
+    showHeader: {
+        type: Boolean,
+        default: true,
+    },
+    width: {
+        type: Number,
+    },
+})
+const { type, title, description, padding, btnCreate, width, showHeader } =
+    toRefs(props)
 
 const emit = defineEmits(['onCreate'])
 </script>
@@ -74,7 +84,7 @@ const emit = defineEmits(['onCreate'])
         }
 
         .head-title {
-            width: calc(100% - 80px);
+            width: calc(100% - 180px);
             &.heading {
                 padding: 12px 24px;
                 color: var(--vt-c-white);
