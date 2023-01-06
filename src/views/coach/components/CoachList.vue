@@ -9,7 +9,7 @@
             <CoachSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue :title="t('coach.list_title')" :type="'table'" :padding="20">
+    <BoxVue>
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />

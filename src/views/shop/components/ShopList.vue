@@ -9,12 +9,7 @@
             <ShopSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue :title="'店舗管理'" :type="'table'" :padding="20">
-        <template v-slot:header>
-            <el-icon :size="24">
-                <Document />
-            </el-icon>
-        </template>
+    <BoxVue>
         <template v-slot:body>
             <section class="box-list">
                 <table-data

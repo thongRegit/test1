@@ -25,6 +25,7 @@
                                             <el-select
                                                 v-model="ruleForm.shop"
                                                 @change="shopChange"
+                                                filterable
                                             >
                                                 <el-option
                                                     v-for="item in shopArr"
@@ -293,7 +294,6 @@ onMounted(async () => {
     await getListShopData()
     await getListData()
 })
-
 </script>
 
 <style lang="scss">

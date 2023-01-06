@@ -9,7 +9,7 @@
             <ReserveSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue :title="t('reserve.list_title')" :type="'table'" :padding="20">
+    <BoxVue>
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />
@@ -202,6 +202,7 @@ const getListData = async () => {
         search: listQuery.value.search,
         per_page: 20,
     }
+    console.log('object :>> ', sortProp)
 
     const reserveStore = useReserveStore()
     await reserveStore.listReserve(query)
@@ -211,12 +212,7 @@ const getListData = async () => {
     data.value.records = reserveStore.reserves.data?.map((e: Reserve) => {
         return {
             id: e.id,
-            date: FORMAT_DAY_WIDTH_TIME(
-                e.date,
-                e.start_time,
-                e.end_time,
-                false
-            ),
+            date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
             reserve_date: e.date,
             start_time: e.start_time,
             end_time: e.end_time,

@@ -10,7 +10,7 @@
             </el-icon>
         </template>
         <template v-slot:body>
-            <div class="shop-detail-block pb-18 mb-7">
+            <div class="shop-detail-block mb-7">
                 <div
                     class="header-wrapper flex justify-between align-items-center p-4"
                 >
@@ -66,82 +66,6 @@
                                     : t('shop.details.value.is_active.inactive')
                             }}</span>
                         </el-form-item>
-                        <el-form-item class="small-input">
-                            <p>
-                                {{ t('shop.details.business_hours_setting') }}
-                            </p>
-                            <el-select
-                                v-model="currentPatternIndex"
-                                :placeholder="t('shop.details.choice')"
-                                class="pattern-input pattern-select"
-                                :fit-input-width="true"
-                                :filterable="true"
-                                @change="updatePattern"
-                            >
-                                <el-option
-                                    v-for="(item, index) in patternList"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="index"
-                                />
-                            </el-select>
-                        </el-form-item>
-                        <div class="detail-session-wrapper mt-7">
-                            <el-row class="title">
-                                <el-col :span="11">
-                                    <p>{{ t('pattern.business_hours') }}</p>
-                                </el-col>
-                                <el-col :span="13" style="padding-left: 60px">
-                                    <p>{{ t('pattern.session_time') }}</p>
-                                </el-col>
-                            </el-row>
-                            <div class="sessions">
-                                <el-row
-                                    class="item"
-                                    v-for="(
-                                        ssItem, index
-                                    ) in currentPattern.details"
-                                    :key="index"
-                                >
-                                    <el-col :span="11">
-                                        <el-row class="align-items-center">
-                                            <el-col :span="10">
-                                                <span class="text-info">
-                                                    {{ ssItem.start_time }}
-                                                </span>
-                                            </el-col>
-                                            <el-col :span="4">
-                                                <div
-                                                    class="text-gray-500 text-center"
-                                                >
-                                                    ~
-                                                </div>
-                                            </el-col>
-                                            <el-col :span="10">
-                                                <span
-                                                    class="text-info"
-                                                    style="margin-left: auto"
-                                                >
-                                                    {{ ssItem.end_time }}
-                                                </span>
-                                            </el-col>
-                                        </el-row>
-                                    </el-col>
-                                    <el-col
-                                        :span="13"
-                                        style="padding-left: 60px"
-                                    >
-                                        <span class="text-info">
-                                            {{
-                                                `${ssItem?.period?.value} ${t(
-                                                    'pattern.minute'
-                                                )}`
-                                            }}
-                                        </span>
-                                    </el-col>
-                                </el-row>
-                            </div>
-                        </div>
                     </el-form>
                 </div>
             </div>
@@ -158,9 +82,6 @@
                     v-for="(stItem, settingIdx) in individuaSettings"
                     :key="stItem.id"
                 >
-                    <h5 class="text-bold">
-                        {{ t('shop.details.business_hours') }}
-                    </h5>
                     <el-checkbox
                         :label="stItem.dayName"
                         name="type"

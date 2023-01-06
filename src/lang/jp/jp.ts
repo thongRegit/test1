@@ -99,7 +99,7 @@ export const jp = {
         coach_detail: 'エナジスト詳細',
         reserves: '予約管理',
         plans: 'プラン管理',
-        patterns: 'パータン管理',
+        patterns: 'パターン管理',
     },
     shop,
     session,

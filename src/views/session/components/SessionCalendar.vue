@@ -25,6 +25,11 @@ const calendarOptions = ref({
     initialDate: firstDay.value,
     displayEventTime: new Date(),
     events: sessions,
+    slotLabelFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: false,
+    },
 })
 
 watch(firstDay, (value) => {
