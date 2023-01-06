@@ -15,8 +15,8 @@
                         <el-radio
                             :label="item"
                             :key="item"
-                            v-for="item in Object.keys(COACH_TYPE)"
-                            >{{ COACH_TYPE[item] }}</el-radio
+                            v-for="item in Object.keys(COACH_TYPE_NOT_ALL)"
+                            >{{ COACH_TYPE_NOT_ALL[item] }}</el-radio
                         >
                     </el-radio-group>
                 </el-form-item>
@@ -137,7 +137,7 @@ import dayjs from 'dayjs'
 import type { CoachRuleForm } from '@/libs/interface/coachInterface'
 import { LoadingVue } from '@/components/common/loading'
 import DateFormVue from '@/components/common/DateForm.vue'
-import { COACH_TYPE, YEARS } from '@/libs/constants/constants'
+import { COACH_TYPE_NOT_ALL, YEARS } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const route = useRoute()

@@ -114,6 +114,12 @@ export const CANCELLING_PAY_STATUS_USERS: any = {
 }
 
 export const COACH_TYPE: any = {
+    0: '全て',
+    1: 'ENERGIST',
+    2: 'ARMY',
+}
+
+export const COACH_TYPE_NOT_ALL: any = {
     1: 'ENERGIST',
     2: 'ARMY',
 }

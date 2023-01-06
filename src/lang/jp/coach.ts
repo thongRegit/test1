@@ -16,7 +16,7 @@ export default {
             title: 'キーワード検索',
             placeholder: '名前、電話番号',
         },
-        type: '全て',
+        type: '分類',
     },
     columns: {
         full_name: '名前',
