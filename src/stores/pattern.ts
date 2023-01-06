@@ -46,7 +46,7 @@ export const usePatternStore = defineStore('patterns', () => {
                 cb()
             }
             alertStore.createAlert({
-                title: i18n.t('message.update_success'),
+                title: i18n.t('message.create_success'),
                 type: 'success',
             })
             loading.close()

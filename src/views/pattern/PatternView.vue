@@ -149,7 +149,6 @@ const getListData = async () => {
 }
 
 const onClickEditBtn = (item: Pattern) => {
-    // patternStore.setPatternItem(item)
     createModalRef.value?.showCreateModal(item)
 }
 
