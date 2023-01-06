@@ -133,7 +133,7 @@ const search = (search: CoachSearch) => {
         },
         {
             key: 'type',
-            data: search.type,
+            data: search.type === '0' ? '' : search.type,
         },
     ]
     listQuery.value.page = 1
@@ -191,7 +191,10 @@ const sort = (sortProps: any) => {
 const resetForm = () => {
     listQuery.value.page = 1
     listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'is_active', data: '' }]
+    listQuery.value.filters = [
+        { key: 'is_active', data: '' },
+        { key: 'type', data: '' },
+    ]
     getListData()
 }
 

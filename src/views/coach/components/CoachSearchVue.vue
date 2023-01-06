@@ -86,7 +86,7 @@ const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
     search: '',
-    type: '',
+    type: '0',
     status: 'all',
 })
 
