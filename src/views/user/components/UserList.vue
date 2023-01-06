@@ -9,7 +9,7 @@
             <UserSearch @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue :title="'プラン一覧'" :type="'table'" :padding="20">
+    <BoxVue>
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />

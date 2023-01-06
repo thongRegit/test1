@@ -43,7 +43,9 @@ export const FORMAT_DAY_WIDTH_TIME = (
     const day_of_week = FORMAT_DAY(day, 'd')
     return (
         FORMAT_DAY(day, 'YYYY-MM-DD') +
-        (show_day_week ? dayList[parseInt(day_of_week) + 1].slice(0, 1) : ' ') +
+        (show_day_week
+            ? `(${dayList[parseInt(day_of_week) + 1].slice(0, 1)})`
+            : ' ') +
         start_time.slice(0, 5) +
         '〜' +
         end_time.slice(0, 5)

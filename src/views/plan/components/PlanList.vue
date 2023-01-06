@@ -9,13 +9,7 @@
             <PlanSearchVue @submit="search" @reset="resetForm" />
         </template>
     </BoxVue>
-    <BoxVue
-        :title="'プラン一覧'"
-        :type="'table'"
-        :padding="20"
-        :btnCreate="false"
-        @on-create="handleCreate"
-    >
+    <BoxVue :btnCreate="false" @on-create="handleCreate">
         <template v-slot:header>
             <el-icon :size="24">
                 <Document />
