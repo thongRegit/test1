@@ -173,7 +173,7 @@
 import BoxVue from '@/components/common/BoxVue.vue'
 import { useI18n } from 'vue3-i18n'
 import { ref, onMounted, watch, reactive } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useShopStore, usePatternStore } from '@/stores'
 import type {
@@ -188,6 +188,7 @@ import type { Pattern } from '@/libs/interface/patternInterface'
 import { dayList } from '@/libs/constants/constants'
 
 const ruleFormRef = ref<FormInstance>()
+const router = useRouter()
 const { t } = useI18n()
 const individualData: Array<IndividuaSetting> = [
     {
@@ -350,7 +351,10 @@ const updateShopDetail = async (formEl: FormInstance | undefined) => {
 
             const res = await shopStore.updateShop(payloadData, shopDetail.id)
             if (res.success) {
-                getShopDetail()
+                router.push({
+                    name: 'shops',
+                    replace: true,
+                })
             }
         } else {
             return false

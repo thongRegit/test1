@@ -37,7 +37,12 @@
             :align="column.align"
         >
             <template v-slot="scope">
-                <p :class="{ 'text-danger': scope.row.cancelling_pay_status_id }" v-html="scope.row[column.prop]"></p>
+                <p
+                    :class="{
+                        'text-danger': scope.row.cancelling_pay_status_id,
+                    }"
+                    v-html="scope.row[column.prop]"
+                ></p>
             </template>
         </el-table-column>
         <el-table-column

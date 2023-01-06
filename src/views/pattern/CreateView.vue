@@ -1,6 +1,10 @@
 <template>
     <modal-box
-        :title="isUpdate ? t('pattern.pattern_edit') : t('pattern.pattern_registration')"
+        :title="
+            isUpdate
+                ? t('pattern.pattern_edit')
+                : t('pattern.pattern_registration')
+        "
         :open="isShowModal"
         :isUpdate="isUpdate"
         @close="oncloseModal"
@@ -302,7 +306,7 @@ const checkTime = (rule: any, value: any, callback: any) => {
             index > 0 ? ruleForm.pattern_details[index - 1]?.end_time : null
         if (fieldName == 'start_time') {
             if (prevEndTime) {
-                if (dayjs(startTime, 'HH:mm') <= dayjs(prevEndTime, 'HH:mm')) {
+                if (dayjs(startTime, 'HH:mm') < dayjs(prevEndTime, 'HH:mm')) {
                     callback(new Error('開始時刻が無効です'))
                     return
                 }
