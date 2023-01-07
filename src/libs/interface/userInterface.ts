@@ -36,6 +36,7 @@ export interface UserDetail {
     gender: string | number
     is_active: boolean | number
     age?: number
+    type?: string
 }
 
 export interface UserUpdate {
@@ -47,6 +48,7 @@ export interface UserUpdate {
     birthday?: string | null
     gender: string | number
     is_active: boolean | number
+    type?: string
 }
 
 export interface UserSearchParam {

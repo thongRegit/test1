@@ -180,17 +180,26 @@ const ruleForm = reactive({
 } as CoachRuleForm)
 
 const validateDate = (rule: any, value: any, callback: any) => {
-    if ((<any>Object).values(ruleForm.birthdays).includes('')) {
+    if (
+        [
+            ruleForm.birthdays.year,
+            ruleForm.birthdays.month,
+            ruleForm.birthdays.day,
+        ].includes('')
+    ) {
         callback(
             new Error(
                 t('validation.required', [t('coach.detail.label.birthday')])
             )
         )
     } else {
-        const now = dayjs(new Date())
         if (
-            now.diff(
-                new Date((<any>Object).values(ruleForm.birthdays).join('-'))
+            dayjs().diff(
+                [
+                    ruleForm.birthdays.year,
+                    ruleForm.birthdays.month,
+                    ruleForm.birthdays.day,
+                ].join('-')
             ) < 0
         ) {
             callback(
@@ -207,7 +216,7 @@ const validateDate = (rule: any, value: any, callback: any) => {
 }
 
 const checkRegexTel = (rule: any, value: any, callback: any) => {
-    const regex = new RegExp(/^([0-9\s\-]*)$/)
+    const regex = new RegExp(/^([0-9\s-]*)$/)
     if (!regex.test(value) && value !== null) {
         callback(new Error(t('validation.tel_format')))
     } else {
@@ -307,9 +316,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate(async (valid) => {
         if (valid) {
             const id = route.params.id
-            ruleForm.birthday = (<any>Object)
-                .values(ruleForm.birthdays)
-                .join('-')
+            ruleForm.birthday = [
+                ruleForm.birthdays.year,
+                ruleForm.birthdays.month,
+                ruleForm.birthdays.day,
+            ].join('-')
             const coachStore = useCoachStore()
             const alertStore = useAlertStore()
             await coachStore.updateCoach(ruleForm, id)
