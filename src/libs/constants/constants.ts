@@ -125,3 +125,8 @@ export const COACH_TYPE_NOT_ALL: any = {
 }
 
 export const perPage = 20
+
+export const COACH_TYPE_VALUE: any = {
+    energist: 1,
+    army: 2
+}
