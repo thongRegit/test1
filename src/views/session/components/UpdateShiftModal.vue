@@ -121,6 +121,7 @@ import { useSessionStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
+import { COACH_TYPE_VALUE } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 
@@ -235,6 +236,8 @@ const addShiftBlock = () => {
 const getCoachesData = async () => {
     const query = {
         all: 1,
+        'filters[0][key]': 'type',
+        'filters[0][data]': COACH_TYPE_VALUE.energist
     }
     await sessionStore.getCoaches(query)
     coaches.value = sessionStore.coaches.map((e: any) => {
