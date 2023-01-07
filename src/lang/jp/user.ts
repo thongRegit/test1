@@ -1,6 +1,7 @@
 export default {
     status: 'ステータス',
     keyword_search: 'キーワード検索',
+    type: 'ユーザータイプ',
     first_experience: '初回体験',
     ruleForm: {
         status: {
@@ -38,6 +39,7 @@ export default {
             amount: '料金',
             cancelling_pay_status: 'ステータス',
         },
+        type: 'ユーザータイプ',
     },
     tabs: {
         1: '基本設定',

@@ -62,7 +62,7 @@ const ruleFormRef = ref<FormInstance>()
 const validateMailAddress = (rule: any, value: any, callback: any) => {
     var regex = /\S+@\S+\.\S+/
     if (!regex.test(value)) {
-        callback(new Error(t('validation.email')))
+        callback(new Error(t('validation.email', [t('mail_address')])))
     } else {
         callback()
     }

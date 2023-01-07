@@ -15,6 +15,7 @@ export interface User {
     last_session_date: string
     first_experience_date: string
     created_at: number
+    type: string
 }
 
 export interface Date {
@@ -50,6 +51,7 @@ export interface UserUpdate {
 
 export interface UserSearchParam {
     search: string
+    type: string
     is_active: string
 }
 

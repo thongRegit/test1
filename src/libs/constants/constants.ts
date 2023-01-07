@@ -108,6 +108,17 @@ export const STATUS_USERS: any = {
     4: '実施',
 }
 
+export const TYPE_USERS: any = {
+    0: '全て',
+    1: '旧サイト',
+    2: '新規登録',
+}
+
+export const TYPE_NOT_ALL_USERS: any = {
+    1: '旧サイト',
+    2: '新規登録',
+}
+
 export const CANCELLING_PAY_STATUS_USERS: any = {
     1: '支払い待ち',
     2: '支払い済',
