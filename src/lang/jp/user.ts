@@ -3,6 +3,10 @@ export default {
     keyword_search: 'キーワード検索',
     type: 'ユーザータイプ',
     first_experience: '初回体験',
+    plan_change: 'プラン変更',
+    plan_type: 'プラン',
+    start_date: '開始日',
+    end_date: '終了日',
     ruleForm: {
         status: {
             title: 'ステータス',
@@ -40,11 +44,18 @@ export default {
             cancelling_pay_status: 'ステータス',
         },
         type: 'ユーザータイプ',
+        user_plans: {
+            plan_name: 'プラン名',
+            start_date: '開始日',
+            end_date: '終了日',
+            created_date: '変更申請日',
+        },
     },
     tabs: {
         1: '基本設定',
         2: 'セッション',
         3: 'キャンセル料',
+        4: 'プラン履歴',
     },
     detail: {
         label: {

@@ -16,6 +16,9 @@
                 <el-tab-pane :label="t('user.tabs.3')">
                     <UserListCancelFee />
                 </el-tab-pane>
+                <el-tab-pane :label="t('user.tabs.4')">
+                    <UserPlan />
+                </el-tab-pane>
             </el-tabs>
         </template>
     </BoxVue>
@@ -26,6 +29,7 @@ import BoxVue from '@/components/common/BoxVue.vue'
 import UserForm from './components/UserForm.vue'
 import UserListSession from './components/UserListSession.vue'
 import UserListCancelFee from './components/UserListCancelFee.vue'
+import UserPlan from './components/UserPlan.vue'
 import { useI18n } from 'vue3-i18n'
 import { ref } from 'vue'
 
