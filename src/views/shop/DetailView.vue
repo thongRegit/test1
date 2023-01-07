@@ -85,7 +85,7 @@
                     <el-checkbox
                         :label="stItem.dayName"
                         name="type"
-                        v-model="stItem.isShowDetail"
+                        v-model="stItem.checked"
                         @change="onActiveSetting(settingIdx, $event)"
                     />
                     <div>
@@ -112,9 +112,7 @@
                         v-show="stItem.isShowDetail"
                     >
                         <el-row class="title">
-                            <el-col :span="11">
-                                <p>{{ t('pattern.business_hours') }}</p>
-                            </el-col>
+                            <el-col :span="11"></el-col>
                             <el-col :span="13" style="padding-left: 60px">
                                 <p>{{ t('pattern.session_time') }}</p>
                             </el-col>
@@ -195,42 +193,49 @@ const individualData: Array<IndividuaSetting> = [
         id: 2,
         dayName: dayList[2],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
     {
         id: 3,
         dayName: dayList[3],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
     {
         id: 4,
         dayName: dayList[4],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
     {
         id: 5,
         dayName: dayList[5],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
     {
         id: 6,
         dayName: dayList[6],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
     {
         id: 7,
         dayName: dayList[7],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
     {
         id: 1,
         dayName: dayList[1],
         isShowDetail: false,
+        checked: false,
         currentSessionsList: [],
     },
 ]
@@ -270,6 +275,7 @@ const getShopDetail = async () => {
                             : []),
                     ]
                     setting.isShowDetail = true
+                    setting.checked = true
                 }
             })
         })
@@ -296,18 +302,12 @@ const getListPattern = async () => {
     })
 }
 
-const updatePattern = (index: number) => {
-    if (patternList.value.length) {
-        currentPattern.value = { ...patternList.value[index] }
-        currentPatternIndex.value = index
-    }
-}
-
 const updatePatternForSetting = (index: number, value: number) => {
     individuaSettings.value[index].patternIndex = value
     patternList?.value[value].details
     individuaSettings.value[index].currentSessionsList =
         patternList.value[value].details
+    individuaSettings.value[index].isShowDetail = true
 }
 
 const onUpdatePattern = () => {
@@ -319,7 +319,13 @@ const onUpdatePattern = () => {
 }
 
 const onActiveSetting = (index: number, value: any) => {
-    individuaSettings.value[index].isShowDetail = value
+    if (!value) {
+        individuaSettings.value[index].isShowDetail = false
+    } else {
+        if (typeof individuaSettings.value[index].patternIndex !== 'undefined') {
+            individuaSettings.value[index].isShowDetail = true
+        }
+    }
 }
 
 const updateShopDetail = async (formEl: FormInstance | undefined) => {
