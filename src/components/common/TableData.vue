@@ -5,90 +5,44 @@
         <el-button type="success" class="btn-create" @click="$emit('handleRedirectCreate')" >{{ t('btn_create') }}</el-button>
       </el-col>
     </el-row> -->
-    <el-table
-        :data="data.records"
-        id="table"
-        @sort-change="sortChange"
-        v-loading="loading"
-        :empty-text="t('table.no_data')"
-        @cell-click="cellClick"
-        :lazy="true"
-        @selection-change="handleSelectionChange"
-    >
+    <el-table :data="data.records" id="table" @sort-change="sortChange" v-loading="loading"
+        :empty-text="t('table.no_data')" @cell-click="cellClick" :lazy="true" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" v-if="showCheckbox" />
-        <el-table-column
-            type="index"
-            :index="indexMethod"
-            width="75"
-            label="No."
-            v-if="showIndex"
-            :class-name="'index'"
-            :label-class-name="'label-index'"
-        />
-        <el-table-column
-            v-for="(column, index) in columns"
-            :key="index"
-            :label="column.label"
-            :sortable="column.sortable"
-            :class-name="column.class"
-            :prop="column.prop"
-            :width="column.width"
-            :label-class-name="column.labelClass"
-            :align="column.align"
-        >
+        <el-table-column type="index" :index="indexMethod" width="75" label="No." v-if="showIndex" :class-name="'index'"
+            :label-class-name="'label-index'" />
+        <el-table-column v-for="(column, index) in columns" :key="index" :label="column.label"
+            :sortable="column.sortable" :class-name="column.class" :prop="column.prop" :width="column.width"
+            :label-class-name="column.labelClass" :align="column.align">
             <template v-slot="scope">
-                <p
-                    :class="{
-                        'text-danger': scope.row.cancelling_pay_status_id,
-                    }"
-                    v-html="scope.row[column.prop]"
-                ></p>
+                <p :class="{ 'text-danger': scope.row.cancelling_pay_status_id === 1 }" v-html="scope.row[column.prop]">
+                </p>
             </template>
         </el-table-column>
-        <el-table-column
-            v-if="buttons && buttons.length"
-            align="center"
-            :width="widthButton"
-            :label="t('user.columns.edit')"
-        >
+        <el-table-column v-if="buttons && buttons.length" align="center" :width="widthButton"
+            :label="t('user.columns.edit')">
             <template #default="scope">
                 <div v-if="'order_id' in scope.row">
                     <div v-if="scope.row.order_id">
-                        <el-button
-                            v-for="(button, index) in buttons"
-                            :icon="button.icon"
-                            :type="button.type"
-                            :class="button.class"
-                            :key="index"
-                            @click="
+                        <el-button v-for="(button, index) in buttons" :icon="button.icon" :type="button.type"
+                            :class="button.class" :key="index" @click="
                                 $emit('clickButton', button.class, scope.row)
-                            "
-                            >{{ button.label }}
+                            ">{{ button.label }}
                         </el-button>
                     </div>
                 </div>
                 <div v-else>
-                    <el-button
-                        v-for="(button, index) in buttons"
-                        :icon="button.icon"
-                        :type="button.type"
-                        :class="button.class"
-                        :key="index"
-                        @click="$emit('clickButton', button.class, scope.row)"
-                        >{{ button.label }}
+                    <el-button v-for="(button, index) in buttons" :icon="button.icon" :type="button.type"
+                        :class="button.class" :key="index" @click="$emit('clickButton', button.class, scope.row)">{{
+                            button.label
+                        }}
                     </el-button>
                 </div>
             </template>
         </el-table-column>
         <el-table-column v-if="links && links.length" align="right">
             <template #default="scope">
-                <el-link
-                    v-for="(link, index) in links"
-                    :class="link.class"
-                    :key="index"
-                    :underline="false"
-                    @click="$emit('clickLink', link.type, scope.row)"
-                >
+                <el-link v-for="(link, index) in links" :class="link.class" :key="index" :underline="false"
+                    @click="$emit('clickLink', link.type, scope.row)">
                     {{ link.label }}
                 </el-link>
             </template>
@@ -99,19 +53,13 @@
             {{
                 t('quantity_item_is_showing_table_footer', [
                     data.total,
-                    recordStart,
-                    recordEnd,
-                ])
+                recordStart,
+                recordEnd,
+                        ])
             }}
         </p>
-        <el-pagination
-            background
-            layout="prev, pager, next"
-            :total="data.total"
-            :page-size="data.perPage"
-            :currentPage="data.currentPage"
-            @current-change="handleChangePage"
-        />
+        <el-pagination background layout="prev, pager, next" :total="data.total" :page-size="data.perPage"
+            :currentPage="data.currentPage" @current-change="handleChangePage" />
     </div>
 </template>
 
@@ -122,11 +70,11 @@ import { useI18n } from 'vue3-i18n'
 const { t } = useI18n()
 
 const props = defineProps({
-    columns: { type: Array<any>, required: true, default: [] },
+    columns: { type: Array < any >, required: true, default: [] },
     data: { type: Object, required: true },
-    buttons: { type: Array<any>, required: false, default: [] },
+    buttons: { type: Array < any >, required: false, default: [] },
     loading: { type: Boolean, required: true, default: true },
-    links: { type: Array<any>, required: false, default: [] },
+    links: { type: Array < any >, required: false, default: [] },
     showIndex: { type: Boolean, required: false, default: true },
     showCheckbox: { type: Boolean, required: false, default: true },
     hasCreate: { type: Boolean, required: false, default: false },
@@ -227,6 +175,7 @@ const widthButton = computed(() => (buttons.value.length > 1 ? 230 : 100))
 .label-index {
     font: normal normal normal 12px/29px Kozuka Gothic Pr6N !important;
 }
+
 .table-quantity-data-bottom {
     padding: 8px 0 4px;
 }

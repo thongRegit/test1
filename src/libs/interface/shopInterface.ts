@@ -39,7 +39,7 @@ export interface IndividuaSetting {
     id: number
     dayName: string | number
     isShowDetail: boolean
-    // patternList?: Array<Pattern> | []
+    checked: boolean,
     currentSessionsList?: Array<BusinessHourDetail> | []
     patternIndex?: number
 }
