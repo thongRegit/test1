@@ -49,6 +49,7 @@ import type {
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import UserSearch from './UserSearch.vue'
 import { findStatus } from '@/libs/utils/common'
+import { TYPE_NOT_ALL_USERS } from '@/libs/constants/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -56,7 +57,10 @@ const router = useRouter()
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'is_active', data: 'all' }],
+    filters: [
+        { key: 'is_active', data: 'all' },
+        { key: 'type', data: '0' },
+    ],
 })
 const data = ref({
     currentPage: 1,
@@ -99,6 +103,12 @@ const columns = ref([
         class: '',
     },
     {
+        prop: 'type',
+        label: t('user.columns.type'),
+        sortable: true,
+        class: '',
+    },
+    {
         prop: 'is_active',
         label: t('user.columns.is_active'),
         sortable: true,
@@ -122,6 +132,8 @@ const getListData = async () => {
         'orders[0][dir]': sortProp.dir,
         'filters[0][key]': listQuery.value.filters[0].key,
         'filters[0][data]': listQuery.value.filters[0].data,
+        'filters[1][key]': listQuery.value.filters[1].key,
+        'filters[1][data]': listQuery.value.filters[1].data,
         page: listQuery.value.page,
         search: listQuery.value.search,
         per_page: 20,
@@ -141,6 +153,9 @@ const getListData = async () => {
             created_at: e.created_at,
             first_experience_date: e.first_experience_date,
             last_session_date: e.last_session_date,
+            type: e.type
+                ? `<div class='text-center'>${TYPE_NOT_ALL_USERS[e.type]}</div>`
+                : '',
             is_active: status.display,
         }
     })
@@ -156,7 +171,10 @@ const handleChangePage = (page: any) => {
 const search = (search: UserSearchParam) => {
     loading.value = true
     listQuery.value.search = search.search
-    listQuery.value.filters = [{ key: 'is_active', data: search.is_active }]
+    listQuery.value.filters = [
+        { key: 'is_active', data: search.is_active },
+        { key: 'type', data: search.type },
+    ]
     listQuery.value.page = 1
     getListData()
 }
@@ -172,7 +190,10 @@ const sort = (sortProps: any) => {
 const resetForm = () => {
     listQuery.value.page = 1
     listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'is_active', data: 'all' }]
+    listQuery.value.filters = [
+        { key: 'is_active', data: 'all' },
+        { key: 'type', data: '' },
+    ]
     getListData()
 }
 
