@@ -35,11 +35,11 @@ export interface ShopSearch {
     status: string
 }
 
-export interface IndividuaSetting {
+export interface IndividualSetting {
     id: number
     dayName: string | number
     isShowDetail: boolean
-    checked: boolean,
+    checked: boolean
     currentSessionsList?: Array<BusinessHourDetail> | []
     patternIndex?: number
 }
