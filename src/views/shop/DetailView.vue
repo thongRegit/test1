@@ -79,7 +79,7 @@
                 </div>
                 <div
                     class="bussieness-hours-item px-13 mb-5"
-                    v-for="(stItem, settingIdx) in individuaSettings"
+                    v-for="(stItem, settingIdx) in individualSettings"
                     :key="stItem.id"
                 >
                     <el-checkbox
@@ -92,6 +92,7 @@
                         <el-select
                             v-model="stItem.patternIndex"
                             :placeholder="t('shop.details.choice')"
+                            :disabled="!stItem.checked"
                             class="pattern-input pattern-select"
                             :fit-input-width="true"
                             :filterable="true"
@@ -180,7 +181,7 @@ import type {
     UpdateShopPayload,
     BusinessHourForAPI,
     ShopDetailPayload,
-    IndividuaSetting,
+    IndividualSetting,
 } from '@/libs/interface/shopInterface'
 import type { Pattern } from '@/libs/interface/patternInterface'
 import { dayList } from '@/libs/constants/constants'
@@ -188,7 +189,7 @@ import { dayList } from '@/libs/constants/constants'
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter()
 const { t } = useI18n()
-const individualData: Array<IndividuaSetting> = [
+const individualData: Array<IndividualSetting> = [
     {
         id: 2,
         dayName: dayList[2],
@@ -253,7 +254,7 @@ const patternList = ref([] as Array<Pattern>)
 const currentPattern = ref({} as Pattern)
 const currentPatternIndex = ref()
 
-const individuaSettings = ref(individualData)
+const individualSettings = ref(individualData)
 const shopStatus = ref(false)
 const onChangeStatus = () => {
     shopStatus.value = shopStatus.value ? true : false
@@ -267,7 +268,7 @@ const getShopDetail = async () => {
     shopStatus.value = shopStore.shopDetail.status == 1
     if (shopStore.shopDetail.business_hours.length) {
         shopStore.shopDetail.business_hours.forEach((el: BusinessHour) => {
-            individuaSettings.value.forEach((setting: IndividuaSetting) => {
+            individualSettings.value.forEach((setting: IndividualSetting) => {
                 if (setting.id === el.day) {
                     setting.currentSessionsList = [
                         ...(el.business_hour_details?.length
@@ -280,7 +281,7 @@ const getShopDetail = async () => {
             })
         })
     } else {
-        individuaSettings.value.forEach((setting: IndividuaSetting) => {
+        individualSettings.value.forEach((setting: IndividualSetting) => {
             setting.currentSessionsList = []
             setting.isShowDetail = false
             setting.patternIndex = undefined
@@ -303,15 +304,15 @@ const getListPattern = async () => {
 }
 
 const updatePatternForSetting = (index: number, value: number) => {
-    individuaSettings.value[index].patternIndex = value
+    individualSettings.value[index].patternIndex = value
     patternList?.value[value].details
-    individuaSettings.value[index].currentSessionsList =
+    individualSettings.value[index].currentSessionsList =
         patternList.value[value].details
-    individuaSettings.value[index].isShowDetail = true
+    individualSettings.value[index].isShowDetail = true
 }
 
 const onUpdatePattern = () => {
-    individuaSettings.value.forEach((el) => {
+    individualSettings.value.forEach((el) => {
         el.patternIndex = currentPatternIndex.value
         el.currentSessionsList =
             patternList.value[currentPatternIndex.value].details
@@ -320,10 +321,12 @@ const onUpdatePattern = () => {
 
 const onActiveSetting = (index: number, value: any) => {
     if (!value) {
-        individuaSettings.value[index].isShowDetail = false
+        individualSettings.value[index].isShowDetail = false
     } else {
-        if (typeof individuaSettings.value[index].patternIndex !== 'undefined') {
-            individuaSettings.value[index].isShowDetail = true
+        if (
+            typeof individualSettings.value[index].patternIndex !== 'undefined'
+        ) {
+            individualSettings.value[index].isShowDetail = true
         }
     }
 }
@@ -333,7 +336,7 @@ const updateShopDetail = async (formEl: FormInstance | undefined) => {
     formEl.validate(async (valid) => {
         if (valid) {
             const business_hours: Array<BusinessHourForAPI> = []
-            individuaSettings.value.forEach((el) => {
+            individualSettings.value.forEach((el) => {
                 if (el.isShowDetail && el.currentSessionsList?.length) {
                     el.currentSessionsList.forEach((sItem) => {
                         const data: BusinessHourForAPI = {

@@ -50,9 +50,12 @@
                         :rules="rules.start_time"
                         class="full-width"
                     >
-                        <el-time-picker
+                        <el-time-select
                             v-model="item.start_time"
                             placeholder="開始時間"
+                            start="00:00"
+                            step="00:15"
+                            end="23:45"
                             format="HH:mm"
                         />
                     </el-form-item>
@@ -62,9 +65,12 @@
                         :prop="`shifts.${i}.end_time`"
                         :rules="rules.end_time"
                     >
-                        <el-time-picker
+                        <el-time-select
                             v-model="item.end_time"
                             placeholder="終了時間"
+                            start="00:00"
+                            step="00:15"
+                            end="23:45"
                             format="HH:mm"
                         />
                     </el-form-item>
@@ -198,8 +204,8 @@ const updateShift = async (formEl: FormInstance | undefined) => {
                 shifts: ruleForm.shifts.map((item) => {
                     return {
                         coach_id: item.coach_id,
-                        start_time: dayjs(item.start_time).format('HH:mm'),
-                        end_time: dayjs(item.end_time).format('HH:mm'),
+                        start_time: item.start_time,
+                        end_time: item.end_time,
                     }
                 }),
             }
@@ -234,13 +240,13 @@ const addShiftBlock = () => {
 
 const getCoachesData = async () => {
     const query = {
-        all: 1,
+        page: 1,
     }
     await sessionStore.getCoaches(query)
-    coaches.value = sessionStore.coaches.map((e: any) => {
+    coaches.value = sessionStore.coaches.data.map((e: any) => {
         return {
             id: e.id,
-            full_name: e.first_name + e.last_name,
+            full_name: e.full_name,
         }
     })
 }
@@ -261,8 +267,8 @@ const getSessionHistories = async () => {
         ruleForm.shifts = sessionStore.shiftHistories.map((e: any) => {
             return {
                 id: e.id,
-                start_time: `${e.date} ${e.start_time}`,
-                end_time: `${e.date} ${e.end_time}`,
+                start_time: dayjs(`${e.date} ${e.start_time}`).format('HH:mm'),
+                end_time: dayjs(`${e.date} ${e.end_time}`).format('HH:mm'),
                 coach_id: e.coach_id,
             }
         })
