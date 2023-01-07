@@ -98,6 +98,17 @@
                     <el-radio label="2">{{ t('gender.female') }}</el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item prop="type">
+                <p class="label">{{ t('user.type') }}</p>
+                <el-radio-group v-model="ruleForm.type" disabled>
+                    <el-radio
+                        :label="item"
+                        :key="item"
+                        v-for="item in Object.keys(TYPE_NOT_ALL_USERS)"
+                        >{{ TYPE_NOT_ALL_USERS[item] }}</el-radio
+                    >
+                </el-radio-group>
+            </el-form-item>
             <el-form-item prop="is_active">
                 <p class="label">{{ t('coach.detail.label.is_active') }}</p>
                 <el-switch v-model="ruleForm.is_active" />
@@ -125,7 +136,7 @@ import { useRoute, useRouter } from 'vue-router'
 import type { UserDetail } from '@/libs/interface/userInterface'
 import { LoadingVue } from '@/components/common/loading'
 import dayjs from 'dayjs'
-import { YEARS } from '@/libs/constants/constants'
+import { TYPE_NOT_ALL_USERS, YEARS } from '@/libs/constants/constants'
 import DateForm from '@/components/common/DateForm.vue'
 
 const { t } = useI18n()
@@ -153,6 +164,7 @@ const ruleForm = reactive({
     line_name: '',
     gender: '1',
     is_active: false,
+    type: '',
 } as UserDetail)
 
 const validateDate = (rule: any, value: any, callback: any) => {
@@ -167,10 +179,13 @@ const validateDate = (rule: any, value: any, callback: any) => {
             )
         )
     } else {
-        const now = dayjs(new Date())
         if (
-            now.diff(
-                new Date((<any>Object).values(ruleForm.birthdays).join('-'))
+            dayjs().diff(
+                [
+                    ruleForm.birthdays.year,
+                    ruleForm.birthdays.month,
+                    ruleForm.birthdays.day,
+                ].join('-')
             ) < 0
         ) {
             callback(
@@ -187,7 +202,7 @@ const validateDate = (rule: any, value: any, callback: any) => {
 }
 
 const checkRegexTel = (rule: any, value: any, callback: any) => {
-    const regex = new RegExp(/^([0-9\s\-]*)$/)
+    const regex = new RegExp(/^([0-9\s-]*)$/)
     if (!regex.test(value) && value !== null) {
         callback(new Error(t('validation.tel_format')))
     } else {
@@ -270,10 +285,18 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate(async (valid) => {
         if (valid) {
             const id = route.params.id
-            if (!(<any>Object).values(ruleForm.birthdays).includes('')) {
-                ruleForm.birthday = (<any>Object)
-                    .values(ruleForm.birthdays)
-                    .join('-')
+            if (
+                ![
+                    ruleForm.birthdays.year,
+                    ruleForm.birthdays.month,
+                    ruleForm.birthdays.day,
+                ].includes('')
+            ) {
+                ruleForm.birthday = [
+                    ruleForm.birthdays.year,
+                    ruleForm.birthdays.month,
+                    ruleForm.birthdays.day,
+                ].join('-')
             }
             const userStore = useUserStore()
             const alertStore = useAlertStore()
@@ -307,11 +330,6 @@ const trim = (
     }
 }
 
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
-}
-
 const getData = async () => {
     const id = route.params.id
     const useStore = useUserStore()
@@ -333,6 +351,7 @@ const getData = async () => {
         ? dayjs(new Date(useStore.user.birthday)).format('YYYY')
         : ''
     ruleForm.gender = `${useStore.user.gender}`
+    ruleForm.type = String(useStore.user.type)
     ruleForm.is_active = !!useStore.user.is_active
     emit(
         'onTitleDetail',
