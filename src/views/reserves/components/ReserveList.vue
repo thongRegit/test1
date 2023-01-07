@@ -202,7 +202,6 @@ const getListData = async () => {
         search: listQuery.value.search,
         per_page: 20,
     }
-    console.log('object :>> ', sortProp)
 
     const reserveStore = useReserveStore()
     await reserveStore.listReserve(query)
@@ -235,8 +234,7 @@ const handleChangePage = (page: any) => {
 }
 
 const sort = (sortProps: any) => {
-    sortProp.key =
-        sortProps.prop === 'user_name' ? 'first_name' : sortProps.prop
+    sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
     listQuery.value.page = 1
     getListData()
