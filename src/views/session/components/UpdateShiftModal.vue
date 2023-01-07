@@ -246,10 +246,10 @@ const getCoachesData = async () => {
         'filters[0][data]': COACH_TYPE_VALUE.energist
     }
     await sessionStore.getCoaches(query)
-    coaches.value = sessionStore.coaches.data.map((e: any) => {
+    coaches.value = sessionStore.coaches.map((e: any) => {
         return {
             id: e.id,
-            full_name: e.full_name,
+            full_name: e.first_name + e.last_name,
         }
     })
 }
