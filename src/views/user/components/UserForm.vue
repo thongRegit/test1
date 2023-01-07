@@ -121,7 +121,7 @@ import { reactive, ref, onMounted, nextTick } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
 import { useAlertStore, useUserStore } from '@/stores'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import type { UserDetail } from '@/libs/interface/userInterface'
 import { LoadingVue } from '@/components/common/loading'
 import dayjs from 'dayjs'
@@ -130,6 +130,7 @@ import DateForm from '@/components/common/DateForm.vue'
 
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
 
 const listYear = ref(YEARS)
 
@@ -281,8 +282,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
                 title: t('message.update_success'),
                 type: 'success',
             })
-            await getData()
             loading.close()
+            router.push({
+                name: 'users',
+                replace: true,
+            })
         } else {
             loading.close()
             return false
@@ -330,7 +334,10 @@ const getData = async () => {
         : ''
     ruleForm.gender = `${useStore.user.gender}`
     ruleForm.is_active = !!useStore.user.is_active
-    emit('onTitleDetail', `${useStore.user.first_name}${useStore.user.last_name} (${useStore.user.age}歳)`)
+    emit(
+        'onTitleDetail',
+        `${useStore.user.first_name}${useStore.user.last_name} (${useStore.user.age}歳)`
+    )
 }
 
 onMounted(async () => {

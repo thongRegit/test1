@@ -50,8 +50,11 @@
                         :rules="rules.start_time"
                         class="full-width"
                     >
-                        <el-time-picker
+                        <el-time-select
                             v-model="item.start_time"
+                            start="00:00"
+                            step="00:15"
+                            end="23:45"
                             placeholder="開始時間"
                             format="HH:mm"
                         />
@@ -62,8 +65,11 @@
                         :prop="`sessionData.${i}.end_time`"
                         :rules="rules.end_time"
                     >
-                        <el-time-picker
+                        <el-time-select
                             v-model="item.end_time"
+                            start="00:00"
+                            step="00:15"
+                            end="23:45"
                             placeholder="終了時間"
                             format="HH:mm"
                         />
@@ -195,8 +201,8 @@ const updateSession = async (formEl: FormInstance | undefined) => {
                 sessions: ruleForm.sessionData.map((item) => {
                     return {
                         period_id: item.period_id,
-                        start_time: dayjs(item.start_time).format('HH:mm'),
-                        end_time: dayjs(item.end_time).format('HH:mm'),
+                        start_time: item.start_time,
+                        end_time: item.end_time,
                     }
                 }),
             }
@@ -229,10 +235,11 @@ const getSessionHistories = async () => {
     await sessionStore.getSessionHistories(query)
     if (sessionStore.sessionHistories.length) {
         ruleForm.sessionData = sessionStore.sessionHistories.map((e: any) => {
+            console.log('e :>> ', e)
             return {
                 id: e.id,
-                start_time: `${e.date} ${e.start_time}`,
-                end_time: `${e.date} ${e.end_time}`,
+                start_time: dayjs(`${e.date} ${e.start_time}`).format('HH:mm'),
+                end_time: dayjs(`${e.date} ${e.end_time}`).format('HH:mm'),
                 period_id: e.period_id,
             }
         })
