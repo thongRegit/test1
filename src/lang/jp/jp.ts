@@ -21,6 +21,7 @@ export const jp = {
     btn_back_login: 'ログイン画面ヘ',
     btn_reset_password: 'パスワードを再設定する',
     btn_set_password: 'パスワードを設定する',
+    btn_delete: '削除',
     show_password: 'パスワードを表示する',
     is_forgot_password: 'パスワードを忘れた方は',
     is_forgot_login_id: 'ログインIDを忘れた方は',
@@ -58,6 +59,7 @@ export const jp = {
     create: '登録',
     back: '戻る',
     update: '編集',
+    operate: '操作',
     gender: {
         male: '男性',
         female: '女性',

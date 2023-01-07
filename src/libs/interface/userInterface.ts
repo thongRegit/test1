@@ -72,3 +72,9 @@ export interface PaginateUserParams extends PaginateParams {
         is_active: string
     }[]
 }
+
+export interface UserPlanUpdate {
+    type: number
+    start_date: string
+    end_date: string
+}

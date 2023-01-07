@@ -49,7 +49,7 @@
             v-if="buttons && buttons.length"
             align="center"
             :width="widthButton"
-            :label="t('user.columns.edit')"
+            :label="t('operate')"
         >
             <template #default="scope">
                 <div v-if="'order_id' in scope.row">
