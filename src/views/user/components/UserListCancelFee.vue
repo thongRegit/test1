@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, reactive, onMounted, nextTick, watch } from 'vue'
 import { useUserStore, useReserveStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue3-i18n'
@@ -116,6 +116,19 @@ const statusModal = reactive({
     },
     refresh: 1,
 })
+
+const props = defineProps(['tabTitle'])
+watch(
+    () => props.tabTitle,
+    () => {
+        if (
+            props.tabTitle == t('user.tabs.3') &&
+            localStorage.getItem('status')
+        ) {
+            getListData()
+        }
+    }
+)
 
 const listQuery = ref({
     page: 1,
@@ -212,7 +225,7 @@ const getListData = async () => {
     data.value.total = userStore.cancel_fee_users.total
     data.value.currentPage = userStore.cancel_fee_users.current_page
     data.value.perPage = userStore.cancel_fee_users.per_page
-    data.value.records = userStore.cancel_fee_users.data.map((e: any) => {
+    data.value.records = userStore.cancel_fee_users.data?.map((e: any) => {
         return {
             id: e.id,
             date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
@@ -226,6 +239,7 @@ const getListData = async () => {
         }
     })
     loading.value = false
+    localStorage.setItem('status', '')
 }
 
 const handleChangePage = (page: any) => {
