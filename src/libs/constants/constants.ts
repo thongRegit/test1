@@ -139,5 +139,5 @@ export const perPage = 20
 
 export const COACH_TYPE_VALUE: any = {
     energist: 1,
-    army: 2
+    army: 2,
 }

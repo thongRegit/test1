@@ -59,7 +59,7 @@ const listQuery = ref({
     search: '',
     filters: [
         { key: 'is_active', data: 'all' },
-        { key: 'type', data: '0' },
+        { key: 'type', data: '' },
     ],
 })
 const data = ref({
@@ -173,7 +173,7 @@ const search = (search: UserSearchParam) => {
     listQuery.value.search = search.search
     listQuery.value.filters = [
         { key: 'is_active', data: search.is_active },
-        { key: 'type', data: search.type },
+        { key: 'type', data: search.type == '0' ? '' : search.type },
     ]
     listQuery.value.page = 1
     getListData()

@@ -81,9 +81,7 @@ export const updateUserPlan = (
     })
 }
 
-export const deleteUserPlan = (
-    id: string | string[] | number
-) => {
+export const deleteUserPlan = (id: string | string[] | number) => {
     const url = `/users/plans/${id}/destroy`
     return request({
         url,
