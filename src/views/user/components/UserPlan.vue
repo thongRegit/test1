@@ -237,7 +237,7 @@ const getListData = async () => {
 
     data.value.records = []
     const datas = userStore.user_plans.data
-    ruleForm.default_date = dayjs().format('YYYY-MM-DD')
+    ruleForm.default_date = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
     for (let i = 0; i < datas.length; i++) {
         let minDate = dayjs(datas[i].start_date).format('YYYY-MM-DD')
         if (minDate > ruleForm.default_date) {
@@ -247,7 +247,7 @@ const getListData = async () => {
             id: datas[i].id,
             plan_name: datas[i].name,
             start_date: datas[i].start_date,
-            end_date: datas[i + 1]?.start_date,
+            end_date: datas[i + 1] ? dayjs(datas[i + 1].start_date).subtract(1, 'day').format('YYYY-MM-DD') : '',
             created_date: datas[i].created_at,
         }
         data.value.records.push(record)
@@ -267,7 +267,7 @@ const openModal = () => {
 }
 
 const disableStartDate = (date: any) => {
-    date = dayjs(date).format('YYYY-MM-DD')
+    date = dayjs(date).subtract(1, 'day').format('YYYY-MM-DD')
     if (ruleForm.default_date) {
         return ruleForm.default_date > date
     }
