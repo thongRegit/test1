@@ -8,7 +8,4 @@ export const PLAN_TYPE_NORMAL = {
     name: '都度利用',
 }
 
-export const USER_PLAN_TYPES = [
-    PLAN_TYPE_SUBSCRIPTION,
-    PLAN_TYPE_NORMAL,
-]
+export const USER_PLAN_TYPES = [PLAN_TYPE_SUBSCRIPTION, PLAN_TYPE_NORMAL]

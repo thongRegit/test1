@@ -18,11 +18,7 @@
             @click-button="handleClickButtonTable"
         ></table-data>
     </section>
-    <el-dialog
-        title="プラン変更"
-        v-model="isOpenModal"
-        width="50%"
-    >
+    <el-dialog title="プラン変更" v-model="isOpenModal" width="50%">
         <el-form
             ref="ruleFormRef"
             :model="ruleForm"
@@ -68,22 +64,22 @@
         </el-form>
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="isOpenModal = false">{{ t('btn_cancel') }}</el-button>
+                <el-button @click="isOpenModal = false">{{
+                    t('btn_cancel')
+                }}</el-button>
                 <el-button type="primary" @click="updatePlan(ruleFormRef)">
                     {{ t('btn_update') }}
                 </el-button>
             </span>
         </template>
     </el-dialog>
-    <el-dialog
-        title="プラン削除"
-        v-model="isOpenDeleteModal"
-        width="50%"
-    >
+    <el-dialog title="プラン削除" v-model="isOpenDeleteModal" width="50%">
         <div class="ml-5">
             <el-row class="full-width">
                 <el-col :span="6">
-                    <p class="label">{{ t('user.columns.user_plans.plan_name') }}:</p>
+                    <p class="label">
+                        {{ t('user.columns.user_plans.plan_name') }}:
+                    </p>
                 </el-col>
                 <el-col :span="18">
                     <p class="label">{{ planDetail.plan_name }}</p>
@@ -91,7 +87,9 @@
             </el-row>
             <el-row class="full-width mt-4">
                 <el-col :span="6">
-                    <p class="label">{{ t('user.columns.user_plans.start_date') }}:</p>
+                    <p class="label">
+                        {{ t('user.columns.user_plans.start_date') }}:
+                    </p>
                 </el-col>
                 <el-col :span="18">
                     <p class="label">{{ planDetail.start_date }}</p>
@@ -99,7 +97,9 @@
             </el-row>
             <el-row class="full-width mt-4">
                 <el-col :span="6">
-                    <p class="label">{{ t('user.columns.user_plans.end_date') }}:</p>
+                    <p class="label">
+                        {{ t('user.columns.user_plans.end_date') }}:
+                    </p>
                 </el-col>
                 <el-col :span="18">
                     <p class="label">{{ planDetail.end_date }}</p>
@@ -107,7 +107,9 @@
             </el-row>
             <el-row class="full-width mt-4">
                 <el-col :span="6">
-                    <p class="label">{{ t('user.columns.user_plans.created_date') }}:</p>
+                    <p class="label">
+                        {{ t('user.columns.user_plans.created_date') }}:
+                    </p>
                 </el-col>
                 <el-col :span="18">
                     <p class="label">{{ planDetail.created_date }}</p>
@@ -116,7 +118,9 @@
         </div>
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="isOpenDeleteModal = false">{{ t('btn_cancel') }}</el-button>
+                <el-button @click="isOpenDeleteModal = false">{{
+                    t('btn_cancel')
+                }}</el-button>
                 <el-button type="danger" @click="deletePlan">
                     {{ t('btn_delete') }}
                 </el-button>
@@ -189,7 +193,6 @@ const buttons = ref([
     { id: '1', label: '削除', class: 'btn-action btn-delete' },
 ])
 
-
 const loading = ref(true)
 const columns = ref([
     {
@@ -244,7 +247,7 @@ const getListData = async () => {
             id: datas[i].id,
             plan_name: datas[i].name,
             start_date: datas[i].start_date,
-            end_date: datas[i+1]?.start_date,
+            end_date: datas[i + 1]?.start_date,
             created_date: datas[i].created_at,
         }
         data.value.records.push(record)
@@ -259,8 +262,7 @@ const handleChangePage = (page: any) => {
 }
 
 const openModal = () => {
-    ruleForm.type = null,
-    ruleForm.start_date = null
+    ;(ruleForm.type = null), (ruleForm.start_date = null)
     isOpenModal.value = true
 }
 
@@ -279,7 +281,9 @@ const updatePlan = async (formEl: FormInstance | undefined) => {
         if (valid) {
             let query: any = {
                 type: ruleForm.type,
-                start_date: ruleForm.start_date ? dayjs(ruleForm.start_date).format('YYYY-MM-DD') : '',
+                start_date: ruleForm.start_date
+                    ? dayjs(ruleForm.start_date).format('YYYY-MM-DD')
+                    : '',
             }
             const id = router.currentRoute.value.params.id
             await userStore.updateUserPlan(query, id, () => {

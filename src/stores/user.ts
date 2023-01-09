@@ -1,7 +1,11 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 import * as userAPI from '@/api/userApi'
-import type { UserDetail, UserUpdate, UserPlanUpdate } from '@/libs/interface/userInterface'
+import type {
+    UserDetail,
+    UserUpdate,
+    UserPlanUpdate,
+} from '@/libs/interface/userInterface'
 import type { ParamsList, ResponseList } from '@/libs/interface/commonInterface'
 import { makeNotification } from '@/libs/constants/constants'
 import { useAlertStore } from './alert'
