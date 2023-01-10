@@ -247,7 +247,11 @@ const getListData = async () => {
             id: datas[i].id,
             plan_name: datas[i].name,
             start_date: datas[i].start_date,
-            end_date: datas[i + 1] ? dayjs(datas[i + 1].start_date).subtract(1, 'day').format('YYYY-MM-DD') : '',
+            end_date: datas[i + 1]
+                ? dayjs(datas[i + 1].start_date)
+                      .subtract(1, 'day')
+                      .format('YYYY-MM-DD')
+                : '',
             created_date: datas[i].created_at,
         }
         data.value.records.push(record)
@@ -263,6 +267,7 @@ const handleChangePage = (page: any) => {
 
 const openModal = () => {
     ;(ruleForm.type = null), (ruleForm.start_date = null)
+    ruleFormRef.value?.clearValidate()
     isOpenModal.value = true
 }
 
