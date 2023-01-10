@@ -11,6 +11,7 @@
             :buttons="buttons"
             :hasCreate="false"
             @click-button="handleClickButtonTable"
+            @cellClick="cellClick"
         ></table-data>
     </section>
     <modal-box
@@ -109,7 +110,6 @@ import { ORDER_STATUS } from '@/libs/constants/orders'
 
 const { t } = useI18n()
 const router = useRouter()
-const props = defineProps(['dialogVisible', 'coachSessionData', 'status'])
 const statusModel = ref(0)
 
 const statusModal = reactive({
@@ -226,10 +226,11 @@ const getListData = async () => {
         (e: CoachSession) => {
             return {
                 id: e.id,
+                user_id: e.user_id,
                 date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
                 shop_name: e.shop_name,
                 plan_name: e.plan_name,
-                full_name: e.full_name,
+                full_name: e.user_id ? `<span class="link">${e.full_name}</span>` : e.full_name,
                 order_status: STATUS_USERS[e.order_status],
                 status_id: e.order_status,
                 order_id: e.order_id,
@@ -252,10 +253,25 @@ const sort = (sortProps: any) => {
     getListData()
 }
 
+const cellClick = (row: any, column: any) => {
+    if (column.property === 'full_name') {
+        router.push({
+            name: 'users-detail',
+            params: { id: row.user_id },
+            replace: true,
+        })
+    }
+}
+
 onMounted(async () => {
     await nextTick()
     await getListData()
 })
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.link {
+    color: #49a2ff;
+    cursor: pointer;
+}
+</style>
