@@ -7,33 +7,31 @@
         :size="formSize"
         status-icon
     >
-        <el-row :gutter="20">
-            <el-col :span="6">
-                <el-form-item prop="status">
-                    <p class="label">{{ t('coach.ruleForm.status.title') }}</p>
-                    <el-radio-group v-model="ruleForm.status">
-                        <el-radio
-                            :label="item.id"
-                            :key="item.id"
-                            v-for="item in statusArr"
-                            >{{ item.title }}</el-radio
-                        >
-                    </el-radio-group>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item prop="type">
-                    <p class="label">{{ t('coach.ruleForm.type') }}</p>
-                    <el-radio-group v-model="ruleForm.type">
-                        <el-radio
-                            :label="item"
-                            :key="item"
-                            v-for="item in Object.keys(COACH_TYPE)"
-                            >{{ COACH_TYPE[item] }}</el-radio
-                        >
-                    </el-radio-group>
-                </el-form-item>
-            </el-col>
+        <el-row>
+            <el-form-item prop="status">
+                <p class="label">{{ t('coach.ruleForm.status.title') }}</p>
+                <el-radio-group v-model="ruleForm.status">
+                    <el-radio
+                        :label="item.id"
+                        :key="item.id"
+                        v-for="item in statusArr"
+                        >{{ item.title }}</el-radio
+                    >
+                </el-radio-group>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item prop="type">
+                <p class="label">{{ t('coach.ruleForm.type') }}</p>
+                <el-radio-group v-model="ruleForm.type">
+                    <el-radio
+                        :label="item"
+                        :key="item"
+                        v-for="item in Object.keys(COACH_TYPE)"
+                        >{{ COACH_TYPE[item] }}</el-radio
+                    >
+                </el-radio-group>
+            </el-form-item>
         </el-row>
         <el-form-item prop="search">
             <p class="label">{{ t('coach.ruleForm.search.title') }}</p>
