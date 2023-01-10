@@ -100,7 +100,7 @@ export const jp = {
         coaches: 'メンバー管理',
         coach_detail: 'エナジスト詳細',
         reserves: '予約管理',
-        plans: 'プラン管理',
+        plans: 'コース管理',
         patterns: 'パターン管理',
         list: {
             shops: '店舗一覧',
@@ -109,7 +109,7 @@ export const jp = {
             users: 'ユーザ一覧',
             coaches: 'メンバー一覧',
             reserves: '予約一覧',
-            plans: 'プラン一覧',
+            plans: 'コース一覧',
             patterns: 'パターン一覧',
         },
     },
