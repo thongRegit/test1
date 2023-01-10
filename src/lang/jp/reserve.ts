@@ -18,7 +18,8 @@ export default {
             title: 'コース',
             placeholder: 'コース',
         },
-        btn_toggle: '検索条件を増やす',
+        btn_expand: '検索条件を増やす',
+        btn_hide: '検索条件を減らす',
         coach_id: {
             title: 'エナジスト検索',
             placeholder: '田中 康史',
