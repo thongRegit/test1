@@ -181,29 +181,27 @@ const ruleForm = reactive({
 } as CoachRuleForm)
 
 const validateDate = (rule: any, value: any, callback: any) => {
-    const days = checkDayFuture(
+    if (
         [
             ruleForm.birthdays.year,
             ruleForm.birthdays.month,
             ruleForm.birthdays.day,
-        ].join('-')
-    )
-    if (days <= 0) {
+        ].includes('')
+    ) {
         callback(
             new Error(
                 t('validation.required', [t('coach.detail.label.birthday')])
             )
         )
     } else {
-        if (
-            dayjs().diff(
-                [
-                    ruleForm.birthdays.year,
-                    ruleForm.birthdays.month,
-                    ruleForm.birthdays.day,
-                ].join('-')
-            ) < 0
-        ) {
+        const days = checkDayFuture(
+            [
+                ruleForm.birthdays.year,
+                ruleForm.birthdays.month,
+                ruleForm.birthdays.day,
+            ].join('-')
+        )
+        if (days <= 0) {
             callback(
                 new Error(
                     t('validation.date_future', [

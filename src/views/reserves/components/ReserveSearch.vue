@@ -181,7 +181,11 @@
                 type="info"
                 :icon="!showForm ? Plus : Minus"
                 @click="handleShowForm"
-                >{{ !showForm ? t('reserve.search_form.btn_expand') : t('reserve.search_form.btn_hide') }}</el-button
+                >{{
+                    !showForm
+                        ? t('reserve.search_form.btn_expand')
+                        : t('reserve.search_form.btn_hide')
+                }}</el-button
             >
         </el-form-item>
         <el-form-item>
