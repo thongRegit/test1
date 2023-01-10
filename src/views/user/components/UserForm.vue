@@ -137,6 +137,7 @@ import type { UserDetail } from '@/libs/interface/userInterface'
 import { LoadingVue } from '@/components/common/loading'
 import dayjs from 'dayjs'
 import { TYPE_NOT_ALL_USERS, YEARS } from '@/libs/constants/constants'
+import { checkDayFuture } from '@/libs/utils/common'
 import DateForm from '@/components/common/DateForm.vue'
 
 const { t } = useI18n()
@@ -179,15 +180,14 @@ const validateDate = (rule: any, value: any, callback: any) => {
             )
         )
     } else {
-        if (
-            dayjs().diff(
-                [
-                    ruleForm.birthdays.year,
-                    ruleForm.birthdays.month,
-                    ruleForm.birthdays.day,
-                ].join('-')
-            ) < 0
-        ) {
+        const days = checkDayFuture(
+            [
+                ruleForm.birthdays.year,
+                ruleForm.birthdays.month,
+                ruleForm.birthdays.day,
+            ].join('-')
+        )
+        if (days <= 0) {
             callback(
                 new Error(
                     t('validation.date_future', [

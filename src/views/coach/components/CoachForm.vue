@@ -149,6 +149,7 @@ import type { CoachRuleForm } from '@/libs/interface/coachInterface'
 import { LoadingVue } from '@/components/common/loading'
 import DateFormVue from '@/components/common/DateForm.vue'
 import { COACH_TYPE_NOT_ALL, YEARS } from '@/libs/constants/constants'
+import { checkDayFuture } from '@/libs/utils/common'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -180,13 +181,14 @@ const ruleForm = reactive({
 } as CoachRuleForm)
 
 const validateDate = (rule: any, value: any, callback: any) => {
-    if (
+    const days = checkDayFuture(
         [
             ruleForm.birthdays.year,
             ruleForm.birthdays.month,
             ruleForm.birthdays.day,
-        ].includes('')
-    ) {
+        ].join('-')
+    )
+    if (days <= 0) {
         callback(
             new Error(
                 t('validation.required', [t('coach.detail.label.birthday')])

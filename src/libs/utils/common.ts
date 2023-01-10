@@ -2,6 +2,7 @@ import {
     ACTIVE_STATUS,
     CANCELLING_PAY_STATUS_USERS,
 } from '@/libs/constants/constants'
+import dayjs from 'dayjs'
 
 export const findData = (arr: any, id: any) => {
     if (arr.length > 0) return arr.find((item: any) => item.id == id)
@@ -28,4 +29,9 @@ export const cancellingPayStatusLabel = (status: number) => {
     return `<span class="${status === 1 ? 'text-danger' : ''}">${
         CANCELLING_PAY_STATUS_USERS[status]
     }</span>`
+}
+
+export const checkDayFuture = (day: string | Date) => {
+    const hours = dayjs().diff(day, 'hours')
+    return Math.floor(hours / 24)
 }
