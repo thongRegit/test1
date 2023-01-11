@@ -1,5 +1,11 @@
 <template>
-    <BoxVue :title="t('homepage.coaches')" :type="'table'" :padding="20">
+    <BoxVue
+        :title="t('homepage.coaches')"
+        :type="'table'"
+        :padding="20"
+        :btnCreate="true"
+        @on-create="onClickCreateBtn"
+    >
         <template v-slot:header>
             <el-icon :size="24">
                 <Avatar />
@@ -112,6 +118,10 @@ const handleClickButtonTable = (classList: any, row: any) => {
     if (classList.includes('btn-update')) {
         router.push({ name: 'coaches-detail', params: { id: row.id } })
     }
+}
+
+const onClickCreateBtn = () => {
+    router.push({ name: 'coaches-create' })
 }
 
 const data = ref({

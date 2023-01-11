@@ -14,6 +14,7 @@ const SessionList = () => import('@/views/session/SessionVue.vue')
 const PatternList = () => import('@/views/pattern/PatternView.vue')
 const PatternCreate = () => import('@/views/pattern/CreateView.vue')
 const CoachList = () => import('@/views/coach/CoachVue.vue')
+const CoachCreate = () => import('@/views/coach/CreateVue.vue')
 const CoachDetail = () => import('@/views/coach/CoachDetail.vue')
 
 const PlanList = () => import('@/views/plan/PlanView.vue')
@@ -36,6 +37,7 @@ export {
     PatternList,
     PatternCreate,
     CoachList,
+    CoachCreate,
     CoachDetail,
     PlanList,
     PlanCreate,

@@ -67,16 +67,6 @@ const validateMailAddress = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-const validatePassword = (rule: any, value: any, callback: any) => {
-    const regex = new RegExp(
-        /^(?=.*[0-9])(?=.*[A-Z|a-z])(?=.*[!@#$%^&*(){}[\]:;<>,.?/~_+\-=\\])[a-zA-Z0-9!@#$%^&*(){}[\]:;<>,.?/~_+\-=\\]{8,255}$/
-    )
-    if (!regex.test(value)) {
-        callback(new Error(t('validation.password.format')))
-    } else {
-        callback()
-    }
-}
 
 const err = ref('')
 const ruleForm = reactive({
@@ -109,7 +99,6 @@ const rules = reactive({
             message: t('validation.max.string', [t('password'), 255]),
             trigger: 'blur',
         },
-        { validator: validatePassword, trigger: 'blur' },
     ],
 })
 

@@ -12,6 +12,7 @@ import {
     AccountList,
     SessionList,
     CoachList,
+    CoachCreate,
     CoachDetail,
     ShopUpdate,
     ChangePassword,
@@ -183,6 +184,13 @@ const routes = [
                         name: 'coaches',
                         meta: { requiresAuth: true },
                         component: CoachList,
+                        beforeEnter: ifAuthenticated,
+                    },
+                    {
+                        path: 'create',
+                        name: 'coaches-create',
+                        meta: { requiresAuth: true },
+                        component: CoachCreate,
                         beforeEnter: ifAuthenticated,
                     },
                     {

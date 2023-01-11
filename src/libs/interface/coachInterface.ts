@@ -42,6 +42,7 @@ export interface CoachRuleForm {
     last_name_furigana: string
     birthday: string | null
     birthdays: Date
+    mail_address?: string
     tel: string
     invitation_code: string
     people_invited: string
