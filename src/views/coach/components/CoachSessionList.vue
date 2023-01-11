@@ -1,19 +1,28 @@
 <template>
-    <section class="box-list">
-        <table-data
-            :data="data"
-            :loading="loading"
-            :columns="columns"
-            :showIndex="false"
-            :showCheckbox="false"
-            @change-page="handleChangePage"
-            @sort="sort"
-            :buttons="buttons"
-            :hasCreate="false"
-            @click-button="handleClickButtonTable"
-            @cellClick="cellClick"
-        ></table-data>
-    </section>
+    <BoxVue :padding="20" :show-header="false">
+        <template v-slot:body>
+            <CoachSearchSession @submit="sort" @reset="resetForm" />
+        </template>
+    </BoxVue>
+    <BoxVue :type="'table'" :padding="20" :show-header="false" :class="name">
+        <template v-slot:body>
+            <section class="box-list">
+                <table-data
+                    :data="data"
+                    :loading="loading"
+                    :columns="columns"
+                    :showIndex="false"
+                    :showCheckbox="false"
+                    @change-page="handleChangePage"
+                    @sort="sort"
+                    :buttons="buttons"
+                    :hasCreate="false"
+                    @click-button="handleClickButtonTable"
+                    @cellClick="cellClick"
+                ></table-data>
+            </section>
+        </template>
+    </BoxVue>
     <modal-box
         title="エナジスト詳細"
         :open="statusModal.isUpdateOpen"
@@ -107,10 +116,13 @@ import type {
 import type { ParamsList } from '@/libs/interface/commonInterface'
 import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
 import { ORDER_STATUS } from '@/libs/constants/orders'
+import BoxVue from '@/components/common/BoxVue.vue'
+import CoachSearchSession from './CoachSearchSession.vue'
 
 const { t } = useI18n()
 const router = useRouter()
 const statusModel = ref(0)
+const name = 'session'
 
 const statusModal = reactive({
     isUpdateOpen: false,
@@ -177,6 +189,7 @@ const columns = ref([
 const buttons = ref([
     { id: '1', label: '編集', class: 'btn-action btn-update' },
 ])
+
 const sortProp = reactive({ key: 'id', dir: 'descending' })
 
 const handleClickButtonTable = (classList: any, row: any) => {
@@ -231,7 +244,9 @@ const getListData = async () => {
                 date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
                 shop_name: e.shop_name,
                 plan_name: e.plan_name,
-                full_name: e.user_id ? `<span class="link">${e.full_name}</span>` : e.full_name,
+                full_name: e.user_id
+                    ? `<span class="link">${e.full_name}</span>`
+                    : e.full_name,
                 user_name: e.full_name,
                 order_status: STATUS_USERS[e.order_status],
                 status_id: e.order_status,
@@ -251,6 +266,7 @@ const handleChangePage = (page: any) => {
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
+    listQuery.value.filters = [{ key: 'is_active', data: sortProps.status }]
     listQuery.value.page = 1
     getListData()
 }
@@ -265,15 +281,28 @@ const cellClick = (row: any, column: any) => {
     }
 }
 
+const resetForm = () => {
+    listQuery.value.page = 1
+    listQuery.value.search = ''
+    listQuery.value.filters = [{ key: 'is_active', data: 'all' }]
+    getListData()
+}
+
 onMounted(async () => {
     await nextTick()
     await getListData()
 })
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .link {
     color: #49a2ff;
     cursor: pointer;
+}
+.box {
+    margin: 0 0 40px 0;
+    &.session {
+        margin: 0 0 40px 0;
+    }
 }
 </style>

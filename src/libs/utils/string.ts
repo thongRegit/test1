@@ -11,4 +11,4 @@ export const clipTitle = (text: string) => {
     return title
 }
 
-export const hash = Math.floor(Math.random() * 90000) + 10000;
+export const hash = Math.floor(Math.random() * 90000) + 10000
