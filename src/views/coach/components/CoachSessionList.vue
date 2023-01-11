@@ -68,7 +68,7 @@
                         </el-col>
                         <el-col :span="18">
                             <p class="label">
-                                {{ statusModal.coachSessionData.full_name }}
+                                {{ statusModal.coachSessionData.user_name }}
                             </p>
                         </el-col>
                     </el-row>
@@ -117,6 +117,7 @@ const statusModal = reactive({
     coachSessionData: {
         date: '',
         full_name: '',
+        user_name: '',
         id: '',
         order_status: '',
         plan_name: '',
@@ -231,6 +232,7 @@ const getListData = async () => {
                 shop_name: e.shop_name,
                 plan_name: e.plan_name,
                 full_name: e.user_id ? `<span class="link">${e.full_name}</span>` : e.full_name,
+                user_name: e.full_name,
                 order_status: STATUS_USERS[e.order_status],
                 status_id: e.order_status,
                 order_id: e.order_id,

@@ -48,6 +48,7 @@ const routes = [
             {
                 path: '',
                 name: 'home',
+                meta: { requiresAuth: true },
                 component: ShopList,
                 beforeEnter: ifAuthenticated,
             },
@@ -56,25 +57,29 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: ShopList,
                         name: 'shops',
+                        meta: { requiresAuth: true },
+                        component: ShopList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
                         name: 'shops-create',
+                        meta: { requiresAuth: true },
                         component: ShopCreate,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)',
                         name: 'shops-detail',
+                        meta: { requiresAuth: true },
                         component: ShopDetail,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)/update',
                         name: 'shops-update',
+                        meta: { requiresAuth: true },
                         component: ShopUpdate,
                         beforeEnter: ifAuthenticated,
                     },
@@ -85,13 +90,15 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: UserList,
                         name: 'users',
+                        meta: { requiresAuth: true },
+                        component: UserList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)',
                         name: 'users-detail',
+                        meta: { requiresAuth: true },
                         component: UserDetail,
                         beforeEnter: ifAuthenticated,
                     },
@@ -102,25 +109,29 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: ReserveList,
                         name: 'reserves',
+                        meta: { requiresAuth: true },
+                        component: ReserveList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
                         name: 'reserves-create',
+                        meta: { requiresAuth: true },
                         component: ReserveList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)',
                         name: 'reserves-detail',
+                        meta: { requiresAuth: true },
                         component: ReserveDetail,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)/update',
                         name: 'reserves-update',
+                        meta: { requiresAuth: true },
                         component: ReserveList,
                         beforeEnter: ifAuthenticated,
                     },
@@ -131,14 +142,16 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: PatternList,
                         name: 'sessions',
+                        meta: { requiresAuth: true },
+                        component: PatternList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
-                        component: PatternList,
                         name: 'sessions-create',
+                        meta: { requiresAuth: true },
+                        component: PatternList,
                         beforeEnter: ifAuthenticated,
                     },
                 ],
@@ -148,14 +161,16 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: PatternList,
                         name: 'shifts',
+                        meta: { requiresAuth: true },
+                        component: PatternList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
-                        component: PatternList,
                         name: 'shifts-create',
+                        meta: { requiresAuth: true },
+                        component: PatternList,
                         beforeEnter: ifAuthenticated,
                     },
                 ],
@@ -165,14 +180,16 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: CoachList,
                         name: 'coaches',
+                        meta: { requiresAuth: true },
+                        component: CoachList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)',
-                        component: CoachDetail,
                         name: 'coaches-detail',
+                        meta: { requiresAuth: true },
+                        component: CoachDetail,
                         beforeEnter: ifAuthenticated,
                     },
                 ],
@@ -182,19 +199,22 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: PlanList,
                         name: 'plans',
+                        meta: { requiresAuth: true },
+                        component: PlanList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: ':id(\\d+)',
                         name: 'plans-detail',
+                        meta: { requiresAuth: true },
                         component: PlanUpdate,
                     },
                     {
                         path: 'create',
-                        component: PlanCreate,
                         name: 'plans-create',
+                        meta: { requiresAuth: true },
+                        component: PlanCreate,
                         beforeEnter: ifAuthenticated,
                     },
                 ],
@@ -204,14 +224,16 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: PatternList,
                         name: 'patterns',
+                        meta: { requiresAuth: true },
+                        component: PatternList,
                         beforeEnter: ifAuthenticated,
                     },
                     {
                         path: 'create',
-                        component: PatternList,
                         name: 'patterns-create',
+                        meta: { requiresAuth: true },
+                        component: PatternList,
                         beforeEnter: ifAuthenticated,
                     },
                 ],
@@ -219,18 +241,21 @@ const routes = [
             {
                 path: 'account',
                 name: 'account',
+                meta: { requiresAuth: true },
                 component: AccountList,
                 beforeEnter: ifAuthenticated,
             },
             {
                 path: 'session',
                 name: 'session',
+                meta: { requiresAuth: true },
                 component: SessionList,
                 beforeEnter: ifAuthenticated,
             },
             {
                 path: 'change-password',
                 name: 'change-password',
+                meta: { requiresAuth: true },
                 component: ChangePassword,
                 beforeEnter: ifAuthenticated,
             },
