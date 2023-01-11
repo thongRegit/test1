@@ -1,5 +1,5 @@
 <template>
-    <section class="box" :style="{ maxWidth: width }">
+    <section class="box" :style="{ maxWidth: width }" :class="name">
         <div class="box-head">
             <div
                 class="head-icon"
@@ -32,6 +32,7 @@ const props = defineProps({
     title: String,
     description: String,
     padding: Number,
+    name: String,
     btnCreate: {
         type: Boolean,
         default: false,
@@ -44,8 +45,16 @@ const props = defineProps({
         type: Number,
     },
 })
-const { type, title, description, padding, btnCreate, width, showHeader } =
-    toRefs(props)
+const {
+    type,
+    title,
+    description,
+    padding,
+    name,
+    btnCreate,
+    width,
+    showHeader,
+} = toRefs(props)
 
 const emit = defineEmits(['onCreate'])
 </script>
