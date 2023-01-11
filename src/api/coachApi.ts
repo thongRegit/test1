@@ -58,3 +58,14 @@ export const update = (
         data: payload,
     })
 }
+
+export const create = (
+    payload: object | {},
+) => {
+    const url = `/coaches`
+    return request({
+        url,
+        method: 'POST',
+        data: payload,
+    })
+}

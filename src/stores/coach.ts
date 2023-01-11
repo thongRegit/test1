@@ -67,6 +67,18 @@ export const useCoachStore = defineStore('coach', () => {
         }
     }
 
+    const createCoach = async (
+        payload: CoachRuleForm,
+    ) => {
+        payload.is_active = payload.is_active ? 1 : 0
+        try {
+            await coachAPI.create(payload)
+        } catch (error: any) {
+            makeNotification('error', 'Error', error?.message)
+            return error
+        }
+    }
+
     const detailCoach = async (id: string | string[] | number) => {
         try {
             const data = await coachAPI.coach(id)
@@ -85,6 +97,7 @@ export const useCoachStore = defineStore('coach', () => {
         listCoach,
         listCoachInvited,
         listCoachSession,
+        createCoach,
         updateCoach,
         detailCoach,
     }
