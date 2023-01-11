@@ -16,7 +16,7 @@ export default {
             title: 'キーワード検索',
             placeholder: '名前、電話番号',
         },
-        type: '分類',
+        type: '所属',
     },
     columns: {
         full_name: '名前',
@@ -36,7 +36,7 @@ export default {
             full_name: '名前',
             order_status: 'ステータス',
         },
-        type: '選択を',
+        type: '所属',
     },
     tabs: {
         1: '基本設定',
