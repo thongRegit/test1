@@ -116,6 +116,12 @@ const columns = ref([
         sortable: true,
         class: '',
     },
+    {
+        prop: 'amount',
+        label: t('reserve.columns.amount'),
+        sortable: false,
+        class: '',
+    },
 ])
 
 const listQuery = ref({

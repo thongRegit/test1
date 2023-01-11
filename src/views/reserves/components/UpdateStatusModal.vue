@@ -27,7 +27,7 @@
                     <p class="label">{{ t('reserve.columns.amount') }}:</p>
                 </el-col>
                 <el-col :span="18">
-                    <p class="label">{{ reserveData.amount + '円' }}</p>
+                    <p class="label">{{ reserveData.amount }}</p>
                 </el-col>
             </el-row>
             <el-row class="full-width mt-4">
