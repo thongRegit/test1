@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref, computed } from 'vue'
+import { makeNotification } from '../libs/constants/constants'
 import type { LoginDto } from '../libs/interface/authInterface'
 import type { Profile } from '@/libs/interface/userInterface'
 import * as API from '@/api/auth'
@@ -19,7 +20,8 @@ export const useAuthStore = defineStore('auth', () => {
             localStorage.setItem(tokenKey, data.access_token)
             token.value = data.access_token
             profile.value = data.me
-        } catch (error) {
+        } catch (error: any) {
+            makeNotification('error', 'Error', error.message)
             return error
         }
     }

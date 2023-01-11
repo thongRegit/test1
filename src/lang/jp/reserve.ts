@@ -40,6 +40,7 @@ export default {
         status: 'ステータス',
         edit: '編集',
         full_name: '名前',
+        amount: '金額'
     },
     detail: {
         label: {

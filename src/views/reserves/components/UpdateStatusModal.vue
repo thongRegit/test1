@@ -24,6 +24,14 @@
             </el-row>
             <el-row class="full-width mt-4">
                 <el-col :span="6">
+                    <p class="label">{{ t('reserve.columns.amount') }}:</p>
+                </el-col>
+                <el-col :span="18">
+                    <p class="label">{{ reserveData.amount + '円' }}</p>
+                </el-col>
+            </el-row>
+            <el-row class="full-width mt-4">
+                <el-col :span="6">
                     <p class="label">{{ t('reserve.columns.plan_name') }}:</p>
                 </el-col>
                 <el-col :span="18">

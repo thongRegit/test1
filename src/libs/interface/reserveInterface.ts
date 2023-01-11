@@ -45,7 +45,8 @@ export interface ReserveUpdate {
 }
 
 export interface Reserve {
-    id: number
+    id: number,
+    amount: number,
     shop_name: string
     plan_name: string
     user_name: string
