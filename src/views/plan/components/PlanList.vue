@@ -1,5 +1,5 @@
 <template>
-    <BoxVue :title="t('homepage.plans')" :type="'table'" :padding="20">
+    <!-- <BoxVue :title="t('homepage.plans')" :type="'table'" :padding="20">
         <template v-slot:header>
             <el-icon :size="24">
                 <DocumentAdd />
@@ -8,7 +8,7 @@
         <template v-slot:body>
             <PlanSearchVue @submit="search" @reset="resetForm" />
         </template>
-    </BoxVue>
+    </BoxVue> -->
     <BoxVue
         :title="t('homepage.list.plans')"
         :type="'table'"

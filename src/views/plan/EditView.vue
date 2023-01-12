@@ -183,11 +183,11 @@ let ruleForm = ref({} as PlanDetailPayload)
 
 const checkRegexAmount = (rule: any, value: number, callback: any) => {
     const regex = new RegExp(/^([0-9\s\-\.]*)$/)
-    if (value <= 0) {
-        callback(new Error(t('validation.tel_format')))
+    if (value < 0) {
+        callback(new Error(t('validation.numeric')))
     }
     if (!regex.test(value.toString())) {
-        callback(new Error(t('validation.tel_format')))
+        callback(new Error(t('validation.numeric')))
     } else {
         callback()
     }
