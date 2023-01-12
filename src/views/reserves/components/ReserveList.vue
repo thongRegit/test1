@@ -63,7 +63,8 @@ const loading = ref(true)
 const statusModal = reactive({
     isUpdateOpen: false,
     reserveData: {
-        amount: 0,
+        amount: '',
+        amount_with_tax: '',
         coach_name: '',
         date: '',
         end_time: '',
@@ -219,6 +220,7 @@ const getListData = async () => {
         return {
             id: e.id,
             amount: e.amount,
+            amount_with_tax: e.amount_with_tax,
             date: FORMAT_DAY_WIDTH_TIME(e.date, e.start_time, e.end_time),
             reserve_date: e.date,
             start_time: e.start_time,

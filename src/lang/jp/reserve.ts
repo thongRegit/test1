@@ -40,7 +40,8 @@ export default {
         status: 'ステータス',
         edit: '編集',
         full_name: '名前',
-        amount: '金額',
+        amount: '金額（税抜）',
+        tax_included: '税込'
     },
     detail: {
         label: {
