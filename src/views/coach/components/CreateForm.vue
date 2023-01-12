@@ -81,7 +81,9 @@
                 </el-form-item>
             </div>
             <div>
-                <p class="label required">{{ t('coach.create.label.mail_address') }}</p>
+                <p class="label required">
+                    {{ t('coach.create.label.mail_address') }}
+                </p>
                 <el-col :span="15">
                     <el-form-item prop="mail_address">
                         <el-input
@@ -132,7 +134,11 @@ import dayjs from 'dayjs'
 import type { CoachRuleForm } from '@/libs/interface/coachInterface'
 import { LoadingVue } from '@/components/common/loading'
 import DateFormVue from '@/components/common/DateForm.vue'
-import { COACH_TYPE_VALUE, COACH_TYPE_NOT_ALL, YEARS } from '@/libs/constants/constants'
+import {
+    COACH_TYPE_VALUE,
+    COACH_TYPE_NOT_ALL,
+    YEARS,
+} from '@/libs/constants/constants'
 import { checkDayFuture } from '@/libs/utils/common'
 
 const { t } = useI18n()

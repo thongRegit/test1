@@ -59,9 +59,7 @@ export const update = (
     })
 }
 
-export const create = (
-    payload: object | {},
-) => {
+export const create = (payload: object | {}) => {
     const url = `/coaches`
     return request({
         url,
