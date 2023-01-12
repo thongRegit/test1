@@ -67,9 +67,7 @@ export const useCoachStore = defineStore('coach', () => {
         }
     }
 
-    const createCoach = async (
-        payload: CoachRuleForm,
-    ) => {
+    const createCoach = async (payload: CoachRuleForm) => {
         payload.is_active = payload.is_active ? 1 : 0
         try {
             await coachAPI.create(payload)

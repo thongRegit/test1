@@ -25,6 +25,23 @@
                         />
                     </el-form-item>
                 </el-col>
+                <el-col :span="7">
+                    <p class="label">パターン</p>
+                    <el-select
+                        v-model="selected"
+                        :placeholder="t('shop.details.choice')"
+                        :fit-input-width="true"
+                        :filterable="true"
+                        @change="choosePattern(selected)"
+                    >
+                        <el-option
+                            v-for="(value, key) in patternList"
+                            :key="key"
+                            :label="value.name"
+                            :value="value.id"
+                        />
+                    </el-select>
+                </el-col>
             </el-row>
             <el-row class="full-width time-title">
                 <el-col :span="14">
@@ -121,9 +138,10 @@
 
 <script lang="ts" setup>
 import { ref, toRefs, reactive, onMounted } from 'vue'
-import { useSessionStore } from '@/stores'
+import { useSessionStore, usePatternStore } from '@/stores'
 import dayjs from 'dayjs'
 import type { FormInstance, FormRules } from 'element-plus'
+import type { Pattern, SessionEl } from '@/libs/interface/patternInterface'
 import { useI18n } from 'vue3-i18n'
 
 const { t } = useI18n()
@@ -150,7 +168,8 @@ const ruleForm = reactive({
         },
     ],
 })
-
+const patternList = ref([] as Array<Pattern>)
+const selected = ref()
 const rules = reactive<FormRules>({
     day: [
         {
@@ -183,6 +202,7 @@ const rules = reactive<FormRules>({
 })
 
 const sessionStore = useSessionStore()
+const patternStore = usePatternStore()
 
 const emit = defineEmits(['close', 'updated'])
 const close = () => {
@@ -223,6 +243,7 @@ const updateSession = async (formEl: FormInstance | undefined) => {
 }
 const changeDate = () => {
     getSessionHistories()
+    selected.value = null
 }
 
 const getSessionHistories = async () => {
@@ -235,7 +256,6 @@ const getSessionHistories = async () => {
     await sessionStore.getSessionHistories(query)
     if (sessionStore.sessionHistories.length) {
         ruleForm.sessionData = sessionStore.sessionHistories.map((e: any) => {
-            console.log('e :>> ', e)
             return {
                 id: e.id,
                 start_time: dayjs(`${e.date} ${e.start_time}`).format('HH:mm'),
@@ -255,6 +275,27 @@ const getSessionHistories = async () => {
     }
 }
 
+const getListPattern = async () => {
+    let query = {
+        all: 1,
+    }
+    await patternStore.listPattern(query)
+    patternList.value = patternStore.allPatterns.map((el: Pattern) => {
+        return {
+            name: el.name,
+            id: el.id,
+            details: el.pattern_details,
+        }
+    })
+}
+
+const choosePattern = (value: Number) => {
+    const data: any = patternList.value.filter(
+        (patternList) => patternList.id == value
+    )
+    ruleForm.sessionData = data[0]['details']
+}
+
 const removeSession = (index: number) => {
     ruleForm.sessionData.splice(index, 1)
 }
@@ -269,7 +310,7 @@ const addSessionBlock = () => {
 }
 
 onMounted(async () => {
-    await getSessionHistories()
+    await Promise.all([getSessionHistories(), getListPattern()])
 })
 </script>
 <style scoped>
