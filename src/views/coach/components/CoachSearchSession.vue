@@ -2,7 +2,6 @@
     <el-form
         ref="ruleFormRef"
         :model="ruleForm"
-        :rules="rules"
         class="demo-ruleForm"
         :size="formSize"
         status-icon
@@ -10,21 +9,21 @@
         <el-row>
             <el-form-item prop="status">
                 <p class="label">{{ t('coach.ruleForm.status.title') }}</p>
-                <el-radio-group v-model="ruleForm.status">
-                    <el-radio
+                <el-checkbox-group
+                    v-model="checkedSession"
+                    @change="handleCheckedSessionChange"
+                >
+                    <el-checkbox
                         :label="item.id"
                         :key="item.id"
                         v-for="item in statusArr"
-                        >{{ item.title }}</el-radio
+                        >{{ item.title }}</el-checkbox
                     >
-                </el-radio-group>
+                </el-checkbox-group>
             </el-form-item>
         </el-row>
         <el-form-item>
-            <el-button @click="resetForm(ruleFormRef)">{{
-                t('btn_clear')
-            }}</el-button>
-            <el-button type="primary" @click="submitForm(ruleFormRef)">{{
+            <el-button type="primary" @click="submitForm()">{{
                 t('btn_search')
             }}</el-button>
         </el-form-item>
@@ -33,16 +32,12 @@
 
 <script lang="ts" setup>
 import { reactive, ref, defineEmits } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { useI18n } from 'vue3-i18n'
 
 const { t } = useI18n()
 
 const statusArr = [
-    {
-        id: 'all',
-        title: t('coach.ruleForm.status.session.all'),
-    },
     {
         id: '1',
         title: t('coach.ruleForm.status.session.1'),
@@ -58,24 +53,16 @@ const emit = defineEmits(['submit', 'reset'])
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
-    type: '0',
-    status: 'all',
-})
-
-const rules = reactive<FormRules>({
-    status: [
-        {
-            type: 'string',
-            trigger: 'change',
-        },
-    ],
+    status: [1, 0],
 })
 
 const submitForm = () => {
     emit('submit', ruleForm)
 }
 
-const resetForm = () => {
-    emit('reset')
+const checkedSession = ref(['1', '0'])
+
+const handleCheckedSessionChange = (value: []) => {
+    ruleForm['status'] = value
 }
 </script>

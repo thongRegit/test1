@@ -29,7 +29,8 @@
                 <el-col :span="18">
                     <p class="label">
                         {{ reserveData.amount }}
-                        ( {{ t('reserve.columns.tax_included') }} {{ reserveData.amount_with_tax }})
+                        ( {{ t('reserve.columns.tax_included') }}
+                        {{ reserveData.amount_with_tax }})
                     </p>
                 </el-col>
             </el-row>

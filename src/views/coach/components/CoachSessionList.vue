@@ -118,6 +118,7 @@ import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
 import { ORDER_STATUS } from '@/libs/constants/orders'
 import BoxVue from '@/components/common/BoxVue.vue'
 import CoachSearchSession from './CoachSearchSession.vue'
+import { C } from '@fullcalendar/core/internal-common'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -143,7 +144,7 @@ const statusModal = reactive({
 const listQuery = ref({
     page: 1,
     search: '',
-    filters: [{ key: 'is_active', data: 'all' }],
+    filters: [{ key: 'is_active', data: ['0', '1'] }],
 })
 const data = ref({
     currentPage: 1,
@@ -266,7 +267,12 @@ const handleChangePage = (page: any) => {
 const sort = (sortProps: any) => {
     sortProp.key = sortProps.prop
     sortProp.dir = sortProps.order
-    listQuery.value.filters = [{ key: 'is_active', data: sortProps.status }]
+    listQuery.value.filters = [
+        {
+            key: 'is_active',
+            data: sortProps.status.length > 0 ? sortProps.status : ['all'],
+        },
+    ]
     listQuery.value.page = 1
     getListData()
 }
@@ -284,7 +290,7 @@ const cellClick = (row: any, column: any) => {
 const resetForm = () => {
     listQuery.value.page = 1
     listQuery.value.search = ''
-    listQuery.value.filters = [{ key: 'is_active', data: 'all' }]
+    listQuery.value.filters = [{ key: 'is_active', data: ['0', '1'] }]
     getListData()
 }
 
