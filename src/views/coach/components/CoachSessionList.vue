@@ -118,7 +118,6 @@ import { FORMAT_DAY_WIDTH_TIME, STATUS_USERS } from '@/libs/constants/constants'
 import { ORDER_STATUS } from '@/libs/constants/orders'
 import BoxVue from '@/components/common/BoxVue.vue'
 import CoachSearchSession from './CoachSearchSession.vue'
-import { C } from '@fullcalendar/core/internal-common'
 
 const { t } = useI18n()
 const router = useRouter()
