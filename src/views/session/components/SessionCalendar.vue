@@ -30,6 +30,8 @@ const calendarOptions = ref({
         minute: '2-digit',
         hour12: false,
     },
+    slotMinTime: '06:00',
+    slotMaxTime: '23:31',
 })
 
 watch(firstDay, (value) => {
