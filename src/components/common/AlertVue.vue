@@ -26,4 +26,6 @@ const { title, type, effect, showIcon } = toRefs(props as Alert)
 .alert-custom:first-child {
     margin: 0;
 }
-</style>
+</style>avc
+test cherypcik 
+
